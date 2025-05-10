@@ -45,6 +45,7 @@ public class FallenLeavesBlock extends Block implements Waterloggable {
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public BlockState getStateForNeighborUpdate(
           BlockState state,
           Direction facing,
@@ -59,16 +60,19 @@ public class FallenLeavesBlock extends Block implements Waterloggable {
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public VoxelShape getCollisionShape(BlockState state, BlockView worldIn, BlockPos pos, ShapeContext context) {
     return VoxelShapes.empty();
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
     return Block.isFaceFullSquare(world.getBlockState(pos.down()).getCollisionShape(world, pos.down()), Direction.UP);
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
     return SHAPE;
   }

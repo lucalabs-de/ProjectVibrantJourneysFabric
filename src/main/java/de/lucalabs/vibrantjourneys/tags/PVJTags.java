@@ -1,8 +1,12 @@
 package de.lucalabs.vibrantjourneys.tags;
 
+import de.lucalabs.vibrantjourneys.ProjectVibrantJourneys;
+import de.lucalabs.vibrantjourneys.util.ModCompatUtils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 
 public class PVJTags {
@@ -25,7 +29,7 @@ public class PVJTags {
   public static final TagKey<Block> COMPOST_ACTIVATORS = createBlockTag(ModCompatUtils.ModIds.FARMERS_DELIGHT, "compost_activators");
 
   private static TagKey<Biome> createBiomeTag(final String location) {
-    return TagKey.create(Registries.BIOME, new Identifier(ProjectVibrantJourneys.MOD_ID, location));
+    return TagKey.of(RegistryKeys.BIOME, new Identifier(ProjectVibrantJourneys.MOD_ID, location));
   }
 
   private static TagKey<Block> createBlockTag(final String location) {

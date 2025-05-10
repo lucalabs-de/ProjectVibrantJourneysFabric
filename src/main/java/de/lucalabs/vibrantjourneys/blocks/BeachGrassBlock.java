@@ -20,10 +20,10 @@ public class BeachGrassBlock extends PlantBlock {
     return SHAPE;
   }
 
-  @Override
-  protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-    return floor.isIn(BlockTags.SAND) || floor.isOf(Blocks.TERRACOTTA) || floor.getBlock() instanceof GlazedTerracottaBlock;
-  }
+//  @Override
+//  protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
+//    return floor.isIn(BlockTags.SAND) || floor.isOf(Blocks.TERRACOTTA) || floor.getBlock() instanceof GlazedTerracottaBlock;
+//  }
 
   // TODO check if the above does the same as the below
 

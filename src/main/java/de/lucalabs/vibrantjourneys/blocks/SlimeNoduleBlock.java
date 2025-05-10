@@ -20,7 +20,7 @@ public class SlimeNoduleBlock extends EpiphyteBlock {
   }
 
   @Override
-  public ActionResult use(BlockState state, World world, BlockPos pos, PlayerEntity player, InteractionHand hand, BlockHitResult brt) {
+  public ActionResult use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult brt) {
     return ActionResult.FAIL;
   }
 
