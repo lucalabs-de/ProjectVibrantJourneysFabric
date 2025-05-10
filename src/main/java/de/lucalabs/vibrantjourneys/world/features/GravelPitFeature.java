@@ -107,7 +107,7 @@ public class GravelPitFeature extends Feature<NoneFeatureConfiguration> {
                             if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                                 BlockPos blockpos3 = blockpos.offset(j2, l3, j3);
                                 BlockState block;
-                                if (worldgenlevel.getBlockState(blockpos3.up()).canBeReplaced() && randomsource.nextFloat() < 0.17F) {
+                                if (worldgenlevel.getBlockState(blockpos3.up()).canReplace() && randomsource.nextFloat() < 0.17F) {
                                     block = Blocks.GRASS_BLOCK.getDefaultState();
                                 } else {
                                     block = this.getGravelBlock(randomsource);

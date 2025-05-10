@@ -17,9 +17,9 @@ public class SimpleBlockMatchWaterFeature extends Feature<SimpleBlockConfigurati
     BlockPos origin = context.origin();
     BlockState state = config.toPlace().getState(context.random(), origin);
 
-    if (state.canSurvive(level, origin)) {
+    if (state.canPlaceAt(level, origin)) {
       if (state.getBlock() instanceof TallPlantBlock) {
-        if (!level.isEmptyBlock(origin.up())) {
+        if (!level.isAir(origin.up())) {
           return false;
         }
 

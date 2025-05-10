@@ -110,7 +110,7 @@ public class HotSpringsFeature extends Feature<NoneFeatureConfiguration> {
               if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                 BlockPos blockpos3 = blockpos.offset(j2, l3, j3);
                 if (!worldgenlevel.getFluidState(blockpos3.up()).is(FluidTags.WATER)) {
-                  if (worldgenlevel.isEmptyBlock(blockpos3.up()) || worldgenlevel.getBlockState(blockpos3.up()).canBeReplaced()) {
+                  if (worldgenlevel.isAir(blockpos3.up()) || worldgenlevel.getBlockState(blockpos3.up()).canReplace()) {
                     BlockState perimeterBlock = this.getRandomPerimeterBlock(randomsource);
                     worldgenlevel.setBlockState(blockpos3, perimeterBlock, 2);
                     boolean flag4 = randomsource.nextFloat() < 0.45F;

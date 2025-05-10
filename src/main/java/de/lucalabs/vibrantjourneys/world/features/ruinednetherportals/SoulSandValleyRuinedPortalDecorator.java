@@ -52,7 +52,7 @@ public class SoulSandValleyRuinedPortalDecorator extends RuinedPortalDecoratorBa
         }
       }
       if (placeExtraBlock) {
-        Direction direction = Direction.Plane.HORIZONTAL.getRandomDirection(random);
+        Direction direction = Direction.Type.HORIZONTAL.random(random);
         BlockPos pos = groundPos.up(height).offset(direction.getNormal()).up(random.nextBoolean() ? 1 : 0);
         if (LevelUtils.isEmptyOrReplaceable(level, pos)) {
           level.setBlockState(pos, Blocks.BONE_BLOCK.getDefaultState(), 2);

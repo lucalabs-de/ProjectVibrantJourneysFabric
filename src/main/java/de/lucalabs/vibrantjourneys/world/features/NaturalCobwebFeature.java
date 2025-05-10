@@ -20,7 +20,7 @@ public class NaturalCobwebFeature extends Feature<ProbabilityFeatureConfiguratio
       blockpos.setY(i);
 
       if (world.getBlockState(blockpos).getBlock() instanceof LeavesBlock) {
-        if (world.isEmptyBlock(blockpos.down())) {
+        if (world.isAir(blockpos.down())) {
           if (randomSource.nextFloat() < context.config().probability) {
             return LevelUtils.setBlockState(world, blockpos.down(), PVJBlocks.NATURAL_COBWEB.getDefaultState(), 2);
           }

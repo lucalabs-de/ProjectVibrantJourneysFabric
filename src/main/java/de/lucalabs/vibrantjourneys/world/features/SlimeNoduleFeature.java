@@ -24,9 +24,9 @@ public class SlimeNoduleFeature extends Feature<NoneFeatureConfiguration> {
       if (blockToPlace.canAttachTo(level, mutable, Direction.DOWN)) {
         boolean flag = false;
         while (!flag) {
-          Direction dir = Direction.Plane.HORIZONTAL.getRandomDirection(randomSource);
+          Direction dir = Direction.Type.HORIZONTAL.random(randomSource);
           BlockState state = level.getBlockState(mutable);
-          if (level.isEmptyBlock(mutable.offset(dir.getNormal())) && state.isCollisionShapeFullBlock(level, mutable) && state.is(BlockTags.LOGS)) {
+          if (level.isAir(mutable.offset(dir.getNormal())) && state.isCollisionShapeFullBlock(level, mutable) && state.is(BlockTags.LOGS)) {
             if (level.setBlockState(mutable.offset(dir.getNormal()), blockToPlace.getDefaultState().with(HorizontalFacingBlock.FACING, dir), 2)) {
               count++;
             }

@@ -24,8 +24,8 @@ public class BarkMushroomFeature extends Feature<NoneFeatureConfiguration> {
       if (blockToPlace.canAttachTo(level, mutable, Direction.DOWN)) {
         boolean flag = false;
         while (!flag) {
-          Direction dir = Direction.Plane.HORIZONTAL.getRandomDirection(randomSource);
-          if (level.isEmptyBlock(mutable.offset(dir.getNormal())) && level.getBlockState(mutable).isCollisionShapeFullBlock(level, mutable)) {
+          Direction dir = Direction.Type.HORIZONTAL.random(randomSource);
+          if (level.isAir(mutable.offset(dir.getNormal())) && level.getBlockState(mutable).isCollisionShapeFullBlock(level, mutable)) {
             if (LevelUtils.setBlockState(level, mutable.offset(dir.getNormal()), blockToPlace.getDefaultState().with(HorizontalFacingBlock.FACING, dir), 2)) {
               count++;
             }

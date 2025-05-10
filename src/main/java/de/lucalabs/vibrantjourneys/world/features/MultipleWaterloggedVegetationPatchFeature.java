@@ -131,7 +131,7 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
               pos = pos.offset(rand.nextInt(3) - 1, (rand.nextInt(3) - 1) * rand.nextInt(3) / 2, rand.nextInt(3) - 1);
 
               if (level.getBlockState(pos.down()).isCollisionShapeFullBlock(level, pos.down())) {
-                if (blockstate.canSurvive(level, pos)) {
+                if (blockstate.canPlaceAt(level, pos)) {
                   BlockState blockstate1 = level.getBlockState(pos);
                   if (blockstate1.is(Blocks.WATER) && level.getFluidState(pos).getAmount() == 8) {
                     LevelUtils.setBlockState(level, pos, blockstate, 3);
@@ -170,7 +170,7 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
         }
       }
     } else {
-      for (Direction direction : Direction.Plane.HORIZONTAL) {
+      for (Direction direction : Direction.Type.HORIZONTAL) {
         if (rand.nextBoolean()) {
           if (level.getBlockState(pos.relative(direction)).isCollisionShapeFullBlock(level, pos.relative(direction))) {
             Optional<Block> coral = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.WALL_CORALS).getRandomElement(rand);

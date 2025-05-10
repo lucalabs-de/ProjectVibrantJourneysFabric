@@ -32,7 +32,7 @@ public class IcicleFeature extends Feature<NoneFeatureConfiguration> {
     Direction dir = Direction.DOWN;
     BlockPos.MutableBlockPos mutable = pos.mutable();
     int temp = 0;
-    while (temp < height && level.isEmptyBlock(mutable)) {
+    while (temp < height && level.isAir(mutable)) {
       temp++;
       mutable.move(dir);
     }

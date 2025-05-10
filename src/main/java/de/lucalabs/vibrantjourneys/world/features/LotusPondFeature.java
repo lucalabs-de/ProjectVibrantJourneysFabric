@@ -90,7 +90,7 @@ public class LotusPondFeature extends Feature<NoneFeatureConfiguration> {
                 } else {
                   if (
                     PVJConfig.configOptions.get("enableWatergrass")
-                      && worldgenlevel.isEmptyBlock(blockpos1.up())
+                      && worldgenlevel.isAir(blockpos1.up())
                       && worldgenlevel.getBlockState(blockpos1.down()).is(BlockTags.DIRT)
                       && randomsource.nextFloat() <= 0.7F
                   ) {
@@ -119,7 +119,7 @@ public class LotusPondFeature extends Feature<NoneFeatureConfiguration> {
               BlockState blockstate = worldgenlevel.getBlockState(blockpos.offset(j2, l3, j3));
               if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                 BlockPos blockpos3 = blockpos.offset(j2, l3, j3);
-                if (worldgenlevel.getBlockState(blockpos3.up()).canBeReplaced()) {
+                if (worldgenlevel.getBlockState(blockpos3.up()).canReplace()) {
                   worldgenlevel.setBlockState(blockpos3, Blocks.GRASS_BLOCK.getDefaultState(), 2);
                 } else {
                   worldgenlevel.setBlockState(blockpos3, Blocks.DIRT.getDefaultState(), 2);

@@ -1,10 +1,44 @@
 package de.lucalabs.vibrantjourneys.blocks;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.block.*;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.context.LootContextParameterSet;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.state.property.IntProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+
 public class GroundcoverBlock extends HorizontalFacingBlock implements Waterloggable {
 
-  public static final IntegerProperty MODEL = IntegerProperty.create("model", 0, 4);
+  public static final IntProperty MODEL = IntProperty.of("model", 0, 4);
   public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
   public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+
   protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 2.0D, 15.0D);
 
   public GroundcoverBlock(AbstractBlock.Settings props) {
@@ -13,49 +47,54 @@ public class GroundcoverBlock extends HorizontalFacingBlock implements Waterlogg
   }
 
   @Override
-  public boolean canBeReplaced(BlockState state, ItemPlacementContext context) {
+  @SuppressWarnings("deprecation")
+  public boolean canReplace(BlockState state, ItemPlacementContext context) {
     if (PVJConfig.configOptions.get("replaceableGroundcover")) {
-      return context.getItemInHand().isEmpty() || !context.getItemInHand().is(this.asItem());
+      return context.getStack().isEmpty() || !context.getStack().isOf(this.asItem());
     }
-    return super.canBeReplaced(state, context);
+    return super.canReplace(state, context);
   }
 
   @Override
-  public boolean canBeReplaced(BlockState state, Fluid fluid) {
+  @SuppressWarnings("deprecation")
+  public boolean canBucketPlace(BlockState state, Fluid fluid) {
     if (PVJConfig.configOptions.get("replaceableGroundcover")) {
       return true;
     }
-    return super.canBeReplaced(state, fluid);
+    return super.canBucketPlace(state, fluid);
   }
 
   @Override
-  public BlockState getStateForPlacement(ItemPlacementContext context) {
+  public BlockState getPlacementState(ItemPlacementContext context) {
     int model = context.getWorld().getRandom().nextInt(5);
-    Direction facing = Direction.Plane.HORIZONTAL.getRandomDirection(context.getWorld().getRandom());
-    FluidState ifluidstate = context.getWorld().getFluidState(context.getClickedPos());
+    Direction facing = Direction.Type.HORIZONTAL.random(context.getWorld().getRandom());
+    FluidState ifluidstate = context.getWorld().getFluidState(context.getBlockPos());
     return this.getDefaultState()
       .with(MODEL, model)
       .with(FACING, facing)
-      .with(WATERLOGGED, ifluidstate.getType() == Fluids.WATER);
+      .with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState facingState, WorldAccess world, BlockPos currentPos, BlockPos facingPos) {
     if (state.get(WATERLOGGED)) {
-      world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+      world.scheduleFluidTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
     }
     return state;
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
     return Block.hasTopRim(world, pos.down());
   }
 
   @Override
-  public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-    if (!canSurvive(state, world, pos)) {
-      world.destroyBlock(pos, false);
+  @SuppressWarnings("deprecation")
+  public void neighborUpdate(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+    if (!canPlaceAt(state, world, pos)) {
+      world.removeBlock(pos, false);
     }
   }
 
@@ -65,26 +104,27 @@ public class GroundcoverBlock extends HorizontalFacingBlock implements Waterlogg
   }
 
   @Override
-  public ActionResult use(BlockState state, World world, BlockPos pos, PlayerEntity player, InteractionHand hand, BlockHitResult brt) {
-    if (!player.getItemInHand(hand).isEmpty()) {
-      return super.use(state, world, pos, player, hand, brt);
+  @SuppressWarnings("deprecation")
+  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult brt) {
+    if (!player.getStackInHand(hand).isEmpty()) {
+      return super.onUse(state, world, pos, player, hand, brt);
     }
 
-    if (!player.isCreative() && player.mayBuild()) {
+    if (!player.isCreative() && player.canModifyBlocks()) {
       ItemStack loot = null;
 
-      if (!world.isClientSide()) {
+      if (!world.isClient()) {
         ItemStack tool = new ItemStack(Items.APPLE);
-        tool.enchant(Enchantments.SILK_TOUCH, 1); // right click mimics silk touch
-        LootTable lootTable = world.getServer().getLootData().getLootTable(this.getLootTable());
-        LootParams lootParams = new LootParams.Builder((ServerWorld) world)
-          .withParameter(LootContextParams.BLOCK_STATE, state)
-          .withParameter(LootContextParams.ORIGIN, pos.getCenter())
-          .withParameter(LootContextParams.TOOL, tool)
-          .create(LootContextParamSets.BLOCK);
-        ObjectArrayList<ItemStack> randomItems = lootTable.getRandomItems(lootParams);
+        tool.addEnchantment(Enchantments.SILK_TOUCH, 1); // right click mimics silk touch
+        LootTable lootTable = world.getServer().getLootManager().getLootTable(this.getLootTableId());
+        LootContextParameterSet lootParams = new LootContextParameterSet.Builder((ServerWorld) world)
+          .add(LootContextParameters.BLOCK_STATE, state)
+          .add(LootContextParameters.ORIGIN, pos.toCenterPos())
+          .add(LootContextParameters.TOOL, tool)
+          .build(LootContextTypes.BLOCK);
+        ObjectArrayList<ItemStack> randomItems = lootTable.generateLoot(lootParams);
 
-        if (randomItems.size() > 0) {
+        if (!randomItems.isEmpty()) {
           loot = randomItems.get(0);
         }
       }
@@ -102,7 +142,8 @@ public class GroundcoverBlock extends HorizontalFacingBlock implements Waterlogg
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+  @SuppressWarnings("deprecation")
+  public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
     return SHAPE;
   }
 

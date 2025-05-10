@@ -22,7 +22,7 @@ public class NaturalCobwebBlock extends WebBlock {
 
   @Override
   public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-    if (!canSurvive(state, world, pos))
+    if (!canPlaceAt(state, world, pos))
       world.removeBlock(pos, isMoving);
   }
 }

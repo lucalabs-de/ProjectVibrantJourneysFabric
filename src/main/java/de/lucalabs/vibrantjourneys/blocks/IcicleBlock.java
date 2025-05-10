@@ -38,7 +38,7 @@ public class IcicleBlock extends Block implements Fallable {
       Direction direction = state.get(TIP_DIRECTION);
       if (direction == Direction.DOWN && level.getBlockTicks().hasScheduledTick(pos, this)) {
         return state;
-      } else if (dir == direction.getOpposite() && !this.canSurvive(state, level, pos)) {
+      } else if (dir == direction.getOpposite() && !this.canPlaceAt(state, level, pos)) {
         if (direction == Direction.DOWN) {
           level.scheduleTick(pos, this, 2);
         } else {
@@ -58,7 +58,7 @@ public class IcicleBlock extends Block implements Fallable {
   public void onProjectileHit(World level, BlockState pos, BlockHitResult result, Projectile projectile) {
     BlockPos blockpos = result.getBlockPos();
     if (!level.isClientSide && projectile.mayInteract(level, blockpos) && projectile instanceof ThrownTrident && projectile.getDeltaMovement().length() > 0.6D) {
-      level.destroyBlock(blockpos, true);
+      level.removeBlock(blockpos, true);
     }
 
   }
@@ -84,8 +84,8 @@ public class IcicleBlock extends Block implements Fallable {
 
   @Override
   public void tick(BlockState p_154107_, ServerWorld p_154108_, BlockPos p_154109_, Random p_154110_) {
-    if (isStalagmite(p_154107_) && !this.canSurvive(p_154107_, p_154108_, p_154109_)) {
-      p_154108_.destroyBlock(p_154109_, true);
+    if (isStalagmite(p_154107_) && !this.canPlaceAt(p_154107_, p_154108_, p_154109_)) {
+      p_154108_.removeBlock(p_154109_, true);
     } else {
       spawnFallingStalactite(p_154107_, p_154108_, p_154109_);
     }
@@ -95,7 +95,7 @@ public class IcicleBlock extends Block implements Fallable {
   @Override
   public void randomTick(BlockState state, ServerWorld level, BlockPos pos, Random random) {
     if (level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock(level, pos) || level.getBiome(pos).value().warmEnoughToRain(pos)) {
-      level.destroyBlock(pos, true);
+      level.removeBlock(pos, true);
       for (int i = 0; i < 10; i++) {
         spawnDripParticle(level, pos, state);
       }

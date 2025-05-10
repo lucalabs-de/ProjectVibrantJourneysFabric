@@ -17,7 +17,7 @@ public class SandySproutsBlock extends BeachGrassBlock {
 
   @Override
   public BlockState getStateForPlacement(ItemPlacementContext context) {
-    Direction facing = Direction.Plane.HORIZONTAL.getRandomDirection(context.getWorld().getRandom());
+    Direction facing = Direction.Type.HORIZONTAL.random(context.getWorld().getRandom());
     return this.getDefaultState().with(FACING, facing);
   }
 

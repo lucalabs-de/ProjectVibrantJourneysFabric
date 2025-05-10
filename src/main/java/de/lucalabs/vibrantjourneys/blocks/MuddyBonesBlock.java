@@ -2,7 +2,7 @@ package de.lucalabs.vibrantjourneys.blocks;
 
 public class MuddyBonesBlock extends MudBlock {
 
-  public static final IntegerProperty MODEL = IntegerProperty.create("model", 0, 2);
+  public static final IntProperty MODEL = IntProperty.create("model", 0, 2);
   public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
   public MuddyBonesBlock(Properties props) {
@@ -13,7 +13,7 @@ public class MuddyBonesBlock extends MudBlock {
   @Override
   public BlockState getStateForPlacement(ItemPlacementContext context) {
     int model = context.getWorld().getRandom().nextInt(3);
-    Direction facing = Direction.Plane.HORIZONTAL.getRandomDirection(context.getWorld().getRandom());
+    Direction facing = Direction.Type.HORIZONTAL.random(context.getWorld().getRandom());
     FluidState ifluidstate = context.getWorld().getFluidState(context.getClickedPos());
     return this.getDefaultState()
       .with(MODEL, model)

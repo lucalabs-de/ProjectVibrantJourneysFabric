@@ -21,8 +21,8 @@ public class SmallCactusBlock extends PlantBlock implements BonemealableBlock {
   }
 
   @Override
-  public boolean isValidBonemealTarget(WorldView level, BlockPos pos, BlockState state, boolean isClientSide) {
-    for (Direction direction : Direction.Plane.HORIZONTAL) {
+  public boolean isFertilizable(WorldView level, BlockPos pos, BlockState state, boolean isClientSide) {
+    for (Direction direction : Direction.Type.HORIZONTAL) {
       BlockState blockstate = level.getBlockState(pos.relative(direction));
       if (blockstate.isSolid()) {
         return false;
@@ -33,7 +33,7 @@ public class SmallCactusBlock extends PlantBlock implements BonemealableBlock {
   }
 
   @Override
-  public boolean isBonemealSuccess(World level, Random random, BlockPos pos, BlockState state) {
+  public boolean canGrow(World level, Random random, BlockPos pos, BlockState state) {
     return true;
   }
 

@@ -1,5 +1,21 @@
 package de.lucalabs.vibrantjourneys.blocks;
 
+import net.minecraft.block.*;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+
 public class FallenLeavesBlock extends Block implements Waterloggable {
 
   public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -11,27 +27,35 @@ public class FallenLeavesBlock extends Block implements Waterloggable {
   }
 
   @Override
-  public boolean canBeReplaced(BlockState state, ItemPlacementContext context) {
+  @SuppressWarnings("deprecation")
+  public boolean canReplace(BlockState state, ItemPlacementContext context) {
     if (PVJConfig.configOptions.get("replaceableGroundcover")) {
-      return context.getItemInHand().isEmpty() || !context.getItemInHand().is(this.asItem());
+      return context.getStack().isEmpty() || !context.getStack().isOf(this.asItem());
     }
-    return super.canBeReplaced(state, context);
+    return super.canReplace(state, context);
   }
 
   @Override
-  public boolean canBeReplaced(BlockState state, Fluid fluid) {
+  @SuppressWarnings("deprecation")
+  public boolean canBucketPlace(BlockState state, Fluid fluid) {
     if (PVJConfig.configOptions.get("replaceableGroundcover")) {
       return true;
     }
-    return super.canBeReplaced(state, fluid);
+    return super.canBucketPlace(state, fluid);
   }
 
   @Override
-  public BlockState getStateForNeighborUpdate(BlockState state, Direction facing, BlockState facingState, WorldAccess world, BlockPos currentPos, BlockPos facingPos) {
+  public BlockState getStateForNeighborUpdate(
+          BlockState state,
+          Direction facing,
+          BlockState facingState,
+          WorldAccess world,
+          BlockPos currentPos,
+          BlockPos facingPos) {
     if (state.get(WATERLOGGED)) {
-      world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+      world.scheduleFluidTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
     }
-    return !state.canSurvive(world, currentPos) ? Blocks.AIR.getDefaultState() : state;
+    return !state.canPlaceAt(world, currentPos) ? Blocks.AIR.getDefaultState() : state;
   }
 
   @Override
@@ -45,7 +69,7 @@ public class FallenLeavesBlock extends Block implements Waterloggable {
   }
 
   @Override
-  public VoxelShape getShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+  public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
     return SHAPE;
   }
 

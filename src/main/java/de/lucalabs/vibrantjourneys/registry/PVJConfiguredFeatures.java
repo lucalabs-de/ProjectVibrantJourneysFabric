@@ -285,7 +285,7 @@ public class PVJConfiguredFeatures {
   private static RandomPatchConfiguration wildflower(PinkPetalsBlock block, int tries) {
     SimpleWeightedRandomList.Builder<BlockState> builder = SimpleWeightedRandomList.builder();
     for (int i = 1; i <= 4; i++) {
-      for (Direction direction : Direction.Plane.HORIZONTAL) {
+      for (Direction direction : Direction.Type.HORIZONTAL) {
         builder.add(
           block.getDefaultState().with(PinkPetalsBlock.AMOUNT, Integer.valueOf(i)).with(PinkPetalsBlock.FACING, direction), 1
         );

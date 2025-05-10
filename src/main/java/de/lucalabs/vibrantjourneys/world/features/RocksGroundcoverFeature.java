@@ -15,7 +15,7 @@ public class RocksGroundcoverFeature extends Feature<RandomPatchConfiguration> {
     StructureWorldAccess level = context.level();
     BlockState originState = level.getBlockState(origin);
 
-    if (!originState.canBeReplaced() ) {
+    if (!originState.canReplace() ) {
       return false;
     }
 
@@ -24,7 +24,7 @@ public class RocksGroundcoverFeature extends Feature<RandomPatchConfiguration> {
       return false;
     }
     BlockState rocks = getRocksToPlace(randomSource, originState, origin, ground.getBlock());
-    if (!rocks.canSurvive(level, origin)) {
+    if (!rocks.canPlaceAt(level, origin)) {
       return false;
     } else {
       if (LevelUtils.setBlockState(level, origin, rocks, 2)) {
@@ -38,7 +38,7 @@ public class RocksGroundcoverFeature extends Feature<RandomPatchConfiguration> {
   }
 
   private BlockState getRocksToPlace(Random randomSource, BlockState originState, BlockPos origin, Block ground) {
-    Direction dir = Direction.Plane.HORIZONTAL.getRandomDirection(randomSource);
+    Direction dir = Direction.Type.HORIZONTAL.random(randomSource);
     int model = randomSource.nextInt(5);
 
     BlockState rocks = PVJBlocks.ROCKS.getDefaultState();

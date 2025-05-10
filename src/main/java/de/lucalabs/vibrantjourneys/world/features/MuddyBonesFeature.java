@@ -13,7 +13,7 @@ public class MuddyBonesFeature extends Feature<NoneFeatureConfiguration> {
     BlockPos origin = context.origin();
     Random randomSource = context.random();
 
-    Direction dir = Direction.Plane.HORIZONTAL.getRandomDirection(randomSource);
+    Direction dir = Direction.Type.HORIZONTAL.random(randomSource);
     int model = randomSource.nextInt(3);
 
     if (world.getBlockState(origin).is(Blocks.MUD)) {

@@ -18,7 +18,7 @@ public class DirectionalStateProvider extends BlockStateProvider {
   }
 
   public BlockState getState(Random random, BlockPos pos) {
-    Direction dir = Direction.Plane.HORIZONTAL.getRandomDirection(random);
+    Direction dir = Direction.Type.HORIZONTAL.random(random);
     return this.block.getDefaultState().with(HorizontalFacingBlock.FACING, dir);
   }
 }
