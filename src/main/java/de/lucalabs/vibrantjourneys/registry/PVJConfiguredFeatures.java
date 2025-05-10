@@ -24,7 +24,7 @@ import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.PinkPetalsBlock;
+import net.minecraft.world.level.block.FlowerbedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -121,8 +121,8 @@ public class PVJConfiguredFeatures {
     );
     final RandomizedIntStateProvider PINK_PETALS_STATE_PROVIDER = new RandomizedIntStateProvider(
       BlockStateProvider.simple(Blocks.PINK_PETALS),
-      PinkPetalsBlock.AMOUNT,
-      UniformInt.of(PinkPetalsBlock.MIN_FLOWERS, PinkPetalsBlock.MAX_FLOWERS)
+      FlowerbedBlock.AMOUNT,
+      UniformInt.of(FlowerbedBlock.MIN_FLOWERS, FlowerbedBlock.MAX_FLOWERS)
     );
     final List<FallenTreeVegetation> BASIC_FALLEN_TREE_VEGETATION = List.of(
       new FallenTreeVegetation(BlockStateProvider.simple(Blocks.GRASS), Optional.empty()),
@@ -212,12 +212,12 @@ public class PVJConfiguredFeatures {
     register(context, GLOWING_BLUE_FUNGUS, PVJFeatures.GLOWING_BLUE_FUNGUS, NoneFeatureConfiguration.INSTANCE);
     register(context, FLOATING_PINK_LOTUS, Feature.RANDOM_PATCH, new RandomPatchConfiguration(24, 7, 3, PlacementUtils.onlyWhenEmpty(PVJFeatures.FLOATING_PINK_LOTUS, new ProbabilityFeatureConfiguration(0.5F))));
     register(context, OAK_BUSH, PVJFeatures.BUSH, new BushConfiguration(Blocks.OAK_LOG.getDefaultState(), Blocks.OAK_LEAVES.getDefaultState()));
-    register(context, YELLOW_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((PinkPetalsBlock) PVJBlocks.YELLOW_WILDFLOWERS,40));
-    register(context, ORANGE_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((PinkPetalsBlock) PVJBlocks.ORANGE_WILDFLOWERS,40));
-    register(context, BLUE_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((PinkPetalsBlock) PVJBlocks.BLUE_WILDFLOWERS,40));
-    register(context, PURPLE_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((PinkPetalsBlock) PVJBlocks.PURPLE_WILDFLOWERS,40));
-    register(context, WHITE_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((PinkPetalsBlock) PVJBlocks.WHITE_WILDFLOWERS,40));
-    register(context, MIXED_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((PinkPetalsBlock) PVJBlocks.MIXED_WILDFLOWERS,40));
+    register(context, YELLOW_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((FlowerbedBlock) PVJBlocks.YELLOW_WILDFLOWERS,40));
+    register(context, ORANGE_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((FlowerbedBlock) PVJBlocks.ORANGE_WILDFLOWERS,40));
+    register(context, BLUE_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((FlowerbedBlock) PVJBlocks.BLUE_WILDFLOWERS,40));
+    register(context, PURPLE_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((FlowerbedBlock) PVJBlocks.PURPLE_WILDFLOWERS,40));
+    register(context, WHITE_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((FlowerbedBlock) PVJBlocks.WHITE_WILDFLOWERS,40));
+    register(context, MIXED_WILDFLOWERS, Feature.RANDOM_PATCH, wildflower((FlowerbedBlock) PVJBlocks.MIXED_WILDFLOWERS,40));
     register(context, SLIME_NODULE, PVJFeatures.SLIME_NODULE, NoneFeatureConfiguration.INSTANCE);
     register(context, PINK_VINES, Feature.RANDOM_PATCH, new RandomPatchConfiguration(20, 4, 1, PlacementUtils.filtered(Feature.BLOCK_COLUMN, new BlockColumnConfiguration(
       List.of(
@@ -282,12 +282,12 @@ public class PVJConfiguredFeatures {
     ));
   }
 
-  private static RandomPatchConfiguration wildflower(PinkPetalsBlock block, int tries) {
+  private static RandomPatchConfiguration wildflower(FlowerbedBlock block, int tries) {
     SimpleWeightedRandomList.Builder<BlockState> builder = SimpleWeightedRandomList.builder();
     for (int i = 1; i <= 4; i++) {
       for (Direction direction : Direction.Type.HORIZONTAL) {
         builder.add(
-          block.getDefaultState().with(PinkPetalsBlock.AMOUNT, Integer.valueOf(i)).with(PinkPetalsBlock.FACING, direction), 1
+          block.getDefaultState().with(FlowerbedBlock.AMOUNT, Integer.valueOf(i)).with(FlowerbedBlock.FACING, direction), 1
         );
       }
     }
