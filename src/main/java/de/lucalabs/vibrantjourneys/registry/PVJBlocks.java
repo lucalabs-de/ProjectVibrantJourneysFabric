@@ -147,9 +147,9 @@ public final class PVJBlocks {
             () -> new GroundcoverBlock(groundcover(BlockSoundGroup.STONE, false)));
     public static final Block MOSSY_ROCKS = register("mossy_rocks",
             () -> new GroundcoverBlock(groundcover(BlockSoundGroup.STONE, false)));
-    public static final Block SANDSTONE_GRAY_ROCKS = register("sandstone_rocks",
+    public static final Block SANDSTONE_ROCKS = register("sandstone_rocks",
             () -> new GroundcoverBlock(groundcover(BlockSoundGroup.STONE, false)));
-    public static final Block RED_SANDSTONE_GRAY_ROCKS = register("red_sandstone_rocks",
+    public static final Block RED_SANDSTONE_ROCKS = register("red_sandstone_rocks",
             () -> new GroundcoverBlock(groundcover(BlockSoundGroup.STONE, false)));
     public static final Block ICE_CHUNKS = register("ice_chunks",
             () -> new GroundcoverBlock(groundcover(BlockSoundGroup.GLASS, false)));

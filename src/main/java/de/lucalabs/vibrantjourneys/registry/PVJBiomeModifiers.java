@@ -1,32 +1,8 @@
-package dev.orderedchaos.projectvibrantjourneys.core.registry;
+package de.lucalabs.vibrantjourneys.registry;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.PrimitiveCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.orderedchaos.projectvibrantjourneys.common.tags.PVJTags;
-import dev.orderedchaos.projectvibrantjourneys.common.world.modifiers.PVJBiomeModifier;
-import dev.orderedchaos.projectvibrantjourneys.common.world.modifiers.PVJBiomeModifier.Builder.Dimension;
-import dev.orderedchaos.projectvibrantjourneys.common.world.modifiers.PVJSpawnModifier;
-import dev.orderedchaos.projectvibrantjourneys.core.ProjectVibrantJourneys;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.Identifier;
-import net.minecraft.tags.BiomeTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
 

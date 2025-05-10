@@ -1,6 +1,7 @@
 package de.lucalabs.vibrantjourneys;
 
 import de.lucalabs.vibrantjourneys.registry.PVJBlocks;
+import de.lucalabs.vibrantjourneys.registry.PVJItems;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -13,5 +14,6 @@ public class ProjectVibrantJourneys implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		PVJBlocks.initialize();
+		PVJItems.initialize();
 	}
 }
