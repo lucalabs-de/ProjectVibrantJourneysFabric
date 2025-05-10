@@ -25,7 +25,7 @@ public class ExtraLilyPadFeature extends Feature<ProbabilityFeatureConfiguration
       int waterDepth = surfaceY - oceanFloorY;
 
       if (waterDepth <= 3) {
-        return LevelUtils.setBlockState(level, origin, blockstate, 2);
+        return WorldUtils.setBlockState(level, origin, blockstate, 2);
       } else {
         return false;
       }

@@ -37,7 +37,7 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
   protected Set<BlockPos> placeGroundPatch(StructureWorldAccess level, MultipleVegetationPatchConfiguration config, Random rand, BlockPos pos, Predicate<BlockState> replace, int x, int z) {
     Set<BlockPos> set = createGround(level, config, rand, pos, replace, x, z);
     Set<BlockPos> set1 = new HashSet<>();
-    BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+    BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable();
 
     for (BlockPos blockpos : set) {
       if (!isExposed(level, set, blockpos, blockpos$mutableblockpos)) {
@@ -46,13 +46,13 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
     }
 
     for (BlockPos blockpos1 : set1) {
-      LevelUtils.setBlockState(level, blockpos1, Blocks.WATER.getDefaultState(), 2);
+      WorldUtils.setBlockState(level, blockpos1, Blocks.WATER.getDefaultState(), 2);
     }
 
     return set1;
   }
 
-  private static boolean isExposed(StructureWorldAccess level, Set<BlockPos> set, BlockPos pos, BlockPos.MutableBlockPos posMutable) {
+  private static boolean isExposed(StructureWorldAccess level, Set<BlockPos> set, BlockPos pos, BlockPos.Mutable posMutable) {
     return isExposedDirection(level, pos, posMutable, Direction.NORTH)
       || isExposedDirection(level, pos, posMutable, Direction.EAST)
       || isExposedDirection(level, pos, posMutable, Direction.SOUTH)
@@ -60,7 +60,7 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
       || isExposedDirection(level, pos, posMutable, Direction.DOWN);
   }
 
-  private static boolean isExposedDirection(StructureWorldAccess level, BlockPos pos, BlockPos.MutableBlockPos posMutable, Direction dir) {
+  private static boolean isExposedDirection(StructureWorldAccess level, BlockPos pos, BlockPos.Mutable posMutable, Direction dir) {
     posMutable.setWithOffset(pos, dir);
     return !level.getBlockState(posMutable).isFaceSturdy(level, posMutable, dir.getOpposite());
   }
@@ -75,8 +75,8 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
   }
 
   private void carve(Set<BlockPos> set, StructureWorldAccess level, MultipleVegetationPatchConfiguration config, Random rand, BlockPos pos, Predicate<BlockState> predicate, int x, int z, boolean surface) {
-    BlockPos.MutableBlockPos blockpos$mutableblockpos = pos.mutable();
-    BlockPos.MutableBlockPos blockpos$mutableblockpos1 = blockpos$mutableblockpos.mutable();
+    BlockPos.Mutable blockpos$mutableblockpos = pos.mutable();
+    BlockPos.Mutable blockpos$mutableblockpos1 = blockpos$mutableblockpos.mutable();
     Direction direction = config.surface.getDirection();
     Direction direction1 = direction.getOpposite();
 
@@ -134,15 +134,15 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
                 if (blockstate.canPlaceAt(level, pos)) {
                   BlockState blockstate1 = level.getBlockState(pos);
                   if (blockstate1.is(Blocks.WATER) && level.getFluidState(pos).getAmount() == 8) {
-                    LevelUtils.setBlockState(level, pos, blockstate, 3);
+                    WorldUtils.setBlockState(level, pos, blockstate, 3);
                   } else if (blockstate1.is(Blocks.KELP) && rand.nextBoolean()) {
                     int l = Math.min(blockstate1.get(AbstractPlantStemBlock.AGE) + 1, 25);
                     if (level.getBlockState(pos.up()).getFluidState().getType() == Fluids.WATER) {
-                      LevelUtils.setBlockState(level, pos, blockstate1.with(AbstractPlantStemBlock.AGE, Integer.valueOf(l)), 3);
+                      WorldUtils.setBlockState(level, pos, blockstate1.with(AbstractPlantStemBlock.AGE, Integer.valueOf(l)), 3);
                     }
                   } else if (blockstate1.is(Blocks.SEAGRASS) && rand.nextInt(3) == 0) {
                     if (level.getBlockState(pos.up()).getFluidState().getType() == Fluids.WATER) {
-                      LevelUtils.setBlockState(level, pos, Blocks.TALL_SEAGRASS.getDefaultState(), 3);
+                      WorldUtils.setBlockState(level, pos, Blocks.TALL_SEAGRASS.getDefaultState(), 3);
                     }
                   }
                 }
@@ -166,20 +166,20 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
         Optional<Block> coral = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.CORALS).getRandomElement(rand);
         if (coral.isPresent()) {
           Block block = coral;
-          LevelUtils.setBlockState(level, pos, block.getDefaultState(), 2);
+          WorldUtils.setBlockState(level, pos, block.getDefaultState(), 2);
         }
       }
     } else {
       for (Direction direction : Direction.Type.HORIZONTAL) {
         if (rand.nextBoolean()) {
-          if (level.getBlockState(pos.relative(direction)).isCollisionShapeFullBlock(level, pos.relative(direction))) {
+          if (level.getBlockState(pos.offset(direction)).isCollisionShapeFullBlock(level, pos.offset(direction))) {
             Optional<Block> coral = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.WALL_CORALS).getRandomElement(rand);
             if (coral.isPresent()) {
               BlockState blockstate = coral.getDefaultState();
               if (blockstate.hasProperty(BaseCoralWallFanBlock.FACING)) {
                 blockstate = blockstate.with(BaseCoralWallFanBlock.FACING, direction.getOpposite());
               }
-              LevelUtils.setBlockState(level, pos, blockstate, 2);
+              WorldUtils.setBlockState(level, pos, blockstate, 2);
             }
           }
         }
@@ -191,10 +191,10 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
     boolean flag = false;
 
     for (RegistryEntry<PlacedFeature> feature : config.vegetationFeature) {
-      if (feature.value().place(level, chunkGenerator, rand, pos.down().relative(config.surface.getDirection().getOpposite()))) {
+      if (feature.value().place(level, chunkGenerator, rand, pos.down().offset(config.surface.getDirection().getOpposite()))) {
         BlockState blockstate = level.getBlockState(pos);
         if (blockstate.hasProperty(Properties.WATERLOGGED) && !blockstate.get(Properties.WATERLOGGED)) {
-          LevelUtils.setBlockState(level, pos, blockstate.with(Properties.WATERLOGGED, Boolean.valueOf(true)), 2);
+          WorldUtils.setBlockState(level, pos, blockstate.with(Properties.WATERLOGGED, Boolean.valueOf(true)), 2);
         }
         flag = true;
       }
@@ -203,7 +203,7 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
     return flag;
   }
 
-  protected boolean placeGround(StructureWorldAccess level, MultipleVegetationPatchConfiguration config, Predicate<BlockState> pred, Random rand, BlockPos.MutableBlockPos pos, int iterations) {
+  protected boolean placeGround(StructureWorldAccess level, MultipleVegetationPatchConfiguration config, Predicate<BlockState> pred, Random rand, BlockPos.Mutable pos, int iterations) {
     for (int i = 0; i < iterations; ++i) {
       BlockState blockstate = config.groundState.getState(rand, pos);
       BlockState blockstate1 = level.getBlockState(pos);
@@ -212,7 +212,7 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
           return i != 0;
         }
 
-        LevelUtils.setBlockState(level, pos, blockstate, 2);
+        WorldUtils.setBlockState(level, pos, blockstate, 2);
         pos.move(config.surface.getDirection());
       }
     }

@@ -19,14 +19,14 @@ public class PinkVinesPlantBlock extends GrowingPlantBodyBlock {
 
   @Override
   public boolean canPlaceAt(BlockState pState, WorldView pLevel, BlockPos pPos) {
-    BlockPos blockpos = pPos.relative(this.growthDirection.getOpposite());
+    BlockPos blockpos = pPos.offset(this.growthDirection.getOpposite());
     BlockState blockstate = pLevel.getBlockState(blockpos);
     return blockstate.is(this.getHeadBlock()) || blockstate.is(this.getBodyBlock()) || blockstate.is(BlockTags.LEAVES);
   }
 
   @Override
-  public void animateTick(BlockState state, World level, BlockPos pos, Random randomSource) {
-    super.animateTick(state, level, pos, randomSource);
+  public void randomDisplayTick(BlockState state, World level, BlockPos pos, Random randomSource) {
+    super.randomDisplayTick(state, level, pos, randomSource);
     if (randomSource.nextInt(10) == 0) {
       BlockPos blockpos = pos.down();
       BlockState blockstate = level.getBlockState(blockpos);

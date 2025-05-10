@@ -29,7 +29,7 @@ public class BeachedKelpFeature extends Feature<BlockStateConfiguration> {
         }
 
         state = state.with(BeachedKelpBlock.FACING, direction);
-        BlockPos.MutableBlockPos pos = origin.mutable();
+        BlockPos.Mutable pos = origin.mutable();
         level.setBlockState(pos, state.with(BeachedKelpBlock.KELP_SHAPE, BeachedKelpShape.TOP), 2);
         for (int i = 0; i < length; i++) {
             pos.move(direction.getOpposite());
@@ -47,7 +47,7 @@ public class BeachedKelpFeature extends Feature<BlockStateConfiguration> {
 
     private boolean checkHasSpace(StructureWorldAccess level, BlockPos origin, Direction direction, int length) {
         int totalLength = length + 2;
-        BlockPos.MutableBlockPos pos = origin.mutable();
+        BlockPos.Mutable pos = origin.mutable();
         for (int i = 0; i < totalLength; i++) {
             pos = pos.move(direction.getOpposite());
             if (!level.isAir(pos) || !Block.hasTopRim(level, pos.down())) {

@@ -35,19 +35,19 @@ public final class PVJBlocks {
     public static final Block SHORT_GRASS = register("short_grass",
             () -> new ShortGrassBlock(replaceablePlant(null)));
     public static final Block SMALL_CACTUS = register("small_cactus",
-            () -> new SmallCactusBlock(AbstractBlock.Settings.of().mapColor(MapColor.COLOR_LIGHT_GREEN).noCollission().instabreak().ignitedByLava().pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).offsetType(AbstractBlock.OffsetType.XZ)));
+            () -> new SmallCactusBlock(AbstractBlock.Settings.of().mapColor(MapColor.COLOR_LIGHT_GREEN).noCollission().instabreak().ignitedByLava().pushReaction(PistonBehavior.DESTROY).sound(SoundType.GRASS).offsetType(AbstractBlock.OffsetType.XZ)));
     public static final Block PRICKLY_BUSH = register("prickly_bush",
             () -> new ThornsBlock(AbstractBlock.Settings.copy(Blocks.SWEET_BERRY_BUSH).mapColor(MapColor.COLOR_BROWN)));
     public static final Block REEDS = register("reeds",
             () -> new DoubleHighWaterPlantBlock(replaceablePlant(null), true));
     public static final Block ICICLE = register("icicle",
-            () -> new IcicleBlock(AbstractBlock.Settings.of().mapColor(MapColor.ICE).noOcclusion().sound(SoundType.GLASS).randomTicks().strength(1.5F, 3.0F).dynamicShape().offsetType(AbstractBlock.OffsetType.XZ)));
+            () -> new IcicleBlock(AbstractBlock.Settings.create().mapColor(MapColor.ICE).noOcclusion().sound(SoundType.GLASS).randomTicks().strength(1.5F, 3.0F).dynamicShape().offsetType(AbstractBlock.OffsetType.XZ)));
     public static final Block SANDY_SPROUTS = register("sandy_sprouts",
             () -> new SandySproutsBlock(replaceablePlant(MapColor.SAND)));
     public static final Block WATERGRASS = register("watergrass",
             () -> new DoubleHighWaterPlantBlock(replaceablePlant(null), false));
     public static final Block PINK_LOTUS = register("pink_lotus",
-            () -> new LotusBlock(AbstractBlock.Settings.of().mapColor(MapColor.PLANT).instabreak().sound(SoundType.LILY_PAD).noCollission().noOcclusion().pushReaction(PushReaction.DESTROY)));
+            () -> new LotusBlock(AbstractBlock.Settings.of().mapColor(MapColor.PLANT).instabreak().sound(SoundType.LILY_PAD).noCollission().noOcclusion().pushReaction(PistonBehavior.DESTROY)));
     public static final Block YELLOW_WILDFLOWERS = register("yellow_wildflowers",
             () -> new PinkPetalsBlock(wildflowers()));
     public static final Block ORANGE_WILDFLOWERS = register("orange_wildflowers",
@@ -63,19 +63,19 @@ public final class PVJBlocks {
 
     /* NETHER FLORA */
     public static final Block CRIMSON_NETTLE = register("crimson_nettle",
-            () -> new NetherPlantBlock(AbstractBlock.Settings.of().mapColor(MapColor.CRIMSON_NYLIUM).noCollission().instabreak().sound(SoundType.NETHER_SPROUTS).offsetType(AbstractBlock.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
+            () -> new NetherPlantBlock(AbstractBlock.Settings.of().mapColor(MapColor.CRIMSON_NYLIUM).noCollission().instabreak().sound(SoundType.NETHER_SPROUTS).offsetType(AbstractBlock.OffsetType.XZ).pushReaction(PistonBehavior.DESTROY)));
     public static final Block WARPED_NETTLE = register("warped_nettle",
-            () -> new NetherPlantBlock(AbstractBlock.Settings.of().mapColor(MapColor.WARPED_NYLIUM).noCollission().instabreak().sound(SoundType.NETHER_SPROUTS).offsetType(AbstractBlock.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
+            () -> new NetherPlantBlock(AbstractBlock.Settings.of().mapColor(MapColor.WARPED_NYLIUM).noCollission().instabreak().sound(SoundType.NETHER_SPROUTS).offsetType(AbstractBlock.OffsetType.XZ).pushReaction(PistonBehavior.DESTROY)));
     public static final Block CINDERCANE = register("cindercane",
-            () -> new CindercaneBlock(AbstractBlock.Settings.of().mapColor(MapColor.CRIMSON_STEM).noCollission().randomTicks().instabreak().sound(SoundType.TWISTING_VINES).offsetType(AbstractBlock.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
+            () -> new CindercaneBlock(AbstractBlock.Settings.of().mapColor(MapColor.CRIMSON_STEM).noCollission().randomTicks().instabreak().sound(SoundType.TWISTING_VINES).offsetType(AbstractBlock.OffsetType.XZ).pushReaction(PistonBehavior.DESTROY)));
     public static final Block GLOWCAP = register("glowcap",
-            () -> new GlowcapBlock(AbstractBlock.Settings.of().mapColor(MapColor.COLOR_YELLOW).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(AbstractBlock.OffsetType.XZ).lightLevel((state) -> 12).pushReaction(PushReaction.DESTROY)));
+            () -> new GlowcapBlock(AbstractBlock.Settings.of().mapColor(MapColor.COLOR_YELLOW).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).offsetType(AbstractBlock.OffsetType.XZ).lightLevel((state) -> 12).pushReaction(PistonBehavior.DESTROY)));
 
     /* GROUNDCOVER */
     public static final Block FALLEN_LEAVES = register("fallen_leaves",
-            () -> new FallenLeavesBlock(AbstractBlock.Settings.of().mapColor(MapColor.GRASS).noCollission().strength(0.1F, 0.0F).ignitedByLava().sound(SoundType.GRASS).noOcclusion().pushReaction(PushReaction.DESTROY)));
+            () -> new FallenLeavesBlock(AbstractBlock.Settings.of().mapColor(MapColor.GRASS).noCollission().strength(0.1F, 0.0F).ignitedByLava().sound(SoundType.GRASS).noOcclusion().pushReaction(PistonBehavior.DESTROY)));
     public static final Block DEAD_FALLEN_LEAVES = register("dead_fallen_leaves",
-            () -> new FallenLeavesBlock(AbstractBlock.Settings.of().mapColor(MapColor.COLOR_BROWN).noCollission().strength(0.1F, 0.0F).ignitedByLava().sound(SoundType.GRASS).noOcclusion().pushReaction(PushReaction.DESTROY)));
+            () -> new FallenLeavesBlock(AbstractBlock.Settings.of().mapColor(MapColor.COLOR_BROWN).noCollission().strength(0.1F, 0.0F).ignitedByLava().sound(SoundType.GRASS).noOcclusion().pushReaction(PistonBehavior.DESTROY)));
     public static final Block TWIGS = register("twigs",
             () -> new GroundcoverBlock(groundcover(SoundType.CROP, true)));
     public static final Block ROCKS = register("rocks",
@@ -128,7 +128,7 @@ public final class PVJBlocks {
                     .sound(SoundType.GRASS)
                     .offsetType(AbstractBlock.OffsetType.XYZ)
                     .ignitedByLava()
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PistonBehavior.DESTROY)
                     .sound(SoundType.WET_GRASS)
                     .offsetType(AbstractBlock.OffsetType.NONE)));
     public static final Block DRIED_BEACHED_KELP = register("dried_beached_kelp",
@@ -140,7 +140,7 @@ public final class PVJBlocks {
                     .sound(SoundType.GRASS)
                     .offsetType(AbstractBlock.OffsetType.XYZ)
                     .ignitedByLava()
-                    .pushReaction(PushReaction.DESTROY)
+                    .pushReaction(PistonBehavior.DESTROY)
                     .sound(SoundType.WET_GRASS)
                     .offsetType(AbstractBlock.OffsetType.NONE)));
     public static final Block SLIME_NODULE = register("slime_nodule",
@@ -155,14 +155,14 @@ public final class PVJBlocks {
                     .noCollission()
                     .instabreak()
                     .sound(SoundType.CAVE_VINES)
-                    .pushReaction(PushReaction.DESTROY)));
+                    .pushReaction(PistonBehavior.DESTROY)));
     public static final Block PINK_VINES = register("pink_vines",
             () -> new PinkVinesBlock(AbstractBlock.Settings.of()
                     .mapColor(MapColor.COLOR_PINK)
                     .noCollission()
                     .instabreak()
                     .sound(SoundType.CAVE_VINES)
-                    .pushReaction(PushReaction.DESTROY)));
+                    .pushReaction(PistonBehavior.DESTROY)));
 
     public static final Block OAK_HOLLOW_LOG = register("oak_hollow_log",
             () -> new HollowLogBlock(AbstractBlock.Settings.copy(Blocks.OAK_LOG)));
@@ -242,7 +242,7 @@ public final class PVJBlocks {
                 .strength(0.05F, 0.0F)
                 .noOcclusion()
                 .offsetType(AbstractBlock.OffsetType.XZ)
-                .pushReaction(PushReaction.DESTROY)
+                .pushReaction(PistonBehavior.DESTROY)
                 .sound(soundType);
 
         if (isFlammable) {
@@ -257,7 +257,7 @@ public final class PVJBlocks {
                 .mapColor(MapColor.PLANT)
                 .noCollission()
                 .sound(SoundType.PINK_PETALS)
-                .pushReaction(PushReaction.DESTROY);
+                .pushReaction(PistonBehavior.DESTROY);
     }
 
     public static Block createFlowerPot(Block plant) {

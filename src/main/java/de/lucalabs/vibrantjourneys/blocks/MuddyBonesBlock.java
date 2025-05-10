@@ -11,7 +11,7 @@ public class MuddyBonesBlock extends MudBlock {
   }
 
   @Override
-  public BlockState getStateForPlacement(ItemPlacementContext context) {
+  public BlockState getPlacementState(ItemPlacementContext context) {
     int model = context.getWorld().getRandom().nextInt(3);
     Direction facing = Direction.Type.HORIZONTAL.random(context.getWorld().getRandom());
     FluidState ifluidstate = context.getWorld().getFluidState(context.getClickedPos());

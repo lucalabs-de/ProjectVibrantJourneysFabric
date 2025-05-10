@@ -11,7 +11,7 @@ public class ShortGrassBlock extends PlantBlock {
   }
 
   @Override
-  public BlockState getStateForPlacement(ItemPlacementContext context) {
+  public BlockState getPlacementState(ItemPlacementContext context) {
     int model = context.getWorld().getRandom().nextInt(7);
     return this.getDefaultState().with(MODEL, model);
   }

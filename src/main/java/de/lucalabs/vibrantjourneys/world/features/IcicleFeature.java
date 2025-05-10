@@ -1,6 +1,10 @@
 package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.WorldAccess;
 
 import java.util.function.Consumer;
 
@@ -30,7 +34,7 @@ public class IcicleFeature extends Feature<NoneFeatureConfiguration> {
 
   private int checkVerticalSpace(WorldAccess level, BlockPos pos, int height) {
     Direction dir = Direction.DOWN;
-    BlockPos.MutableBlockPos mutable = pos.mutable();
+    BlockPos.Mutable mutable = pos.mutable();
     int temp = 0;
     while (temp < height && level.isAir(mutable)) {
       temp++;
@@ -42,34 +46,34 @@ public class IcicleFeature extends Feature<NoneFeatureConfiguration> {
 
   private void buildBaseToTipColumn(Direction dir, int height, Consumer<BlockState> consumer) {
     if (height >= 3) {
-      consumer.accept(createIcicle(dir, DripstoneThickness.BASE));
+      consumer.accept(createIcicle(dir, Thickness.BASE));
 
       for (int i = 0; i < height - 3; ++i) {
-        consumer.accept(createIcicle(dir, DripstoneThickness.MIDDLE));
+        consumer.accept(createIcicle(dir, Thickness.MIDDLE));
       }
     }
 
     if (height >= 2) {
-      consumer.accept(createIcicle(dir, DripstoneThickness.FRUSTUM));
+      consumer.accept(createIcicle(dir, Thickness.FRUSTUM));
     }
 
     if (height >= 1) {
-      consumer.accept(createIcicle(dir, DripstoneThickness.TIP));
+      consumer.accept(createIcicle(dir, Thickness.TIP));
     }
 
   }
 
   private void growIcicle(WorldAccess level, BlockPos pos, Direction dir, int height) {
-    if (level.getBlockState(pos.relative(dir.getOpposite())).isCollisionShapeFullBlock(level, pos.relative(dir.getOpposite()))) {
-      BlockPos.MutableBlockPos blockpos$mutableblockpos = pos.mutable();
+    if (level.getBlockState(pos.offset(dir.getOpposite())).isCollisionShapeFullBlock(level, pos.offset(dir.getOpposite()))) {
+      BlockPos.Mutable blockpos$mutableblockpos = pos.mutable();
       buildBaseToTipColumn(dir, height, (state) -> {
-        LevelUtils.setBlockState(level, blockpos$mutableblockpos, state, 2);
+        WorldUtils.setBlockState(level, blockpos$mutableblockpos, state, 2);
         blockpos$mutableblockpos.move(dir);
       });
     }
   }
 
-  private BlockState createIcicle(Direction dir, DripstoneThickness thickness) {
+  private BlockState createIcicle(Direction dir, Thickness thickness) {
     return PVJBlocks.ICICLE.getDefaultState().with(PointedDripstoneBlock.TIP_DIRECTION, dir)
       .with(PointedDripstoneBlock.THICKNESS, thickness);
   }

@@ -21,9 +21,10 @@ public abstract class PlantBlockMixin extends Block {
 
     @Inject(method = "canPlaceAt", at = @At("HEAD"), cancellable = true)
     private void checkGroundBlock(BlockState state, WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        Block below = world.getBlockState(pos.down()).getBlock();
-        if (below instanceof PlantDecider decider) {
-            if (decider.acceptsPlant(state, world, pos, Direction.UP, getDefaultState())) {
+        BlockState stateBelow = world.getBlockState(pos.down());
+        Block blockBelow = stateBelow.getBlock();
+        if (blockBelow instanceof PlantDecider decider) {
+            if (decider.acceptsPlant(stateBelow, world, pos, Direction.UP, getDefaultState())) {
                 cir.setReturnValue(true);
             }
         }

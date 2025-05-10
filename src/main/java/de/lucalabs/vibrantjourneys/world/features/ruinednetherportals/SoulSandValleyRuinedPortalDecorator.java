@@ -1,6 +1,6 @@
 package de.lucalabs.vibrantjourneys.world.features.ruinednetherportals;
 
-import dev.orderedchaos.projectvibrantjourneys.util.LevelUtils;
+import dev.orderedchaos.projectvibrantjourneys.util.WorldUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Random;
@@ -42,7 +42,7 @@ public class SoulSandValleyRuinedPortalDecorator extends RuinedPortalDecoratorBa
       boolean placeExtraBlock = false;
       for (int i = 1; i <= height; i++) {
         BlockPos pos = groundPos.up(i);
-        if (LevelUtils.isEmptyOrReplaceable(level, pos)) {
+        if (WorldUtils.isEmptyOrReplaceable(level, pos)) {
           level.setBlockState(pos, Blocks.BONE_BLOCK.getDefaultState(), 2);
           if (i == height) { // if the loop completed without reaching break statement
             placeExtraBlock = random.nextBoolean();
@@ -54,7 +54,7 @@ public class SoulSandValleyRuinedPortalDecorator extends RuinedPortalDecoratorBa
       if (placeExtraBlock) {
         Direction direction = Direction.Type.HORIZONTAL.random(random);
         BlockPos pos = groundPos.up(height).offset(direction.getNormal()).up(random.nextBoolean() ? 1 : 0);
-        if (LevelUtils.isEmptyOrReplaceable(level, pos)) {
+        if (WorldUtils.isEmptyOrReplaceable(level, pos)) {
           level.setBlockState(pos, Blocks.BONE_BLOCK.getDefaultState(), 2);
         }
       }

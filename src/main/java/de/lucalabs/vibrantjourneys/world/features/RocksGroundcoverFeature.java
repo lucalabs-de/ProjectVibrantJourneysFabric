@@ -27,7 +27,7 @@ public class RocksGroundcoverFeature extends Feature<RandomPatchConfiguration> {
     if (!rocks.canPlaceAt(level, origin)) {
       return false;
     } else {
-      if (LevelUtils.setBlockState(level, origin, rocks, 2)) {
+      if (WorldUtils.setBlockState(level, origin, rocks, 2)) {
         if (level.getBlockState(origin.up()).hasProperty(Properties.DOUBLE_BLOCK_HALF) && level.getBlockState(origin.up()).get(Properties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER) {
           level.removeBlock(origin.up(), false);
         }

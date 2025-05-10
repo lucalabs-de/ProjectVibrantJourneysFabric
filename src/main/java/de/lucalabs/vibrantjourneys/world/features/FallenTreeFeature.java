@@ -54,18 +54,18 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
       if (canReplace(level, pos)) {
         if (!(down.canReplace() || down.getFluidState().is(Fluids.WATER)) || i > (length / 2)) {
           boolean mossy = context.config().canBeMossy() ? randomSource.nextBoolean() : false;
-          LevelUtils.setBlockState(level, pos, hollowLog.with(PillarBlock.AXIS, dir.getAxis()).with(HollowLogBlock.MOSSY, mossy), 2);
+          WorldUtils.setBlockState(level, pos, hollowLog.with(PillarBlock.AXIS, dir.getAxis()).with(HollowLogBlock.MOSSY, mossy), 2);
 
           if (level.isAir(pos.up()) && rand.nextFloat() < 0.75F) {
-            LevelUtils.setBlockState(level, pos.up(), this.getVegetationToPlace(vegetationProviders, randomSource, pos.up()), 2);
+            WorldUtils.setBlockState(level, pos.up(), this.getVegetationToPlace(vegetationProviders, randomSource, pos.up()), 2);
           }
 
           if (!branched && i <= (length / 2) + 1 && rand.nextFloat() < 0.5F) {
             BlockPos branchPos = rand.nextBoolean() ? pos.offset(dirCounterClockwise.getNormal()) : pos.offset(dirClockwise.getNormal());
             ;
-            LevelUtils.setBlockState(level, branchPos, baseLog.with(PillarBlock.AXIS, dirCounterClockwise.getAxis()), 2);
+            WorldUtils.setBlockState(level, branchPos, baseLog.with(PillarBlock.AXIS, dirCounterClockwise.getAxis()), 2);
             if (level.isAir(branchPos.up()) && rand.nextFloat() < 0.4F) {
-              LevelUtils.setBlockState(level, branchPos.up(), this.getVegetationToPlace(vegetationProviders, randomSource, branchPos.up()), 2);
+              WorldUtils.setBlockState(level, branchPos.up(), this.getVegetationToPlace(vegetationProviders, randomSource, branchPos.up()), 2);
             }
             branched = true;
           }
@@ -77,11 +77,11 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
             if (rand.nextFloat() < 0.4F && Block.isFaceFullSquare(level.getBlockState(pos.down()).getCollisionShape(level, pos.down()), Direction.UP)) {
               BlockState state = this.getVegetationToPlace(vegetationProviders, randomSource, pos);
               if (state.canPlaceAt(level, pos)) {
-                LevelUtils.setBlockState(level, pos, state, 2);
+                WorldUtils.setBlockState(level, pos, state, 2);
               }
             } else if (rand.nextFloat() < 0.4F && PVJConfig.configOptions.get("enableBarkMushrooms")) {
               BarkMushroomBlock mushroom = BarkMushroomBlock.getRandom(rand);
-              LevelUtils.setBlockState(level, pos, mushroom.getDefaultState().with(BarkMushroomBlock.FACING, dirCounterClockwise), 2);
+              WorldUtils.setBlockState(level, pos, mushroom.getDefaultState().with(BarkMushroomBlock.FACING, dirCounterClockwise), 2);
             }
           }
 
@@ -91,11 +91,11 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
             if (rand.nextFloat() < 0.4F && Block.isFaceFullSquare(level.getBlockState(pos.down()).getCollisionShape(level, pos.down()), Direction.UP)) {
               BlockState state = this.getVegetationToPlace(vegetationProviders, randomSource, pos);
               if (state.canPlaceAt(level, pos)) {
-                LevelUtils.setBlockState(level, pos, state, 2);
+                WorldUtils.setBlockState(level, pos, state, 2);
               }
             } else if (rand.nextFloat() < 0.4F && PVJConfig.configOptions.get("enableBarkMushrooms")) {
               BarkMushroomBlock mushroom = BarkMushroomBlock.getRandom(rand);
-              LevelUtils.setBlockState(level, pos, mushroom.getDefaultState().with(BarkMushroomBlock.FACING, dirClockwise), 2);
+              WorldUtils.setBlockState(level, pos, mushroom.getDefaultState().with(BarkMushroomBlock.FACING, dirClockwise), 2);
             }
           }
 

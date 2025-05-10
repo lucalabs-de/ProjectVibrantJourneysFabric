@@ -12,7 +12,7 @@ public class NaturalCobwebFeature extends Feature<ProbabilityFeatureConfiguratio
     StructureWorldAccess world = context.level();
     BlockPos origin = context.origin();
     Random randomSource = context.random();
-    BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos(origin.getX(), origin.getY(), origin.getZ());
+    BlockPos.Mutable blockpos = new BlockPos.Mutable(origin.getX(), origin.getY(), origin.getZ());
 
     for (int i = 64; i < origin.getY() + 50; i++) {
       blockpos.set(origin);
@@ -22,7 +22,7 @@ public class NaturalCobwebFeature extends Feature<ProbabilityFeatureConfiguratio
       if (world.getBlockState(blockpos).getBlock() instanceof LeavesBlock) {
         if (world.isAir(blockpos.down())) {
           if (randomSource.nextFloat() < context.config().probability) {
-            return LevelUtils.setBlockState(world, blockpos.down(), PVJBlocks.NATURAL_COBWEB.getDefaultState(), 2);
+            return WorldUtils.setBlockState(world, blockpos.down(), PVJBlocks.NATURAL_COBWEB.getDefaultState(), 2);
           }
         }
       }

@@ -13,7 +13,7 @@ public class GroundcoverFeature extends Feature<RandomPatchConfiguration> {
     BlockPos blockpos = context.origin();
     StructureWorldAccess worldgenlevel = context.level();
     int i = 0;
-    BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
+    BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable();
     int j = randompatchconfiguration.xzSpread() + 1;
     int k = randompatchconfiguration.ySpread() + 1;
 

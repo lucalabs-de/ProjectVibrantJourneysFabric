@@ -1,6 +1,6 @@
 package de.lucalabs.vibrantjourneys.world.features.ruinednetherportals;
 
-import dev.orderedchaos.projectvibrantjourneys.util.LevelUtils;
+import dev.orderedchaos.projectvibrantjourneys.util.WorldUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryEntry;
 import net.minecraft.core.registries.Registries;
@@ -47,7 +47,7 @@ public class CrimsonForestRuinedPortalDecorator extends RuinedPortalDecoratorBas
   @Override
   public void decorate(StructureWorldAccess level, ChunkGenerator generator, Random random, BlockPos groundPos) {
     BlockPos pos = groundPos.up();
-    if (LevelUtils.isEmptyOrReplaceable(level, pos)) {
+    if (WorldUtils.isEmptyOrReplaceable(level, pos)) {
       float chance = random.nextFloat();
       if (chance < 0.02F) {
         Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> bigMushroom = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(TreeFeatures.CRIMSON_FUNGUS);

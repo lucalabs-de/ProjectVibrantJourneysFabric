@@ -1,6 +1,6 @@
 package de.lucalabs.vibrantjourneys.blocks;
 
-import dev.orderedchaos.projectvibrantjourneys.util.LevelUtils;
+import dev.orderedchaos.projectvibrantjourneys.util.WorldUtils;
 
 public class SmallCactusBlock extends PlantBlock implements BonemealableBlock {
 
@@ -23,7 +23,7 @@ public class SmallCactusBlock extends PlantBlock implements BonemealableBlock {
   @Override
   public boolean isFertilizable(WorldView level, BlockPos pos, BlockState state, boolean isClientSide) {
     for (Direction direction : Direction.Type.HORIZONTAL) {
-      BlockState blockstate = level.getBlockState(pos.relative(direction));
+      BlockState blockstate = level.getBlockState(pos.offset(direction));
       if (blockstate.isSolid()) {
         return false;
       }
@@ -39,6 +39,6 @@ public class SmallCactusBlock extends PlantBlock implements BonemealableBlock {
 
   @Override
   public void performBonemeal(ServerWorld level, Random random, BlockPos pos, BlockState state) {
-    LevelUtils.setBlockState(level, pos, Blocks.CACTUS.getDefaultState(), 2);
+    WorldUtils.setBlockState(level, pos, Blocks.CACTUS.getDefaultState(), 2);
   }
 }

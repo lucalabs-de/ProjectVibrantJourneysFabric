@@ -41,7 +41,7 @@ public class PinkVinesBlock extends AbstractPlantStemBlock {
 
   @Override
   public boolean canPlaceAt(BlockState pState, WorldView pLevel, BlockPos pPos) {
-    BlockPos blockpos = pPos.relative(this.growthDirection.getOpposite());
+    BlockPos blockpos = pPos.offset(this.growthDirection.getOpposite());
     BlockState blockstate = pLevel.getBlockState(blockpos);
     return blockstate.is(this.getHeadBlock()) || blockstate.isOf(this.getBodyBlock()) || blockstate.isIn(BlockTags.LEAVES);
   }

@@ -27,12 +27,12 @@ public class SimpleBlockMatchWaterFeature extends Feature<SimpleBlockConfigurati
       } else {
         if (state.getBlock() instanceof Waterloggable) {
           if (level.isFluidAtPosition(origin, (fluidstate) -> fluidstate.getType() == Fluids.WATER)) {
-            placed = LevelUtils.setBlockState(level, origin, state.with(Properties.WATERLOGGED, true), 2);
+            placed = WorldUtils.setBlockState(level, origin, state.with(Properties.WATERLOGGED, true), 2);
           } else {
-            placed = LevelUtils.setBlockState(level, origin, state, 2);
+            placed = WorldUtils.setBlockState(level, origin, state, 2);
           }
         } else {
-          placed = LevelUtils.setBlockState(level, origin, state, 2);
+          placed = WorldUtils.setBlockState(level, origin, state, 2);
         }
       }
 

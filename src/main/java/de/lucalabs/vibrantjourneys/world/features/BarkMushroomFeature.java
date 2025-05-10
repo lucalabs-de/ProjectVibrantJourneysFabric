@@ -13,7 +13,7 @@ public class BarkMushroomFeature extends Feature<NoneFeatureConfiguration> {
     Random randomSource = context.random();
     BlockPos origin = context.origin();
     StructureWorldAccess level = context.level();
-    BlockPos.MutableBlockPos mutable = origin.mutable();
+    BlockPos.Mutable mutable = origin.mutable();
     BarkMushroomBlock blockToPlace = BarkMushroomBlock.getRandom(randomSource);
     int count = 0;
 
@@ -26,7 +26,7 @@ public class BarkMushroomFeature extends Feature<NoneFeatureConfiguration> {
         while (!flag) {
           Direction dir = Direction.Type.HORIZONTAL.random(randomSource);
           if (level.isAir(mutable.offset(dir.getNormal())) && level.getBlockState(mutable).isCollisionShapeFullBlock(level, mutable)) {
-            if (LevelUtils.setBlockState(level, mutable.offset(dir.getNormal()), blockToPlace.getDefaultState().with(HorizontalFacingBlock.FACING, dir), 2)) {
+            if (WorldUtils.setBlockState(level, mutable.offset(dir.getNormal()), blockToPlace.getDefaultState().with(HorizontalFacingBlock.FACING, dir), 2)) {
               count++;
             }
           }
