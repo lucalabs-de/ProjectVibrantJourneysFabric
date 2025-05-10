@@ -1,38 +1,47 @@
 package de.lucalabs.vibrantjourneys.blocks;
 
-import com.mojang.serialization.MapCodec;
-import dev.orderedchaos.projectvibrantjourneys.core.registry.PVJBlocks;
+import de.lucalabs.vibrantjourneys.registry.PVJBlocks;
+import net.minecraft.block.*;
+import net.minecraft.client.util.ParticleUtil;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 
-public class PinkVinesPlantBlock extends GrowingPlantBodyBlock {
+public class PinkVinesPlantBlock extends AbstractPlantBlock {
 
-  private static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
+    private static final VoxelShape SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 
-  public PinkVinesPlantBlock(AbstractBlock.Settings props) {
-    super(props, Direction.DOWN, SHAPE, false);
-    this.setDefaultState(this.stateDefinition.any());
-  }
-
-  @Override
-  protected AbstractPlantStemBlock getHeadBlock() {
-    return (AbstractPlantStemBlock) PVJBlocks.PINK_VINES;
-  }
-
-  @Override
-  public boolean canPlaceAt(BlockState pState, WorldView pLevel, BlockPos pPos) {
-    BlockPos blockpos = pPos.offset(this.growthDirection.getOpposite());
-    BlockState blockstate = pLevel.getBlockState(blockpos);
-    return blockstate.is(this.getHeadBlock()) || blockstate.is(this.getBodyBlock()) || blockstate.is(BlockTags.LEAVES);
-  }
-
-  @Override
-  public void randomDisplayTick(BlockState state, World level, BlockPos pos, Random randomSource) {
-    super.randomDisplayTick(state, level, pos, randomSource);
-    if (randomSource.nextInt(10) == 0) {
-      BlockPos blockpos = pos.down();
-      BlockState blockstate = level.getBlockState(blockpos);
-      if (!isFaceFullSquare(blockstate.getCollisionShape(level, blockpos), Direction.UP)) {
-        ParticleUtil.spawnParticleBelow(level, pos, randomSource, ParticleTypes.CHERRY_LEAVES);
-      }
+    public PinkVinesPlantBlock(AbstractBlock.Settings props) {
+        super(props, Direction.DOWN, SHAPE, false);
+        this.setDefaultState(this.getStateManager().getDefaultState());
     }
-  }
+
+    @Override
+    protected AbstractPlantStemBlock getStem() {
+        return (AbstractPlantStemBlock) PVJBlocks.PINK_VINES;
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState pState, WorldView pLevel, BlockPos pPos) {
+        BlockPos blockpos = pPos.offset(this.growthDirection.getOpposite());
+        BlockState blockstate = pLevel.getBlockState(blockpos);
+        return blockstate.isOf(this.getStem()) || blockstate.isOf(this.getPlant()) || blockstate.isIn(BlockTags.LEAVES);
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World level, BlockPos pos, Random randomSource) {
+        super.randomDisplayTick(state, level, pos, randomSource);
+        if (randomSource.nextInt(10) == 0) {
+            BlockPos blockpos = pos.down();
+            BlockState blockstate = level.getBlockState(blockpos);
+            if (!isFaceFullSquare(blockstate.getCollisionShape(level, blockpos), Direction.UP)) {
+                ParticleUtil.spawnParticle(level, pos, randomSource, ParticleTypes.CHERRY_LEAVES);
+            }
+        }
+    }
 }
