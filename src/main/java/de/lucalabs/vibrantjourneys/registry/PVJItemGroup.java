@@ -13,19 +13,19 @@ import java.util.HashSet;
 
 public class PVJItemGroup {
 
-  public static HashSet<Item> TAB_ITEMS = new HashSet<>();
+    public static HashSet<Item> TAB_ITEMS = new HashSet<>();
 
-  public static final ItemGroup PVJ_CREATIVE_MODE_TAB = register(ProjectVibrantJourneys.MOD_ID, () -> FabricItemGroup.builder()
-    .displayName(Text.translatable("itemGroup.projectvibrantjourneys"))
-    .icon(PVJItems.TWIGS::getDefaultInstance)
-    .displayItems((parameters, output) -> {
-      TAB_ITEMS.forEach((item) -> {
-        output.accept(item);
-      });
-    }).build());
+    public static final ItemGroup PVJ_CREATIVE_MODE_TAB = register(
+            new Identifier(ProjectVibrantJourneys.MOD_ID, "item_group"),
+            FabricItemGroup.builder()
+                    .displayName(Text.translatable("itemGroup.projectvibrantjourneys"))
+                    .icon(PVJItems.TWIGS::getDefaultStack)
+                    .entries((parameters, output) -> {
+                        TAB_ITEMS.forEach(output::add);
+                    }).build());
 
-    private static ItemGroup register(final Identifier name, final ItemGroup.Builder g) {
-        return Registry.register(Registries.ITEM_GROUP, name, g.build());
+    private static ItemGroup register(final Identifier name, final ItemGroup g) {
+        return Registry.register(Registries.ITEM_GROUP, name, g);
     }
 
     public static void initialize() {

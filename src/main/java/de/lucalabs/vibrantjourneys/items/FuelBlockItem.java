@@ -6,16 +6,14 @@ import net.minecraft.item.Item;
 
 public class FuelBlockItem extends BlockItem {
 
-  private final int burnTime;
+    private final int burnTime;
 
-  public FuelBlockItem(Block block, Item.Settings props, int burnTime) {
-    super(block, props);
-    this.burnTime = burnTime;
-  }
+    public FuelBlockItem(Block block, Item.Settings props, int burnTime) {
+        super(block, props);
+        this.burnTime = burnTime;
+    }
 
-  // TODO this is a Forge thing, find the fabric replacement
-//  @Override
-//  public int getBurnTime(ItemStack stack, RecipeType type) {
-//    return this.burnTime;
-//  }
+    public int getBurnTime() {
+        return this.burnTime;
+    }
 }

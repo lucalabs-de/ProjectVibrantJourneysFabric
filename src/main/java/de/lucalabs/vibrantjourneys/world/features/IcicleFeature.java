@@ -18,9 +18,9 @@ public class IcicleFeature extends Feature<DefaultFeatureConfig> {
 
   @Override
   public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-    WorldAccess level = context.level();
+    WorldAccess level = context.getWorld();
     BlockPos origin = context.getOrigin();
-    Random random = context.random();
+    Random random = context.getRandom();
 
     int height = checkVerticalSpace(level, origin, random.nextInt(4) + 1);
     if (height == 0)

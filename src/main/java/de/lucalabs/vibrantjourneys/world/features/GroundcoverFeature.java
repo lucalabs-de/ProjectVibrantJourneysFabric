@@ -9,9 +9,9 @@ public class GroundcoverFeature extends Feature<RandomPatchFeatureConfig> {
 
   public boolean generate(FeatureContext<RandomPatchFeatureConfig> context) {
     RandomPatchFeatureConfig randompatchconfiguration = context.getConfig();
-    Random randomsource = context.random();
+    Random randomsource = context.getRandom();
     BlockPos blockpos = context.getOrigin();
-    StructureWorldAccess worldgenlevel = context.level();
+    StructureWorldAccess worldgenlevel = context.getWorld();
     int i = 0;
     BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable();
     int j = randompatchconfiguration.xzSpread() + 1;

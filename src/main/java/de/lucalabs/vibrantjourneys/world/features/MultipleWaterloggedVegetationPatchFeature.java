@@ -15,9 +15,9 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
 
   @Override
   public boolean generate(FeatureContext<MultipleVegetationPatchConfiguration> context) {
-    StructureWorldAccess worldgenlevel = context.level();
+    StructureWorldAccess worldgenlevel = context.getWorld();
     MultipleVegetationPatchConfiguration config = context.getConfig();
-    Random random = context.random();
+    Random random = context.getRandom();
 
     if (random.nextFloat() > config.placementChance)
       return false;

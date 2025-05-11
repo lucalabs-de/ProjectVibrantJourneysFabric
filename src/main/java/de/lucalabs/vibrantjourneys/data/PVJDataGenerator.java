@@ -32,10 +32,10 @@ public class PVJDataGenerator implements DataGeneratorEntrypoint {
 
     }
 
-  private static final RegistryBuilder BUILDER = new RegistryBuilder()
-    .addRegistry(RegistryKeys.CONFIGURED_FEATURE, PVJConfiguredFeatures::bootstrap)
-    .addRegistry(RegistryKeys.PLACED_FEATURE, PVJPlacements::bootstrap)
-    .addRegistry(ForgeRegistries.Keys.BIOME_MODIFIERS, PVJBiomeModifiers::bootstrap);
+//  private static final RegistryBuilder BUILDER = new RegistryBuilder()
+//    .addRegistry(RegistryKeys.CONFIGURED_FEATURE, PVJConfiguredFeatures::bootstrap)
+//    .addRegistry(RegistryKeys.PLACED_FEATURE, PVJPlacements::bootstrap)
+//    .addRegistry(ForgeRegistries.Keys.BIOME_MODIFIERS, PVJBiomeModifiers::bootstrap); // TODO implement this one!!
 
 //  @SubscribeEvent
 //  public static void gatherData(GatherDataEvent event) {
@@ -50,7 +50,7 @@ public class PVJDataGenerator implements DataGeneratorEntrypoint {
 //    generator.addProvider(event.includeServer(), new PVJRecipes(packOutput));
 //    generator.addProvider(event.includeServer(), new PVJBiomeTagsProvider(packOutput, lookupProvider, existingFileHelper));
 //
-    generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, BUILDER, Set.of(ProjectVibrantJourneys.MOD_ID)));
+//    generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(packOutput, lookupProvider, BUILDER, Set.of(ProjectVibrantJourneys.MOD_ID)));
 //    generator.addProvider(event.includeServer(), new LootTableProvider(packOutput, Set.of(), List.of(new LootTableProvider.SubProviderEntry(PVJBlockLootProvider::new, LootContextParamSets.BLOCK))));
 //  }
 

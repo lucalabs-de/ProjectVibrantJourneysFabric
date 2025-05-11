@@ -13,9 +13,9 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
 
   @Override
   public boolean generate(FeatureContext<FallenTreeConfiguration> context) {
-    StructureWorldAccess level = context.level();
+    StructureWorldAccess level = context.getWorld();
     BlockPos pos = context.getOrigin();
-    Random rand = context.random();
+    Random rand = context.getRandom();
     BlockState hollowLog = context.getConfig().hollowLog();
     BlockState baseLog = context.getConfig().baseLog();
 

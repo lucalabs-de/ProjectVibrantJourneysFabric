@@ -9,9 +9,9 @@ public class NaturalCobwebFeature extends Feature<ProbabilityConfig> {
 
   @Override
   public boolean generate(FeatureContext<ProbabilityConfig> context) {
-    StructureWorldAccess world = context.level();
+    StructureWorldAccess world = context.getWorld();
     BlockPos origin = context.getOrigin();
-    Random randomSource = context.random();
+    Random randomSource = context.getRandom();
     BlockPos.Mutable blockpos = new BlockPos.Mutable(origin.getX(), origin.getY(), origin.getZ());
 
     for (int i = 64; i < origin.getY() + 50; i++) {

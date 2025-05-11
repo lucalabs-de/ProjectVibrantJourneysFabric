@@ -13,9 +13,9 @@ public class SimpleBlockMatchWaterFeature extends Feature<SimpleBlockFeatureConf
     boolean placed = false;
 
     SimpleBlockFeatureConfig config = context.getConfig();
-    StructureWorldAccess level = context.level();
+    StructureWorldAccess level = context.getWorld();
     BlockPos origin = context.getOrigin();
-    BlockState state = config.toPlace().getState(context.random(), origin);
+    BlockState state = config.toPlace().getState(context.getRandom(), origin);
 
     if (state.canPlaceAt(level, origin)) {
       if (state.getBlock() instanceof TallPlantBlock) {

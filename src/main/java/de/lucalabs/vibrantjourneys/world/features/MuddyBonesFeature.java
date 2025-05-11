@@ -9,9 +9,9 @@ public class MuddyBonesFeature extends Feature<DefaultFeatureConfig> {
 
   @Override
   public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-    StructureWorldAccess world = context.level();
+    StructureWorldAccess world = context.getWorld();
     BlockPos origin = context.getOrigin();
-    Random randomSource = context.random();
+    Random randomSource = context.getRandom();
 
     Direction dir = Direction.Type.HORIZONTAL.random(randomSource);
     int model = randomSource.nextInt(3);

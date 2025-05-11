@@ -2,6 +2,7 @@ package de.lucalabs.vibrantjourneys.registry;
 
 import de.lucalabs.vibrantjourneys.ProjectVibrantJourneys;
 import de.lucalabs.vibrantjourneys.items.FuelBlockItem;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
@@ -20,11 +21,11 @@ public class PVJItems {
             () -> new BlockItem(PVJBlocks.SEA_OATS, basicItem()));
     public static final Item CATTAIL = registerItem("cattail",
             () -> new BlockItem(PVJBlocks.CATTAIL, basicItem()));
-    public static final Item BARK_MUSHROOM = registerItem("bark_mushroom",
+    public static final Item BARK_MUSHROOM = registerBurnable("bark_mushroom",
             () -> new FuelBlockItem(PVJBlocks.BARK_MUSHROOM, basicItem(), 100));
-    public static final Item LIGHT_BROWN_BARK_MUSHROOM = registerItem("light_brown_bark_mushroom",
+    public static final Item LIGHT_BROWN_BARK_MUSHROOM = registerBurnable("light_brown_bark_mushroom",
             () -> new FuelBlockItem(PVJBlocks.LIGHT_BROWN_BARK_MUSHROOM, basicItem(), 100));
-    public static final Item ORANGE_BARK_MUSHROOM = registerItem("orange_bark_mushroom",
+    public static final Item ORANGE_BARK_MUSHROOM = registerBurnable("orange_bark_mushroom",
             () -> new FuelBlockItem(PVJBlocks.ORANGE_BARK_MUSHROOM, basicItem(), 100));
     public static final Item GLOWING_BLUE_FUNGUS = registerItem("glowing_blue_fungus",
             () -> new BlockItem(PVJBlocks.GLOWING_BLUE_FUNGUS, basicItem()));
@@ -66,7 +67,7 @@ public class PVJItems {
             () -> new BlockItem(PVJBlocks.CRIMSON_NETTLE, basicItem()));
     public static final Item WARPED_NETTLE = registerItem("warped_nettle",
             () -> new BlockItem(PVJBlocks.WARPED_NETTLE, basicItem()));
-    public static final Item CINDERCANE = registerItem("cindercane",
+    public static final Item CINDERCANE = registerBurnable("cindercane",
             () -> new FuelBlockItem(PVJBlocks.CINDERCANE, basicItem(), 800));
     public static final Item GLOWCAP = registerItem("glowcap",
             () -> new BlockItem(PVJBlocks.GLOWCAP, basicItem()));
@@ -75,7 +76,7 @@ public class PVJItems {
             () -> new BlockItem(PVJBlocks.FALLEN_LEAVES, basicItem()));
     public static final Item DEAD_FALLEN_LEAVES = registerItem("dead_fallen_leaves",
             () -> new BlockItem(PVJBlocks.DEAD_FALLEN_LEAVES, basicItem()));
-    public static final Item TWIGS = registerItem("twigs",
+    public static final Item TWIGS = registerBurnable("twigs",
             () -> new FuelBlockItem(PVJBlocks.TWIGS, basicItem(), 100));
     public static final Item ROCKS = registerItem("rocks",
             () -> new BlockItem(PVJBlocks.ROCKS, basicItem()));
@@ -91,26 +92,26 @@ public class PVJItems {
             () -> new BlockItem(PVJBlocks.BONES, basicItem()));
     public static final Item CHARRED_BONES = registerItem("charred_bones",
             () -> new BlockItem(PVJBlocks.CHARRED_BONES, basicItem()));
-    public static final Item PINECONES = registerItem("pinecones",
+    public static final Item PINECONES = registerBurnable("pinecones",
             () -> new FuelBlockItem(PVJBlocks.PINECONES, basicItem(), 100));
     public static final Item SEASHELLS = registerItem("seashells",
             () -> new BlockItem(PVJBlocks.SEASHELLS, basicItem()));
 
-    public static final Item OAK_HOLLOW_LOG = registerItem("oak_hollow_log",
+    public static final Item OAK_HOLLOW_LOG = registerBurnable("oak_hollow_log",
             () -> new FuelBlockItem(PVJBlocks.OAK_HOLLOW_LOG, basicItem(), 300));
-    public static final Item BIRCH_HOLLOW_LOG = registerItem("birch_hollow_log",
+    public static final Item BIRCH_HOLLOW_LOG = registerBurnable("birch_hollow_log",
             () -> new FuelBlockItem(PVJBlocks.BIRCH_HOLLOW_LOG, basicItem(), 300));
-    public static final Item SPRUCE_HOLLOW_LOG = registerItem("spruce_hollow_log",
+    public static final Item SPRUCE_HOLLOW_LOG = registerBurnable("spruce_hollow_log",
             () -> new FuelBlockItem(PVJBlocks.SPRUCE_HOLLOW_LOG, basicItem(), 300));
-    public static final Item JUNGLE_HOLLOW_LOG = registerItem("jungle_hollow_log",
+    public static final Item JUNGLE_HOLLOW_LOG = registerBurnable("jungle_hollow_log",
             () -> new FuelBlockItem(PVJBlocks.JUNGLE_HOLLOW_LOG, basicItem(), 300));
-    public static final Item ACACIA_HOLLOW_LOG = registerItem("acacia_hollow_log",
+    public static final Item ACACIA_HOLLOW_LOG = registerBurnable("acacia_hollow_log",
             () -> new FuelBlockItem(PVJBlocks.ACACIA_HOLLOW_LOG, basicItem(), 300));
-    public static final Item DARK_OAK_HOLLOW_LOG = registerItem("dark_oak_hollow_log",
+    public static final Item DARK_OAK_HOLLOW_LOG = registerBurnable("dark_oak_hollow_log",
             () -> new FuelBlockItem(PVJBlocks.DARK_OAK_HOLLOW_LOG, basicItem(), 300));
-    public static final Item CHERRY_HOLLOW_LOG = registerItem("cherry_hollow_log",
+    public static final Item CHERRY_HOLLOW_LOG = registerBurnable("cherry_hollow_log",
             () -> new FuelBlockItem(PVJBlocks.CHERRY_HOLLOW_LOG, basicItem(), 300));
-    public static final Item MANGROVE_HOLLOW_LOG = registerItem("mangrove_hollow_log",
+    public static final Item MANGROVE_HOLLOW_LOG = registerBurnable("mangrove_hollow_log",
             () -> new FuelBlockItem(PVJBlocks.MANGROVE_HOLLOW_LOG, basicItem(), 300));
 
     public static final Item FERROUS_GRAVEL = registerItem("ferrous_gravel",
@@ -127,7 +128,13 @@ public class PVJItems {
         return new Item.Settings();
     }
 
-    private static Item registerItem(String name, Supplier<Item> item) {
+    private static Item registerBurnable(String name, Supplier<FuelBlockItem> item) {
+        Item i = registerItem(name, item);
+        FuelRegistry.INSTANCE.add(i, item.get().getBurnTime());
+        return i;
+    }
+
+    private static Item registerItem(String name, Supplier<? extends Item> item) {
         Item i = Registry.register(Registries.ITEM, name, item.get());
         PVJItemGroup.TAB_ITEMS.add(i);
         return i;

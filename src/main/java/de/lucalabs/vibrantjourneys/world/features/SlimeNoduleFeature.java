@@ -10,9 +10,9 @@ public class SlimeNoduleFeature extends Feature<DefaultFeatureConfig> {
 
   @Override
   public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-    Random randomSource = context.random();
+    Random randomSource = context.getRandom();
     BlockPos origin = context.getOrigin();
-    StructureWorldAccess level = context.level();
+    StructureWorldAccess level = context.getWorld();
     BlockPos.Mutable mutable = origin.mutable();
     SlimeNoduleBlock blockToPlace = (SlimeNoduleBlock) PVJBlocks.SLIME_NODULE;
     int count = 0;

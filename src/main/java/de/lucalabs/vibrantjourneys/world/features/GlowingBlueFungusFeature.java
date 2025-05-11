@@ -10,9 +10,9 @@ public class GlowingBlueFungusFeature extends Feature<DefaultFeatureConfig> {
 
   @Override
   public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-    Random randomSource = context.random();
+    Random randomSource = context.getRandom();
     BlockPos origin = context.getOrigin();
-    StructureWorldAccess level = context.level();
+    StructureWorldAccess level = context.getWorld();
     BlockPos.Mutable mutable = origin.mutable();
     GlowingFungusBlock blockToPlace = (GlowingFungusBlock) PVJBlocks.GLOWING_BLUE_FUNGUS;
     int count = 0;

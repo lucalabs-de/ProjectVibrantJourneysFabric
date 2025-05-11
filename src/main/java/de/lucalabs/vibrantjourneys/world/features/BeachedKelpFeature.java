@@ -11,9 +11,9 @@ public class BeachedKelpFeature extends Feature<SingleStateFeatureConfig> {
     @Override
     public boolean generate(FeatureContext<SingleStateFeatureConfig> context) {
         SingleStateFeatureConfig config = context.getConfig();
-        Random random = context.random();
+        Random random = context.getRandom();
         BlockPos origin = context.getOrigin();
-        StructureWorldAccess level = context.level();
+        StructureWorldAccess level = context.getWorld();
         BlockState state = config.state;
         if (!(config.state.getBlock() instanceof BeachedKelpBlock)) {
             // silently fail if not beached kelp block
