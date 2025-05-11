@@ -2,15 +2,15 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class MuddyBonesFeature extends Feature<NoneFeatureConfiguration> {
-  public MuddyBonesFeature(Codec<NoneFeatureConfiguration> codec) {
+public class MuddyBonesFeature extends Feature<DefaultFeatureConfig> {
+  public MuddyBonesFeature(Codec<DefaultFeatureConfig> codec) {
     super(codec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+  public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
     StructureWorldAccess world = context.level();
-    BlockPos origin = context.origin();
+    BlockPos origin = context.getOrigin();
     Random randomSource = context.random();
 
     Direction dir = Direction.Type.HORIZONTAL.random(randomSource);

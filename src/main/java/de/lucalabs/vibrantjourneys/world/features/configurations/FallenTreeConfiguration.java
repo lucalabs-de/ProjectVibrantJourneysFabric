@@ -14,17 +14,17 @@ public record FallenTreeConfiguration(BlockState hollowLog, BlockState baseLog,
                                       List<FallenTreeVegetation> vegetationProviders,
                                       boolean canBeMossy) implements FeatureConfig {
 
-  public static final Codec<FallenTreeConfiguration> CODEC = RecordCodecBuilder.create((builder) -> builder.group(
-    BlockState.CODEC.fieldOf("hollowLog").forGetter(FallenTreeConfiguration::hollowLog),
-    BlockState.CODEC.fieldOf("baseLog").forGetter(FallenTreeConfiguration::baseLog),
-    FallenTreeVegetation.CODEC.listOf().fieldOf("vegetationProviders").forGetter(FallenTreeConfiguration::vegetationProviders),
-    PrimitiveCodec.BOOL.fieldOf("canBeMossy").forGetter(FallenTreeConfiguration::canBeMossy)
-  ).apply(builder, FallenTreeConfiguration::new));
+    public static final Codec<FallenTreeConfiguration> CODEC = RecordCodecBuilder.create((builder) -> builder.group(
+            BlockState.CODEC.fieldOf("hollowLog").forGetter(FallenTreeConfiguration::hollowLog),
+            BlockState.CODEC.fieldOf("baseLog").forGetter(FallenTreeConfiguration::baseLog),
+            FallenTreeVegetation.CODEC.listOf().fieldOf("vegetationProviders").forGetter(FallenTreeConfiguration::vegetationProviders),
+            PrimitiveCodec.BOOL.fieldOf("canBeMossy").forGetter(FallenTreeConfiguration::canBeMossy)
+    ).apply(builder, FallenTreeConfiguration::new));
 
-  public record FallenTreeVegetation(BlockStateProvider provider, Optional<String> configOption) {
-    public static Codec<FallenTreeVegetation> CODEC = RecordCodecBuilder.create((builder) -> builder.group(
-      BlockStateProvider.TYPE_CODEC.fieldOf("provider").forGetter(FallenTreeVegetation::provider),
-      PrimitiveCodec.STRING.optionalFieldOf("configOption").forGetter(FallenTreeVegetation::configOption)
-    ).apply(builder, FallenTreeVegetation::new));
-  }
+    public record FallenTreeVegetation(BlockStateProvider provider, Optional<String> configOption) {
+        public static Codec<FallenTreeVegetation> CODEC = RecordCodecBuilder.create((builder) -> builder.group(
+                BlockStateProvider.TYPE_CODEC.fieldOf("provider").forGetter(FallenTreeVegetation::provider),
+                PrimitiveCodec.STRING.optionalFieldOf("configOption").forGetter(FallenTreeVegetation::configOption)
+        ).apply(builder, FallenTreeVegetation::new));
+    }
 }

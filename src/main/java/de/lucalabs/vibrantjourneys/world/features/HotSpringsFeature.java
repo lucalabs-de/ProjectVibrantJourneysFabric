@@ -4,15 +4,15 @@ import com.mojang.serialization.Codec;
 
 import java.util.Optional;
 
-public class HotSpringsFeature extends Feature<NoneFeatureConfiguration> {
+public class HotSpringsFeature extends Feature<DefaultFeatureConfig> {
   private static final BlockState AIR = Blocks.CAVE_AIR.getDefaultState();
 
-  public HotSpringsFeature(Codec<NoneFeatureConfiguration> pCodec) {
+  public HotSpringsFeature(Codec<DefaultFeatureConfig> pCodec) {
     super(pCodec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> pContext) {
+  public boolean generate(FeatureContext<DefaultFeatureConfig> pContext) {
     BlockPos blockpos = pContext.origin();
     StructureWorldAccess worldgenlevel = pContext.level();
     Random randomsource = pContext.random();
@@ -123,7 +123,7 @@ public class HotSpringsFeature extends Feature<NoneFeatureConfiguration> {
                   worldgenlevel.setBlockState(blockpos3, innerBlock, 2);
                   boolean flag5 = randomsource.nextFloat() < 0.3F;
                   if (flag5) {
-                    Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> watergrassFeature = worldgenlevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(AquaticFeatures.SEAGRASS_SIMPLE);
+                    Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> watergrassFeature = worldgenlevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(OceanConfiguredFeatures.SEAGRASS_SIMPLE);
                     watergrassFeature.ifPresent((feature) -> feature.value().place(worldgenlevel, generator, randomsource, blockpos3.up()));
                   }
                 }

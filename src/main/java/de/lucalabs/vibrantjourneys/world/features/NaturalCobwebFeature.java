@@ -2,15 +2,15 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class NaturalCobwebFeature extends Feature<ProbabilityFeatureConfiguration> {
-  public NaturalCobwebFeature(Codec<ProbabilityFeatureConfiguration> codec) {
+public class NaturalCobwebFeature extends Feature<ProbabilityConfig> {
+  public NaturalCobwebFeature(Codec<ProbabilityConfig> codec) {
     super(codec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<ProbabilityFeatureConfiguration> context) {
+  public boolean generate(FeatureContext<ProbabilityConfig> context) {
     StructureWorldAccess world = context.level();
-    BlockPos origin = context.origin();
+    BlockPos origin = context.getOrigin();
     Random randomSource = context.random();
     BlockPos.Mutable blockpos = new BlockPos.Mutable(origin.getX(), origin.getY(), origin.getZ());
 
@@ -21,7 +21,7 @@ public class NaturalCobwebFeature extends Feature<ProbabilityFeatureConfiguratio
 
       if (world.getBlockState(blockpos).getBlock() instanceof LeavesBlock) {
         if (world.isAir(blockpos.down())) {
-          if (randomSource.nextFloat() < context.config().probability) {
+          if (randomSource.nextFloat() < context.getConfig().probability) {
             return WorldUtils.setBlockState(world, blockpos.down(), PVJBlocks.NATURAL_COBWEB.getDefaultState(), 2);
           }
         }

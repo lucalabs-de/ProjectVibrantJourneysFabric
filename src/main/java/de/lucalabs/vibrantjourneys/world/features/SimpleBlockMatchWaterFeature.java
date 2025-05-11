@@ -2,19 +2,19 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class SimpleBlockMatchWaterFeature extends Feature<SimpleBlockConfiguration> {
+public class SimpleBlockMatchWaterFeature extends Feature<SimpleBlockFeatureConfig> {
 
-  public SimpleBlockMatchWaterFeature(Codec<SimpleBlockConfiguration> codec) {
+  public SimpleBlockMatchWaterFeature(Codec<SimpleBlockFeatureConfig> codec) {
     super(codec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<SimpleBlockConfiguration> context) {
+  public boolean generate(FeatureContext<SimpleBlockFeatureConfig> context) {
     boolean placed = false;
 
-    SimpleBlockConfiguration config = context.config();
+    SimpleBlockFeatureConfig config = context.getConfig();
     StructureWorldAccess level = context.level();
-    BlockPos origin = context.origin();
+    BlockPos origin = context.getOrigin();
     BlockState state = config.toPlace().getState(context.random(), origin);
 
     if (state.canPlaceAt(level, origin)) {

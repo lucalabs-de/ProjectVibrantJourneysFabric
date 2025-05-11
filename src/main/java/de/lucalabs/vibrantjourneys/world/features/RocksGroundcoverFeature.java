@@ -2,16 +2,16 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class RocksGroundcoverFeature extends Feature<RandomPatchConfiguration> {
+public class RocksGroundcoverFeature extends Feature<RandomPatchFeatureConfig> {
 
-  public RocksGroundcoverFeature(Codec<RandomPatchConfiguration> codec) {
+  public RocksGroundcoverFeature(Codec<RandomPatchFeatureConfig> codec) {
     super(codec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<RandomPatchConfiguration> context) {
+  public boolean generate(FeatureContext<RandomPatchFeatureConfig> context) {
     Random randomSource = context.random();
-    BlockPos origin = context.origin();
+    BlockPos origin = context.getOrigin();
     StructureWorldAccess level = context.level();
     BlockState originState = level.getBlockState(origin);
 

@@ -2,15 +2,15 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class LotusPondFeature extends Feature<NoneFeatureConfiguration> {
+public class LotusPondFeature extends Feature<DefaultFeatureConfig> {
   private static final BlockState AIR = Blocks.CAVE_AIR.getDefaultState();
 
-  public LotusPondFeature(Codec<NoneFeatureConfiguration> pCodec) {
+  public LotusPondFeature(Codec<DefaultFeatureConfig> pCodec) {
     super(pCodec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> pContext) {
+  public boolean generate(FeatureContext<DefaultFeatureConfig> pContext) {
     BlockPos blockpos = pContext.origin();
     StructureWorldAccess worldgenlevel = pContext.level();
     Random randomsource = pContext.random();

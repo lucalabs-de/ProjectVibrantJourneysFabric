@@ -1,11 +1,4 @@
-package dev.orderedchaos.projectvibrantjourneys.core.registry;
-
-import dev.orderedchaos.projectvibrantjourneys.core.ProjectVibrantJourneys;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+package de.lucalabs.vibrantjourneys.registry;
 
 import java.util.function.Supplier;
 

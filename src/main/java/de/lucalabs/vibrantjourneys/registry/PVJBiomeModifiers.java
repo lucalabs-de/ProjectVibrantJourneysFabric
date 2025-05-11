@@ -3,11 +3,14 @@ package de.lucalabs.vibrantjourneys.registry;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.PrimitiveCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import de.lucalabs.vibrantjourneys.world.modifiers.PVJBiomeModifier;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
+import net.minecraft.registry.RegistryWrapper;
 
 import java.util.List;
 
-public class PVJBiomeModifiers {
-  public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, ProjectVibrantJourneys.MOD_ID);
+public class PVJBiomeModifiers extends FabricDynamicRegistryProvider {
+//  public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, ProjectVibrantJourneys.MOD_ID);
 
   public static final RegistryObject<Codec<PVJBiomeModifier>> BIOME_MODIFIER_SERIALIZER = BIOME_MODIFIER_SERIALIZERS.register("biome_modifier_serializer",
     () -> RecordCodecBuilder.create(builder -> builder.group(
@@ -186,5 +189,15 @@ public class PVJBiomeModifiers {
 
   private static List<TagKey<Biome>> nether() {
     return List.of(BiomeTags.IS_NETHER);
+  }
+
+  @Override
+  protected void configure(RegistryWrapper.WrapperLookup wrapperLookup, Entries entries) {
+
+  }
+
+  @Override
+  public String getName() {
+    return "";
   }
 }

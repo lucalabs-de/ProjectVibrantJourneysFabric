@@ -12,16 +12,16 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<FallenTreeConfiguration> context) {
+  public boolean generate(FeatureContext<FallenTreeConfiguration> context) {
     StructureWorldAccess level = context.level();
-    BlockPos pos = context.origin();
+    BlockPos pos = context.getOrigin();
     Random rand = context.random();
-    BlockState hollowLog = context.config().hollowLog();
-    BlockState baseLog = context.config().baseLog();
+    BlockState hollowLog = context.getConfig().hollowLog();
+    BlockState baseLog = context.getConfig().baseLog();
 
     String biome = level.getBiome(pos).unwrapKey().location().toString();
-    HashSet<TreeFeatureUtils.ChanceBiomeEntry> biomeEntries = getEntrySet(baseLog.getBlock());
-    int chance = TreeFeatureUtils.getChance(biome, biomeEntries);
+    HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> biomeEntries = getEntrySet(baseLog.getBlock());
+    int chance = TreeConfiguredFeatures.getChance(biome, biomeEntries);
     if(chance == -1) {
       chance = 10; //set default
     }
@@ -46,14 +46,14 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
       pos = pos.offset(dir.getNormal());
     }
 
-    pos = context.origin();
-    List<FallenTreeVegetation> vegetationProviders = context.config().vegetationProviders();
+    pos = context.getOrigin();
+    List<FallenTreeVegetation> vegetationProviders = context.getConfig().vegetationProviders();
     Random randomSource = level.getRandom();
 
     for (int i = 0; i < length; i++) {
       if (canReplace(level, pos)) {
         if (!(down.canReplace() || down.getFluidState().is(Fluids.WATER)) || i > (length / 2)) {
-          boolean mossy = context.config().canBeMossy() ? randomSource.nextBoolean() : false;
+          boolean mossy = context.getConfig().canBeMossy() ? randomSource.nextBoolean() : false;
           WorldUtils.setBlockState(level, pos, hollowLog.with(PillarBlock.AXIS, dir.getAxis()).with(HollowLogBlock.MOSSY, mossy), 2);
 
           if (level.isAir(pos.up()) && rand.nextFloat() < 0.75F) {
@@ -103,7 +103,7 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
           pos = pos.offset(dir.getNormal());
         } else {
           dir = dir.getOpposite();
-          pos = context.origin().offset(dir.getNormal());
+          pos = context.getOrigin().offset(dir.getNormal());
         }
         down = level.getBlockState(pos.down());
       } else {
@@ -121,7 +121,7 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
       || world.getBlockState(pos).getBlock() instanceof GroundcoverBlock;
   }
 
-  public HashSet<TreeFeatureUtils.ChanceBiomeEntry> getEntrySet(Block log) {
+  public HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> getEntrySet(Block log) {
     if (log == Blocks.OAK_LOG) {
       return PVJFeatureVars.OAK;
     } else if (log == Blocks.BIRCH_LOG) {

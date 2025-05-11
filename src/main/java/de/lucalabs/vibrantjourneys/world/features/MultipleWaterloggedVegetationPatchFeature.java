@@ -14,15 +14,15 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<MultipleVegetationPatchConfiguration> context) {
+  public boolean generate(FeatureContext<MultipleVegetationPatchConfiguration> context) {
     StructureWorldAccess worldgenlevel = context.level();
-    MultipleVegetationPatchConfiguration config = context.config();
+    MultipleVegetationPatchConfiguration config = context.getConfig();
     Random random = context.random();
 
     if (random.nextFloat() > config.placementChance)
       return false;
 
-    BlockPos blockpos = context.origin();
+    BlockPos blockpos = context.getOrigin();
     Predicate<BlockState> predicate = (p_204782_) -> {
       return p_204782_.is(config.replaceable);
     };
@@ -117,7 +117,7 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
   }
 
   //TODO: move hardcoded vegetation to config for flexibility (may re-use this feature for other things who knows)
-  protected void distributeVegetation(FeaturePlaceContext<MultipleVegetationPatchConfiguration> context, StructureWorldAccess level, MultipleVegetationPatchConfiguration config, Random rand, Set<BlockPos> set, int p_160619_, int p_160620_) {
+  protected void distributeVegetation(FeatureContext<MultipleVegetationPatchConfiguration> context, StructureWorldAccess level, MultipleVegetationPatchConfiguration config, Random rand, Set<BlockPos> set, int p_160619_, int p_160620_) {
     for (BlockPos blockpos : set) {
       if (config.vegetationChance > 0.0F && rand.nextFloat() < config.vegetationChance) {
         this.placeVegetation(level, config, context.chunkGenerator(), rand, blockpos);

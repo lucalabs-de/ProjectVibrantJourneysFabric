@@ -16,7 +16,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 
-public class TreeFeatureUtils {
+public class TreeConfiguredFeatures {
 
   public static boolean isIn(Set<ChanceBiomeEntry> Set, Identifier biome) {
     for (ChanceBiomeEntry entry : Set) {

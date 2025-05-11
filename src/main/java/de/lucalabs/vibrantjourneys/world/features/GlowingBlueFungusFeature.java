@@ -2,16 +2,16 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class GlowingBlueFungusFeature extends Feature<NoneFeatureConfiguration> {
+public class GlowingBlueFungusFeature extends Feature<DefaultFeatureConfig> {
 
-  public GlowingBlueFungusFeature(Codec<NoneFeatureConfiguration> codec) {
+  public GlowingBlueFungusFeature(Codec<DefaultFeatureConfig> codec) {
     super(codec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+  public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
     Random randomSource = context.random();
-    BlockPos origin = context.origin();
+    BlockPos origin = context.getOrigin();
     StructureWorldAccess level = context.level();
     BlockPos.Mutable mutable = origin.mutable();
     GlowingFungusBlock blockToPlace = (GlowingFungusBlock) PVJBlocks.GLOWING_BLUE_FUNGUS;

@@ -2,17 +2,17 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class BeachedKelpFeature extends Feature<BlockStateConfiguration> {
+public class BeachedKelpFeature extends Feature<SingleStateFeatureConfig> {
 
-    public BeachedKelpFeature(Codec<BlockStateConfiguration> codec) {
+    public BeachedKelpFeature(Codec<SingleStateFeatureConfig> codec) {
         super(codec);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<BlockStateConfiguration> context) {
-        BlockStateConfiguration config = context.config();
+    public boolean generate(FeatureContext<SingleStateFeatureConfig> context) {
+        SingleStateFeatureConfig config = context.getConfig();
         Random random = context.random();
-        BlockPos origin = context.origin();
+        BlockPos origin = context.getOrigin();
         StructureWorldAccess level = context.level();
         BlockState state = config.state;
         if (!(config.state.getBlock() instanceof BeachedKelpBlock)) {

@@ -2,15 +2,15 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class GroundcoverFeature extends Feature<RandomPatchConfiguration> {
-  public GroundcoverFeature(Codec<RandomPatchConfiguration> codec) {
+public class GroundcoverFeature extends Feature<RandomPatchFeatureConfig> {
+  public GroundcoverFeature(Codec<RandomPatchFeatureConfig> codec) {
     super(codec);
   }
 
-  public boolean place(FeaturePlaceContext<RandomPatchConfiguration> context) {
-    RandomPatchConfiguration randompatchconfiguration = context.config();
+  public boolean generate(FeatureContext<RandomPatchFeatureConfig> context) {
+    RandomPatchFeatureConfig randompatchconfiguration = context.getConfig();
     Random randomsource = context.random();
-    BlockPos blockpos = context.origin();
+    BlockPos blockpos = context.getOrigin();
     StructureWorldAccess worldgenlevel = context.level();
     int i = 0;
     BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable();

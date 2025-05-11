@@ -2,17 +2,17 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class ExtraLilyPadFeature extends Feature<ProbabilityFeatureConfiguration> {
+public class ExtraLilyPadFeature extends Feature<ProbabilityConfig> {
 
-  public ExtraLilyPadFeature(Codec<ProbabilityFeatureConfiguration> codec) {
+  public ExtraLilyPadFeature(Codec<ProbabilityConfig> codec) {
     super(codec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<ProbabilityFeatureConfiguration> context) {
-    ProbabilityFeatureConfiguration config = context.config();
+  public boolean generate(FeatureContext<ProbabilityConfig> context) {
+    ProbabilityConfig config = context.getConfig();
     StructureWorldAccess level = context.level();
-    BlockPos origin = context.origin();
+    BlockPos origin = context.getOrigin();
     BlockState blockstate = Blocks.LILY_PAD.getDefaultState();
 
     if (level.getBlockState(origin.down()).is(Blocks.ICE)) {

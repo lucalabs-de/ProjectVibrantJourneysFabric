@@ -1,11 +1,11 @@
 package de.lucalabs.vibrantjourneys.config.compatibility;
 
 import de.lucalabs.vibrantjourneys.util.PVJFeatureVars;
-import de.lucalabs.vibrantjourneys.util.TreeFeatureUtils;
+import de.lucalabs.vibrantjourneys.util.TreeConfiguredFeatures;
 
 import java.util.Set;
 
-import static de.lucalabs.vibrantjourneys.util.TreeFeatureUtils.entry;
+import static de.lucalabs.vibrantjourneys.util.TreeConfiguredFeatures.entry;
 
 public class Terralith {
     private static final String MOD_ID = "terralith";
@@ -19,7 +19,7 @@ public class Terralith {
     Does not spawn on Skylands yet (need to check height or sth.? Since the ocean counts as the biome as well)
     */
 
-    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> OAK_DEFAULT = Set.of(
+    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> OAK_DEFAULT = Set.of(
             entry(MOD_ID + ":brushlands", 5),
             entry(MOD_ID + ":birch_taiga", 5),
             entry(MOD_ID + ":blooming_valley", 10),
@@ -35,7 +35,7 @@ public class Terralith {
             entry(MOD_ID + ":snowy_maple_forest", 5)
     );
 
-    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> BIRCH_DEFAULT = Set.of(
+    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> BIRCH_DEFAULT = Set.of(
             entry(MOD_ID + ":alpine_highlands", 5),
             entry(MOD_ID + ":birch_taiga", 20),
             entry(MOD_ID + ":blooming_valley", 10),
@@ -54,7 +54,7 @@ public class Terralith {
             entry(MOD_ID + ":sakura_valley", 5)
     );
 
-    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> SPRUCE_DEFAULT = Set.of(
+    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> SPRUCE_DEFAULT = Set.of(
             entry(MOD_ID + ":alpine_grove", 5),
             entry(MOD_ID + ":alpine_highlands", 5),
             entry(MOD_ID + ":moonlight_valley", 5), // Trees are made of Stripped Spruce Logs
@@ -74,7 +74,7 @@ public class Terralith {
             entry(MOD_ID + ":rocky_shrublands", 5)
     );
 
-    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> JUNGLE_DEFAULT = Set.of(
+    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> JUNGLE_DEFAULT = Set.of(
             entry(MOD_ID + ":desert_oasis", 5),
             entry(MOD_ID + ":jungle_mountains", 10),
             entry(MOD_ID + ":rocky_jungle", 15),
@@ -83,7 +83,7 @@ public class Terralith {
             entry(MOD_ID + ":red_oasis", 10)
     );
 
-    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> ACACIA_DEFAULT = Set.of(
+    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> ACACIA_DEFAULT = Set.of(
             entry(MOD_ID + ":moonlight_valley", 5),
             entry(MOD_ID + ":arid_highlands", 3),
             entry(MOD_ID + ":hot_shrublands", 3),
@@ -97,7 +97,7 @@ public class Terralith {
             entry(MOD_ID + ":savanna_badlands", 5)
     );
 
-    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> DARK_OAK_DEFAULT = Set.of(
+    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> DARK_OAK_DEFAULT = Set.of(
             entry(MOD_ID + ":forested_highlands", 10),
             entry(MOD_ID + ":sakura_grove", 15),
             entry(MOD_ID + ":lavender_forest", 15),
@@ -112,11 +112,11 @@ public class Terralith {
     );
 
     public static void init() {
-        TreeFeatureUtils.serializeAndLoad("oak_trees", MOD_ID, OAK_DEFAULT, PVJFeatureVars.OAK);
-        TreeFeatureUtils.serializeAndLoad("birch_trees", MOD_ID, BIRCH_DEFAULT, PVJFeatureVars.BIRCH);
-        TreeFeatureUtils.serializeAndLoad("spruce_trees", MOD_ID, SPRUCE_DEFAULT, PVJFeatureVars.SPRUCE);
-        TreeFeatureUtils.serializeAndLoad("jungle_trees", MOD_ID, JUNGLE_DEFAULT, PVJFeatureVars.JUNGLE);
-        TreeFeatureUtils.serializeAndLoad("acacia_trees", MOD_ID, ACACIA_DEFAULT, PVJFeatureVars.ACACIA);
-        TreeFeatureUtils.serializeAndLoad("dark_oak_trees", MOD_ID, DARK_OAK_DEFAULT, PVJFeatureVars.DARK_OAK);
+        TreeConfiguredFeatures.serializeAndLoad("oak_trees", MOD_ID, OAK_DEFAULT, PVJFeatureVars.OAK);
+        TreeConfiguredFeatures.serializeAndLoad("birch_trees", MOD_ID, BIRCH_DEFAULT, PVJFeatureVars.BIRCH);
+        TreeConfiguredFeatures.serializeAndLoad("spruce_trees", MOD_ID, SPRUCE_DEFAULT, PVJFeatureVars.SPRUCE);
+        TreeConfiguredFeatures.serializeAndLoad("jungle_trees", MOD_ID, JUNGLE_DEFAULT, PVJFeatureVars.JUNGLE);
+        TreeConfiguredFeatures.serializeAndLoad("acacia_trees", MOD_ID, ACACIA_DEFAULT, PVJFeatureVars.ACACIA);
+        TreeConfiguredFeatures.serializeAndLoad("dark_oak_trees", MOD_ID, DARK_OAK_DEFAULT, PVJFeatureVars.DARK_OAK);
     }
 }

@@ -2,17 +2,17 @@ package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
 
-public class FloatingPinkLotusFeature extends Feature<ProbabilityFeatureConfiguration> {
+public class FloatingPinkLotusFeature extends Feature<ProbabilityConfig> {
 
-  public FloatingPinkLotusFeature(Codec<ProbabilityFeatureConfiguration> codec) {
+  public FloatingPinkLotusFeature(Codec<ProbabilityConfig> codec) {
     super(codec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<ProbabilityFeatureConfiguration> context) {
-    ProbabilityFeatureConfiguration config = context.config();
+  public boolean generate(FeatureContext<ProbabilityConfig> context) {
+    ProbabilityConfig config = context.getConfig();
     StructureWorldAccess level = context.level();
-    BlockPos origin = context.origin();
+    BlockPos origin = context.getOrigin();
     BlockState blockstate = PVJBlocks.PINK_LOTUS.getDefaultState();
 
     if (context.random().nextFloat() < config.probability && level.getBlockState(origin.down()).is(Blocks.WATER)) {

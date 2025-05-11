@@ -8,18 +8,18 @@ import net.minecraft.world.WorldAccess;
 
 import java.util.function.Consumer;
 
-public class IcicleFeature extends Feature<NoneFeatureConfiguration> {
+public class IcicleFeature extends Feature<DefaultFeatureConfig> {
 
   private static final int MAX_LENGTH = 4;
 
-  public IcicleFeature(Codec<NoneFeatureConfiguration> codec) {
+  public IcicleFeature(Codec<DefaultFeatureConfig> codec) {
     super(codec);
   }
 
   @Override
-  public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+  public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
     WorldAccess level = context.level();
-    BlockPos origin = context.origin();
+    BlockPos origin = context.getOrigin();
     Random random = context.random();
 
     int height = checkVerticalSpace(level, origin, random.nextInt(4) + 1);
