@@ -9,6 +9,10 @@ import net.minecraft.util.Identifier;
 public class FabricTags {
 
   public static final TagKey<Block> SAND = createBlockTag("sands");
+  public static final TagKey<Block> SAND_RED = createBlockTag("sands/red");
+  public static final TagKey<Block> ORES = createBlockTag("ores");
+  public static final TagKey<Block> GRAVEL = createBlockTag("gravels");
+  public static final TagKey<Block> STORAGE_BLOCKS = createBlockTag("storage_blocks");
 
   public static final TagKey<Item> BONES = createItemTag("bones");
   public static final TagKey<Item> MUSHROOMS = createItemTag("mushrooms");

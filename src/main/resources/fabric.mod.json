@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"de.lucalabs.vibrantjourneys.ProjectVibrantJourneysClient"
+		],
+		"fabric-datagen": [
+			"de.lucalabs.vibrantjourneys.data.PVJDataGenerator"
 		]
 	},
 	"mixins": [

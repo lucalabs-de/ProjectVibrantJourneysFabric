@@ -11,12 +11,11 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
 public class PVJBiomeTagsProvider extends VanillaBiomeTagProvider {
-    public PVJBiomeTagsProvider(DataOutput packOutput, CompletableFuture<RegistryWrapper.WrapperLookup> provider, @Nullable ExistingFileHelper helper) {
+    public PVJBiomeTagsProvider(DataOutput packOutput, CompletableFuture<RegistryWrapper.WrapperLookup> provider) {
         super(packOutput, provider); //, ProjectVibrantJourneys.MOD_ID, helper);
     }
 

@@ -1,20 +1,36 @@
 package de.lucalabs.vibrantjourneys.data;
 
+import de.lucalabs.vibrantjourneys.ProjectVibrantJourneys;
+import de.lucalabs.vibrantjourneys.registry.PVJBlocks;
+import de.lucalabs.vibrantjourneys.registry.PVJItems;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.RecipeJsonProvider;
+import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
+
 import java.util.function.Consumer;
 
-public class PVJRecipes extends RecipeProvider {
+public class PVJRecipes extends FabricRecipeProvider {
 
-  public PVJRecipes(DataOutput packOutput) {
+  public PVJRecipes(FabricDataOutput packOutput) {
     super(packOutput);
   }
 
   @Override
-  protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+  public void generate(Consumer<RecipeJsonProvider> consumer) {
     this.buildCraftingRecipes(consumer);
     this.buildCookingRecipes(consumer);
   }
 
-  private void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+  private void buildCraftingRecipes(Consumer<RecipeJsonProvider> consumer) {
     simpleDye(consumer, Items.BROWN_DYE, PVJItems.BARK_MUSHROOM, 1);
     simpleDye(consumer, Items.BROWN_DYE, PVJItems.LIGHT_BROWN_BARK_MUSHROOM, 1);
     simpleDye(consumer, Items.ORANGE_DYE, PVJItems.ORANGE_BARK_MUSHROOM, 1);
@@ -48,64 +64,64 @@ public class PVJRecipes extends RecipeProvider {
     simpleTwoByTwo(consumer, Items.SANDSTONE, PVJItems.SANDSTONE_ROCKS, 1);
     simpleTwoByTwo(consumer, Items.RED_SANDSTONE, PVJItems.RED_SANDSTONE_ROCKS, 1);
 
-    ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Items.SHROOMLIGHT)
+    ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, Items.SHROOMLIGHT)
       .pattern(" # ")
       .pattern("#N#")
       .pattern(" # ")
-      .define('#', Items.GLOWSTONE)
-      .define('N', PVJItems.GLOWCAP)
-      .unlockedBy("has_glowcap", has(PVJItems.GLOWCAP))
-      .save(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "glowcap_to_shroomlight"));
+      .input('#', Items.GLOWSTONE)
+      .input('N', PVJItems.GLOWCAP)
+      .criterion("has_glowcap", conditionsFromItem(PVJItems.GLOWCAP))
+      .offerTo(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "glowcap_to_shroomlight"));
 
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, PVJItems.NETTLE_SOUP)
-      .requires(PVJBlocks.WARPED_NETTLE)
-      .requires(PVJBlocks.CRIMSON_NETTLE)
-      .requires(Items.BOWL)
-      .unlockedBy("has_nettle_soup", has(PVJItems.NETTLE_SOUP))
-      .unlockedBy("has_bowl", has(Items.BOWL))
-      .unlockedBy("has_warped_nettle", has(PVJBlocks.WARPED_NETTLE))
-      .unlockedBy("has_crimson_nettle", has(PVJBlocks.CRIMSON_NETTLE))
-      .save(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "nettle_soup"));
+    ShapelessRecipeJsonBuilder.create(RecipeCategory.FOOD, PVJItems.NETTLE_SOUP)
+      .input(PVJBlocks.WARPED_NETTLE)
+      .input(PVJBlocks.CRIMSON_NETTLE)
+      .input(Items.BOWL)
+      .criterion("has_nettle_soup", conditionsFromItem(PVJItems.NETTLE_SOUP))
+      .criterion("has_bowl", conditionsFromItem(Items.BOWL))
+      .criterion("has_warped_nettle", conditionsFromItem(PVJBlocks.WARPED_NETTLE))
+      .criterion("has_crimson_nettle", conditionsFromItem(PVJBlocks.CRIMSON_NETTLE))
+      .offerTo(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "nettle_soup"));
   }
 
-  private void buildCookingRecipes(Consumer<FinishedRecipe> consumer) {
-    SimpleCookingRecipeBuilder.smoking(Ingredient.of(PVJItems.CINDERCANE), RecipeCategory.MISC, Items.BLAZE_POWDER, 0.3F, 800)
-      .unlockedBy("has_cindercane", has(PVJItems.CINDERCANE))
-      .save(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "cindercane_to_blaze_powder"));
-    SimpleCookingRecipeBuilder.smelting(Ingredient.of(PVJItems.SMALL_CACTUS), RecipeCategory.MISC, Items.GREEN_DYE, 0.1F, 200)
-      .unlockedBy("has_small_cactus", has(PVJItems.SMALL_CACTUS))
-      .save(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "small_cactus_to_green_dye"));
-    SimpleCookingRecipeBuilder.smelting(Ingredient.of(PVJItems.GLOWCAP), RecipeCategory.MISC, Items.GLOWSTONE_DUST, 0.1F, 200)
-      .unlockedBy("has_glowcap", has(PVJItems.GLOWCAP))
-      .save(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "glowcap_to_glowstone_dust"));
+  private void buildCookingRecipes(Consumer<RecipeJsonProvider> consumer) {
+    CookingRecipeJsonBuilder.createSmoking(Ingredient.ofItems(PVJItems.CINDERCANE), RecipeCategory.MISC, Items.BLAZE_POWDER, 0.3F, 800)
+      .criterion("has_cindercane", conditionsFromItem(PVJItems.CINDERCANE))
+      .offerTo(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "cindercane_to_blaze_powder"));
+    CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(PVJItems.SMALL_CACTUS), RecipeCategory.MISC, Items.GREEN_DYE, 0.1F, 200)
+      .criterion("has_small_cactus", conditionsFromItem(PVJItems.SMALL_CACTUS))
+      .offerTo(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "small_cactus_to_green_dye"));
+    CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(PVJItems.GLOWCAP), RecipeCategory.MISC, Items.GLOWSTONE_DUST, 0.1F, 200)
+      .criterion("has_glowcap", conditionsFromItem(PVJItems.GLOWCAP))
+      .offerTo(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, "glowcap_to_glowstone_dust"));
   }
 
-  private void simpleShapeless(Consumer<FinishedRecipe> consumer, Item output, Item input, int count) {
-    String outputPath = ForgeRegistries.ITEMS.getKey(output).getPath();
-    String inputPath = ForgeRegistries.ITEMS.getKey(input).getPath();
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, output, count)
-      .requires(input)
-      .unlockedBy("has_" + inputPath, has(input))
-      .save(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, outputPath + "_from_" + inputPath));
+  private void simpleShapeless(Consumer<RecipeJsonProvider> consumer, Item output, Item input, int count) {
+    String outputPath = Registries.ITEM.getId(output).getPath();
+    String inputPath = Registries.ITEM.getId(input).getPath();
+    ShapelessRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, output, count)
+      .input(input)
+      .criterion("has_" + inputPath, conditionsFromItem(input))
+      .offerTo(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, outputPath + "_from_" + inputPath));
   }
 
-  private void simpleTwoByTwo(Consumer<FinishedRecipe> consumer, Item output, Item input, int count) {
-    String outputPath = ForgeRegistries.ITEMS.getKey(output).getPath();
-    String inputPath = ForgeRegistries.ITEMS.getKey(input).getPath();
-    ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, output, count)
+  private void simpleTwoByTwo(Consumer<RecipeJsonProvider> consumer, Item output, Item input, int count) {
+    String outputPath = Registries.ITEM.getId(output).getPath();
+    String inputPath = Registries.ITEM.getId(input).getPath();
+    ShapedRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, output, count)
       .pattern("##")
       .pattern("##")
-      .define('#', input)
-      .unlockedBy("has_" + inputPath, has(input))
-      .save(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, outputPath + "_from_" + inputPath));
+      .input('#', input)
+      .criterion("has_" + inputPath, conditionsFromItem(input))
+      .offerTo(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, outputPath + "_from_" + inputPath));
   }
 
-  private void simpleDye(Consumer<FinishedRecipe> consumer, Item dye, Item ingredient, int count) {
-    String dyePath = ForgeRegistries.ITEMS.getKey(dye).getPath();
-    String ingredientPath = ForgeRegistries.ITEMS.getKey(ingredient).getPath();
-    ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, dye, count)
-      .requires(ingredient)
-      .unlockedBy("has_" + ingredientPath, has(ingredient))
-      .save(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, dyePath + "_from_" + ingredientPath));
+  private void simpleDye(Consumer<RecipeJsonProvider> consumer, Item dye, Item ingredient, int count) {
+    String dyePath = Registries.ITEM.getId(dye).getPath();
+    String ingredientPath = Registries.ITEM.getId(ingredient).getPath();
+    ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, dye, count)
+      .input(ingredient)
+      .criterion("has_" + ingredientPath, conditionsFromItem(ingredient))
+      .offerTo(consumer, new Identifier(ProjectVibrantJourneys.MOD_ID, dyePath + "_from_" + ingredientPath));
   }
 }
