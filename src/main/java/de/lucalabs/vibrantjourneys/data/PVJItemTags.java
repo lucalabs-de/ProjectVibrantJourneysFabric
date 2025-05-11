@@ -4,12 +4,12 @@ import java.util.concurrent.CompletableFuture;
 
 public class PVJItemTags extends ItemTagsProvider {
 
-  public PVJItemTags(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> provider, CompletableFuture<TagsProvider.TagLookup<Block>> blockProvider, ExistingFileHelper existingFileHelper) {
+  public PVJItemTags(DataOutput packOutput, CompletableFuture<RegistryWrapper.WrapperLookup> provider, CompletableFuture<TagsProvider.TagLookup<Block>> blockProvider, ExistingFileHelper existingFileHelper) {
     super(packOutput, provider, blockProvider, ProjectVibrantJourneys.MOD_ID, existingFileHelper);
   }
 
   @Override
-  protected void addTags(HolderLookup.Provider provider) {
+  protected void addTags(RegistryWrapper.WrapperLookup provider) {
     copy(BlockTags.LOGS, ItemTags.LOGS);
     copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
     tag(ItemTags.CREEPER_IGNITERS).add(PVJItems.CINDERCANE);

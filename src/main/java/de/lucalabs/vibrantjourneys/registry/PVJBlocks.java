@@ -214,7 +214,7 @@ public final class PVJBlocks {
                     .luminance((state) -> 5)
                     .sounds(BlockSoundGroup.SLIME)
                     .hardness(0.2F)));
-    public static final Block PINK_VINES_DARK_GREEN = register("pink_vines_plant",
+    public static final Block PINK_VINES_PLANT = register("pink_vines_plant",
             () -> new PinkVinesPlantBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.PINK)
                     .noCollision()

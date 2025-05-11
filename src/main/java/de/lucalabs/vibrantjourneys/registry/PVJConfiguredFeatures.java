@@ -6,68 +6,68 @@ import java.util.Optional;
 public class PVJConfiguredFeatures {
   public static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registries.CONFIGURED_FEATURE, ProjectVibrantJourneys.MOD_ID);
 
-  public static final ResourceKey<ConfiguredFeature<?, ?>> MOSS_CARPETS = createKey("moss_carpet");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> LILYPADS = createKey("lilypads");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> CAVE_ROOTS = createKey("cave_roots");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> MOSS_CARPETS = createKey("moss_carpet");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> LILYPADS = createKey("lilypads");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> CAVE_ROOTS = createKey("cave_roots");
 
-  public static final ResourceKey<ConfiguredFeature<?, ?>> BEACH_GRASS = createKey("beach_grass");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> SEA_OATS = createKey("sea_oats");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> CATTAILS = createKey("cattails");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> BARK_MUSHROOM = createKey("bark_mushroom");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> NATURAL_COBWEB = createKey("natural_cobweb");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> SHORT_GRASS = createKey("short_grass");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> SMALL_CACTUS = createKey("small_cactus");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> ICICLE = createKey("icicle");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> REEDS = createKey("reeds");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> PRICKLY_BUSH = createKey("prickly_bush");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> SANDY_SPROUTS = createKey("sandy_sprouts");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> BEACH_GRASS = createKey("beach_grass");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SEA_OATS = createKey("sea_oats");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> CATTAILS = createKey("cattails");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> BARK_MUSHROOM = createKey("bark_mushroom");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> NATURAL_COBWEB = createKey("natural_cobweb");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SHORT_GRASS = createKey("short_grass");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SMALL_CACTUS = createKey("small_cactus");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ICICLE = createKey("icicle");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> REEDS = createKey("reeds");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> PRICKLY_BUSH = createKey("prickly_bush");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SANDY_SPROUTS = createKey("sandy_sprouts");
 
-  public static final ResourceKey<ConfiguredFeature<?, ?>> TWIGS = createKey("twigs");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> FALLEN_LEAVES = createKey("fallen_leaves");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> DEAD_FALLEN_LEAVES = createKey("dead_fallen_leaves");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> PINECONES = createKey("pinecones");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> SEASHELLS = createKey("seashells");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> ROCKS = createKey("rocks");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> ICE_CHUNKS = createKey("ice_chunks");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> BONES = createKey("bones");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> CHARRED_BONES = createKey("charred_bones");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> TWIGS = createKey("twigs");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> FALLEN_LEAVES = createKey("fallen_leaves");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> DEAD_FALLEN_LEAVES = createKey("dead_fallen_leaves");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> PINECONES = createKey("pinecones");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SEASHELLS = createKey("seashells");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ROCKS = createKey("rocks");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ICE_CHUNKS = createKey("ice_chunks");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> BONES = createKey("bones");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> CHARRED_BONES = createKey("charred_bones");
 
-  public static final ResourceKey<ConfiguredFeature<?, ?>> WARPED_NETTLE = createKey("warped_nettle");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> CRIMSON_NETTLE = createKey("crimson_nettle");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> CINDERCANE = createKey("cindercane");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> GLOWCAP = createKey("glowcap");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> WARPED_NETTLE = createKey("warped_nettle");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> CRIMSON_NETTLE = createKey("crimson_nettle");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> CINDERCANE = createKey("cindercane");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> GLOWCAP = createKey("glowcap");
 
-  public static final ResourceKey<ConfiguredFeature<?, ?>> OAK_FALLEN_TREE = createKey("oak_fallen_tree");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> BIRCH_FALLEN_TREE = createKey("birch_fallen_tree");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> SPRUCE_FALLEN_TREE = createKey("spruce_fallen_tree");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> JUNGLE_FALLEN_TREE = createKey("jungle_fallen_tree");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> ACACIA_FALLEN_TREE = createKey("acacia_fallen_tree");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> DARK_OAK_FALLEN_TREE = createKey("dark_oak_fallen_tree");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> CHERRY_FALLEN_TREE = createKey("cherry_fallen_tree");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> MANGROVE_FALLEN_TREE = createKey("mangrove_fallen_tree");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> OAK_FALLEN_TREE = createKey("oak_fallen_tree");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> BIRCH_FALLEN_TREE = createKey("birch_fallen_tree");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SPRUCE_FALLEN_TREE = createKey("spruce_fallen_tree");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> JUNGLE_FALLEN_TREE = createKey("jungle_fallen_tree");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ACACIA_FALLEN_TREE = createKey("acacia_fallen_tree");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> DARK_OAK_FALLEN_TREE = createKey("dark_oak_fallen_tree");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> CHERRY_FALLEN_TREE = createKey("cherry_fallen_tree");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> MANGROVE_FALLEN_TREE = createKey("mangrove_fallen_tree");
 
-  public static final ResourceKey<ConfiguredFeature<?, ?>> SEA_PICKLE = createKey("sea_pickle");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> TIDE_POOL = createKey("tide_pool");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SEA_PICKLE = createKey("sea_pickle");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> TIDE_POOL = createKey("tide_pool");
 
-  public static final ResourceKey<ConfiguredFeature<?, ?>> WATERGRASS = createKey("watergrass");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> BEACHED_KELP = createKey("beached_kelp");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> DRIED_BEACHED_KELP = createKey("dried_beached_kelp");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> GLOWING_BLUE_FUNGUS = createKey("glowing_blue_fungus");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> FLOATING_PINK_LOTUS = createKey("floating_pink_lotus");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> OAK_BUSH = createKey("oak_bush");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> YELLOW_WILDFLOWERS = createKey("yellow_wildflowers");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> ORANGE_WILDFLOWERS = createKey("orange_wildflowers");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> BLUE_WILDFLOWERS = createKey("blue_wildflowers");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> PURPLE_WILDFLOWERS = createKey("purple_wildflowers");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> WHITE_WILDFLOWERS = createKey("white_wildflowers");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> MIXED_WILDFLOWERS = createKey("mixed_wildflowers");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> SLIME_NODULE = createKey("slime_nodule");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> PINK_VINES = createKey("pink_vines");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> GRAVEL_PIT = createKey("gravel_pit");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> GOLD_PIT = createKey("gold_pit");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> MUDDY_BONES = createKey("muddy_bones");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> LOTUS_POND = createKey("lotus_pond");
-  public static final ResourceKey<ConfiguredFeature<?, ?>> HOT_SPRINGS = createKey("hot_springs");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> WATERGRASS = createKey("watergrass");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> BEACHED_KELP = createKey("beached_kelp");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> DRIED_BEACHED_KELP = createKey("dried_beached_kelp");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> GLOWING_BLUE_FUNGUS = createKey("glowing_blue_fungus");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> FLOATING_PINK_LOTUS = createKey("floating_pink_lotus");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> OAK_BUSH = createKey("oak_bush");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> YELLOW_WILDFLOWERS = createKey("yellow_wildflowers");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> ORANGE_WILDFLOWERS = createKey("orange_wildflowers");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> BLUE_WILDFLOWERS = createKey("blue_wildflowers");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> PURPLE_WILDFLOWERS = createKey("purple_wildflowers");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> WHITE_WILDFLOWERS = createKey("white_wildflowers");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> MIXED_WILDFLOWERS = createKey("mixed_wildflowers");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> SLIME_NODULE = createKey("slime_nodule");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> PINK_VINES = createKey("pink_vines");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> GRAVEL_PIT = createKey("gravel_pit");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> GOLD_PIT = createKey("gold_pit");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> MUDDY_BONES = createKey("muddy_bones");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> LOTUS_POND = createKey("lotus_pond");
+  public static final RegistryKey<ConfiguredFeature<?, ?>> HOT_SPRINGS = createKey("hot_springs");
 
   public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
 
@@ -224,11 +224,11 @@ public class PVJConfiguredFeatures {
     register(context, HOT_SPRINGS, PVJFeatures.HOT_SPRINGS, NoneFeatureConfiguration.INSTANCE);
   }
 
-  private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
-    return ResourceKey.create(Registries.CONFIGURED_FEATURE, new Identifier(ProjectVibrantJourneys.MOD_ID, name));
+  private static RegistryKey<ConfiguredFeature<?, ?>> createKey(String name) {
+    return RegistryKey.create(Registries.CONFIGURED_FEATURE, new Identifier(ProjectVibrantJourneys.MOD_ID, name));
   }
 
-  private static <FC extends FeatureConfig, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC config) {
+  private static <FC extends FeatureConfig, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, RegistryKey<ConfiguredFeature<?, ?>> key, F feature, FC config) {
     context.register(key, new ConfiguredFeature<>(feature, config));
   }
 

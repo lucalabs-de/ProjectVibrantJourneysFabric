@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 public class PVJRecipes extends RecipeProvider {
 
-  public PVJRecipes(PackOutput packOutput) {
+  public PVJRecipes(DataOutput packOutput) {
     super(packOutput);
   }
 

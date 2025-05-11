@@ -4,17 +4,17 @@ import java.util.concurrent.CompletableFuture;
 
 public class PVJBlockTags extends BlockTagsProvider {
 
-  public PVJBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
+  public PVJBlockTags(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
     super(output, lookupProvider, ProjectVibrantJourneys.MOD_ID, existingFileHelper);
   }
 
   @Override
-  protected void addTags(HolderLookup.Provider provider) {
+  protected void addTags(RegistryWrapper.WrapperLookup provider) {
     this.addModTags(provider);
     this.addModCompatTags(provider);
   }
 
-  private void addModTags(HolderLookup.Provider provider) {
+  private void addModTags(RegistryWrapper.WrapperLookup provider) {
     tag(BlockTags.OAK_LOGS).add(PVJBlocks.OAK_HOLLOW_LOG);
     tag(BlockTags.BIRCH_LOGS).add(PVJBlocks.BIRCH_HOLLOW_LOG);
     tag(BlockTags.SPRUCE_LOGS).add(PVJBlocks.SPRUCE_HOLLOW_LOG);
@@ -216,7 +216,7 @@ public class PVJBlockTags extends BlockTagsProvider {
     );
   }
 
-  private void addModCompatTags(HolderLookup.Provider provider) {
+  private void addModCompatTags(RegistryWrapper.WrapperLookup provider) {
     tag(PVJTags.COMPOST_ACTIVATORS)
       .add(PVJBlocks.GLOWCAP);
   }

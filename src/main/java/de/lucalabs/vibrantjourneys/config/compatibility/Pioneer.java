@@ -1,12 +1,6 @@
 package de.lucalabs.vibrantjourneys.config.compatibility;
 
-import dev.orderedchaos.projectvibrantjourneys.util.TreeFeatureUtils.ChanceBiomeEntry;
-import dev.orderedchaos.projectvibrantjourneys.util.PVJFeatureVars;
-import dev.orderedchaos.projectvibrantjourneys.util.TreeFeatureUtils;
-
 import java.util.Set;
-
-import static dev.orderedchaos.projectvibrantjourneys.util.TreeFeatureUtils.entry;
 
 public class Pioneer {
 

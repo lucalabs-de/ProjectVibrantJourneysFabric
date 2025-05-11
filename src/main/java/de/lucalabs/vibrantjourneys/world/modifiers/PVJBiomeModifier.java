@@ -63,7 +63,7 @@ public record PVJBiomeModifier(
     private List<RegistryEntry<Biome>> extraBlacklist = new ArrayList<>();
     private GenerationStep.Decoration decoration = GenerationStep.Decoration.VEGETAL_DECORATION;
     private final String configOption;
-    private ResourceKey<PlacedFeature> placedFeatureKey;
+    private RegistryKey<PlacedFeature> placedFeatureKey;
 
     public Builder(BootstapContext<BiomeModifier> context, String configOption) {
       this.placedFeatureGetter = context.lookup(Registries.PLACED_FEATURE);
@@ -71,7 +71,7 @@ public record PVJBiomeModifier(
       this.configOption = configOption;
     }
 
-    public Builder placedFeature(ResourceKey<PlacedFeature> placedFeatureKey) {
+    public Builder placedFeature(RegistryKey<PlacedFeature> placedFeatureKey) {
       this.placedFeatureKey = placedFeatureKey;
       return this;
     }
@@ -108,8 +108,8 @@ public record PVJBiomeModifier(
       return this;
     }
 
-    public Builder extraBiomes(ResourceKey<Biome>... biomes) {
-      for(ResourceKey<Biome> biome : biomes) {
+    public Builder extraBiomes(RegistryKey<Biome>... biomes) {
+      for(RegistryKey<Biome> biome : biomes) {
         RegistryEntry<Biome> biomeHolder = biomeGetter.getOrThrow(biome);
         this.extraBiomes.add(biomeHolder);
       }
@@ -127,16 +127,16 @@ public record PVJBiomeModifier(
       return this;
     }
 
-    public Builder extraBlacklist(ResourceKey<Biome>... biomes) {
-      for(ResourceKey<Biome> biome : biomes) {
+    public Builder extraBlacklist(RegistryKey<Biome>... biomes) {
+      for(RegistryKey<Biome> biome : biomes) {
         RegistryEntry<Biome> biomeHolder = biomeGetter.getOrThrow(biome);
         this.extraBlacklist.add(biomeHolder);
       }
       return this;
     }
 
-    public Builder extraBlacklist(List<ResourceKey<Biome>> biomes) {
-      for(ResourceKey<Biome> biome : biomes) {
+    public Builder extraBlacklist(List<RegistryKey<Biome>> biomes) {
+      for(RegistryKey<Biome> biome : biomes) {
         RegistryEntry<Biome> biomeHolder = biomeGetter.getOrThrow(biome);
         this.extraBlacklist.add(biomeHolder);
       }

@@ -1,11 +1,11 @@
 package de.lucalabs.vibrantjourneys.config.compatibility;
 
-import dev.orderedchaos.projectvibrantjourneys.util.PVJFeatureVars;
-import dev.orderedchaos.projectvibrantjourneys.util.TreeFeatureUtils;
+import de.lucalabs.vibrantjourneys.util.PVJFeatureVars;
+import de.lucalabs.vibrantjourneys.util.TreeFeatureUtils;
 
 import java.util.Set;
 
-import static dev.orderedchaos.projectvibrantjourneys.util.TreeFeatureUtils.entry;
+import static de.lucalabs.vibrantjourneys.util.TreeFeatureUtils.entry;
 
 public class Terralith {
   private static final String MOD_ID = "terralith";

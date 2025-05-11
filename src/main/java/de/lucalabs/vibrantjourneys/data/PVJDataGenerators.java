@@ -15,9 +15,9 @@ public class PVJDataGenerators {
   @SubscribeEvent
   public static void gatherData(GatherDataEvent event) {
     DataGenerator generator = event.getGenerator();
-    PackOutput packOutput = generator.getPackOutput();
+    DataOutput packOutput = generator.getPackOutput();
     ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-    CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+    CompletableFuture<RegistryWrapper.WrapperLookup> lookupProvider = event.getLookupProvider();
 
     PVJBlockTags blockTags = new PVJBlockTags(packOutput, lookupProvider, existingFileHelper);
     generator.addProvider(event.includeServer(), blockTags);

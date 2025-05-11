@@ -2,8 +2,6 @@ package de.lucalabs.vibrantjourneys.config.compatibility;
 
 import java.util.Set;
 
-import static dev.orderedchaos.projectvibrantjourneys.util.TreeFeatureUtils.entry;
-
 public class BOP {
 
   public static final Set<ChanceBiomeEntry> OAK_DEFAULT = Set.of(entry("biomesoplenty:bamboo_grove", 10),

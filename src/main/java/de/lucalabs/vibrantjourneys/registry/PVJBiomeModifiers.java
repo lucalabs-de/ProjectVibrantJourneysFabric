@@ -109,9 +109,9 @@ public class PVJBiomeModifiers {
     addSpawnModifier(context, "tropical_fish_in_jungles", BiomeTags.IS_OVERWORLD, BiomeTags.IS_JUNGLE, MobCategory.WATER_AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.TROPICAL_FISH, 25, 5, 5), "enableJungleTropicalFish");
   }
 
-  private static void addBiomeModifier(BootstapContext<BiomeModifier> context, ResourceKey<PlacedFeature> placedFeatureKey, PVJBiomeModifier.Builder builder) {
+  private static void addBiomeModifier(BootstapContext<BiomeModifier> context, RegistryKey<PlacedFeature> placedFeatureKey, PVJBiomeModifier.Builder builder) {
     BiomeModifier modifier = builder.placedFeature(placedFeatureKey).build();
-    ResourceKey<BiomeModifier> key = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, placedFeatureKey.location());
+    RegistryKey<BiomeModifier> key = RegistryKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, placedFeatureKey.location());
     context.register(key, modifier);
   }
 
@@ -125,7 +125,7 @@ public class PVJBiomeModifiers {
     String configOption
   ) {
     HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
-    ResourceKey<BiomeModifier> key = ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new Identifier(ProjectVibrantJourneys.MOD_ID, spawnName));
+    RegistryKey<BiomeModifier> key = RegistryKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new Identifier(ProjectVibrantJourneys.MOD_ID, spawnName));
     BiomeModifier modifier = new PVJSpawnModifier(dimension, biomeGetter.getOrThrow(biomes), mobCategory, spawnerData, configOption);
     context.register(key, modifier);
   }
@@ -166,7 +166,7 @@ public class PVJBiomeModifiers {
     return List.of(Tags.Biomes.IS_MUSHROOM);
   }
 
-  private static List<ResourceKey<Biome>> veryCold() {
+  private static List<RegistryKey<Biome>> veryCold() {
     return List.of(Biomes.FROZEN_RIVER, Biomes.SNOWY_PLAINS,
       Biomes.SNOWY_BEACH,
       Biomes.SNOWY_SLOPES,
