@@ -9,7 +9,7 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 
-public class PVJTags {
+public final class PVJTags {
     public static final TagKey<Biome> HAS_OAK_LOGS = createBiomeTag("has_logs/oak");
     public static final TagKey<Biome> HAS_BIRCH_LOGS = createBiomeTag("has_logs/birch");
     public static final TagKey<Biome> HAS_SPRUCE_LOGS = createBiomeTag("has_logs/spruce");
@@ -27,6 +27,9 @@ public class PVJTags {
 
     /* MOD COMPAT */
     public static final TagKey<Block> COMPOST_ACTIVATORS = createBlockTag(ModCompatUtils.ModIds.FARMERS_DELIGHT, "compost_activators");
+
+    private PVJTags() {
+    }
 
     private static TagKey<Biome> createBiomeTag(final String location) {
         return TagKey.of(RegistryKeys.BIOME, new Identifier(ProjectVibrantJourneys.MOD_ID, location));

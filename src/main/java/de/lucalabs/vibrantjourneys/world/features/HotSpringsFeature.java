@@ -123,7 +123,7 @@ public class HotSpringsFeature extends Feature<DefaultFeatureConfig> {
                   worldgenlevel.setBlockState(blockpos3, innerBlock, 2);
                   boolean flag5 = randomsource.nextFloat() < 0.3F;
                   if (flag5) {
-                    Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> watergrassFeature = worldgenlevel.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(OceanConfiguredFeatures.SEAGRASS_SIMPLE);
+                    Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> watergrassFeature = worldgenlevel.getRegistryManager().get(Registries.CONFIGURED_FEATURE).getEntry(OceanConfiguredFeatures.SEAGRASS_SIMPLE);
                     watergrassFeature.ifPresent((feature) -> feature.value().place(worldgenlevel, generator, randomsource, blockpos3.up()));
                   }
                 }

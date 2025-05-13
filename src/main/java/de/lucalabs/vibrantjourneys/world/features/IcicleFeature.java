@@ -34,7 +34,7 @@ public class IcicleFeature extends Feature<DefaultFeatureConfig> {
 
   private int checkVerticalSpace(WorldAccess level, BlockPos pos, int height) {
     Direction dir = Direction.DOWN;
-    BlockPos.Mutable mutable = pos.mutable();
+    BlockPos.Mutable mutable = pos.mutableCopy();
     int temp = 0;
     while (temp < height && level.isAir(mutable)) {
       temp++;
@@ -65,7 +65,7 @@ public class IcicleFeature extends Feature<DefaultFeatureConfig> {
 
   private void growIcicle(WorldAccess level, BlockPos pos, Direction dir, int height) {
     if (level.getBlockState(pos.offset(dir.getOpposite())).isCollisionShapeFullBlock(level, pos.offset(dir.getOpposite()))) {
-      BlockPos.Mutable blockpos$mutableblockpos = pos.mutable();
+      BlockPos.Mutable blockpos$mutableblockpos = pos.mutableCopy();
       buildBaseToTipColumn(dir, height, (state) -> {
         WorldUtils.setBlockState(level, blockpos$mutableblockpos, state, 2);
         blockpos$mutableblockpos.move(dir);

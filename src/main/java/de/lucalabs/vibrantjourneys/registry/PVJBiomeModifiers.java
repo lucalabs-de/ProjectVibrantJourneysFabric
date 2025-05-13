@@ -1,203 +1,332 @@
 package de.lucalabs.vibrantjourneys.registry;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.PrimitiveCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import de.lucalabs.vibrantjourneys.world.modifiers.PVJBiomeModifier;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.minecraft.registry.RegistryWrapper;
+import de.lucalabs.vibrantjourneys.ProjectVibrantJourneys;
+import de.lucalabs.vibrantjourneys.tags.CompatTags;
+import de.lucalabs.vibrantjourneys.tags.FabricTags;
+import de.lucalabs.vibrantjourneys.tags.ForgeCompatTags;
+import de.lucalabs.vibrantjourneys.tags.PVJTags;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.tag.BiomeTags;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.feature.PlacedFeature;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
-public class PVJBiomeModifiers extends FabricDynamicRegistryProvider {
-//  public static final DeferredRegister<Codec<? extends BiomeModifier>> BIOME_MODIFIER_SERIALIZERS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, ProjectVibrantJourneys.MOD_ID);
+public final class PVJBiomeModifiers {
 
-  public static final RegistryObject<Codec<PVJBiomeModifier>> BIOME_MODIFIER_SERIALIZER = BIOME_MODIFIER_SERIALIZERS.register("biome_modifier_serializer",
-    () -> RecordCodecBuilder.create(builder -> builder.group(
-      TagKey.codec(Registries.BIOME).fieldOf("dimension").forGetter(PVJBiomeModifier::dimension),
-      Biome.LIST_CODEC.listOf().fieldOf("biomes").forGetter(PVJBiomeModifier::biomes),
-      Biome.LIST_CODEC.listOf().fieldOf("blacklist").forGetter(PVJBiomeModifier::blacklist),
-      GenerationStep.Decoration.CODEC.fieldOf("decoration").forGetter(PVJBiomeModifier::decoration),
-      PlacedFeature.CODEC.fieldOf("feature").forGetter(PVJBiomeModifier::feature),
-      PrimitiveCodec.STRING.fieldOf("configOption").forGetter(PVJBiomeModifier::configOption)
-    ).apply(builder, PVJBiomeModifier::new)));
+//    public static final RegistryObject<Codec<PVJBiomeModifier>> BIOME_MODIFIER_SERIALIZER = BIOME_MODIFIER_SERIALIZERS.register("biome_modifier_serializer",
+//            () -> RecordCodecBuilder.create(builder -> builder.group(
+//                    TagKey.codec(Registries.BIOME).fieldOf("dimension").forGetter(PVJBiomeModifier::dimension),
+//                    Biome.LIST_CODEC.listOf().fieldOf("biomes").forGetter(PVJBiomeModifier::biomes),
+//                    Biome.LIST_CODEC.listOf().fieldOf("blacklist").forGetter(PVJBiomeModifier::blacklist),
+//                    GenerationStep.Decoration.CODEC.fieldOf("decoration").forGetter(PVJBiomeModifier::decoration),
+//                    PlacedFeature.CODEC.fieldOf("feature").forGetter(PVJBiomeModifier::feature),
+//                    PrimitiveCodec.STRING.fieldOf("configOption").forGetter(PVJBiomeModifier::configOption)
+//            ).apply(builder, PVJBiomeModifier::new)));
+//
+//    public static final RegistryObject<Codec<PVJSpawnModifier>> SPAWN_MODIFIER_SERIALIZER = BIOME_MODIFIER_SERIALIZERS.register("spawn_modifier_serializer",
+//            () -> RecordCodecBuilder.create(builder -> builder.group(
+//                    TagKey.codec(Registries.BIOME).fieldOf("dimension").forGetter(PVJSpawnModifier::dimension),
+//                    Biome.LIST_CODEC.fieldOf("biomes").forGetter(PVJSpawnModifier::biomes),
+//                    MobCategory.CODEC.fieldOf("category").forGetter(PVJSpawnModifier::category),
+//                    MobSpawnSettings.SpawnerData.CODEC.fieldOf("data").forGetter(PVJSpawnModifier::data),
+//                    PrimitiveCodec.STRING.fieldOf("configOption").forGetter(PVJSpawnModifier::configOption)
+//            ).apply(builder, PVJSpawnModifier::new)));
 
-  public static final RegistryObject<Codec<PVJSpawnModifier>> SPAWN_MODIFIER_SERIALIZER = BIOME_MODIFIER_SERIALIZERS.register("spawn_modifier_serializer",
-    () -> RecordCodecBuilder.create(builder -> builder.group(
-      TagKey.codec(Registries.BIOME).fieldOf("dimension").forGetter(PVJSpawnModifier::dimension),
-      Biome.LIST_CODEC.fieldOf("biomes").forGetter(PVJSpawnModifier::biomes),
-      MobCategory.CODEC.fieldOf("category").forGetter(PVJSpawnModifier::category),
-      MobSpawnSettings.SpawnerData.CODEC.fieldOf("data").forGetter(PVJSpawnModifier::data),
-      PrimitiveCodec.STRING.fieldOf("configOption").forGetter(PVJSpawnModifier::configOption)
-    ).apply(builder, PVJSpawnModifier::new)));
+    private PVJBiomeModifiers() {
+    }
 
-  public static void bootstrap(BootstapContext<BiomeModifier> context) {
-    bootstrapBiomeModifiers(context);
-    bootstrapSpawnModifiers(context);
-  }
+    public static void initialize() {
+        ProjectVibrantJourneys.LOGGER.info("initializing biome modifiers");
 
-  public static void bootstrapBiomeModifiers(BootstapContext<BiomeModifier> context) {
-    addBiomeModifier(context, PVJPlacements.TWIGS, new PVJBiomeModifier.Builder(context, "enableTwigs").tag(overworld()).blacklist(desert(), oceanOrBeach(), mushroom(), badlands()).extraBlacklist(veryCold()).extraBlacklist(Biomes.STONY_SHORE));
-    addBiomeModifier(context, PVJPlacements.FALLEN_LEAVES, new PVJBiomeModifier.Builder(context, "enableFallenLeaves").tag(overworld()).blacklist(desert(), oceanOrBeach(), mushroom(), badlands()).extraBlacklist(veryCold()).extraBlacklist(Biomes.STONY_SHORE));
-    addBiomeModifier(context, PVJPlacements.DEAD_FALLEN_LEAVES, new PVJBiomeModifier.Builder(context, "enableFallenLeaves").extraBiomes(Biomes.WOODED_BADLANDS));
-    addBiomeModifier(context, PVJPlacements.DENSE_DEAD_FALLEN_LEAVES, new PVJBiomeModifier.Builder(context, "enableFallenLeaves").extraBiomes(Biomes.OLD_GROWTH_PINE_TAIGA, Biomes.OLD_GROWTH_SPRUCE_TAIGA));
-    addBiomeModifier(context, PVJPlacements.PINECONES, new PVJBiomeModifier.Builder(context, "enablePinecones").tag(coniferous()));
-    addBiomeModifier(context, PVJPlacements.SEASHELLS, new PVJBiomeModifier.Builder(context, "enableSeashells").tag(oceanOrBeach()));
-    addBiomeModifier(context, PVJPlacements.OCEAN_FLOOR_SEASHELLS, new PVJBiomeModifier.Builder(context, "enableSeashells").tag(oceanOrBeach()));
-    addBiomeModifier(context, PVJPlacements.ROCKS, new PVJBiomeModifier.Builder(context, "enableRocks").tag(overworld()).blacklist(mushroom()).extraBlacklist(veryCold()));
-    addBiomeModifier(context, PVJPlacements.BONES, new PVJBiomeModifier.Builder(context, "enableBones").tag(overworld()).blacklist(mushroom()).extraBlacklist(veryCold()));
-    addBiomeModifier(context, PVJPlacements.CAVE_ROCKS, new PVJBiomeModifier.Builder(context, "enableRocks").tag(overworld()).blacklist(mushroom()).extraBlacklist(veryCold()));
-    addBiomeModifier(context, PVJPlacements.CAVE_BONES, new PVJBiomeModifier.Builder(context, "enableBones").tag(overworld()).blacklist(mushroom()).extraBlacklist(veryCold()));
-    addBiomeModifier(context, PVJPlacements.ICE_CHUNKS, new PVJBiomeModifier.Builder(context, "enableIceChunks").tag(snowy()).extraBlacklist(Biomes.SNOWY_BEACH));
-    addBiomeModifier(context, PVJPlacements.MOSS_CARPET, new PVJBiomeModifier.Builder(context, "enableMossCarpets").extraBiomes(Biomes.OLD_GROWTH_PINE_TAIGA, Biomes.OLD_GROWTH_SPRUCE_TAIGA));
-    addBiomeModifier(context, PVJPlacements.BARK_MUSHROOM, new PVJBiomeModifier.Builder(context, "enableBarkMushrooms").tag(overworld()));
-    addBiomeModifier(context, PVJPlacements.SEA_OATS, new PVJBiomeModifier.Builder(context, "enableSeaOats").tag(beach()).extraBlacklist(veryCold()));
-    addBiomeModifier(context, PVJPlacements.BEACH_GRASS, new PVJBiomeModifier.Builder(context, "enableBeachGrass").tag(beach()).extraBlacklist(veryCold()));
-    addBiomeModifier(context, PVJPlacements.CATTAILS, new PVJBiomeModifier.Builder(context, "enableCattails").tag(overworld()).blacklist(oceanOrBeach()).extraBlacklist(veryCold()).extraBlacklist(Biomes.STONY_SHORE));
-    addBiomeModifier(context, PVJPlacements.SHORT_GRASS, new PVJBiomeModifier.Builder(context, "enableShortGrass").tag(overworld()).blacklist(mushroom()).extraBlacklist(Biomes.SNOWY_PLAINS));
-    addBiomeModifier(context, PVJPlacements.NATURAL_COBWEB, new PVJBiomeModifier.Builder(context, "enableNaturalCobwebs").tag(overworld()).blacklist(mushroom()).extraBlacklist(Biomes.SNOWY_PLAINS));
-    addBiomeModifier(context, PVJPlacements.SMALL_CACTUS, new PVJBiomeModifier.Builder(context, "enableSmallCacti").tag(desert()));
-    addBiomeModifier(context, PVJPlacements.EXTRA_SEAGRASS, new PVJBiomeModifier.Builder(context, "enableExtraSeagrass").tag(overworld()).blacklist(oceanOrBeach(), desert(), badlands()).extraBlacklist(Biomes.STONY_SHORE));
-    addBiomeModifier(context, PVJPlacements.EXTRA_LILYPADS, new PVJBiomeModifier.Builder(context, "enableExtraLilypads").tag(overworld()).blacklist(oceanOrBeach(), desert(), badlands()).extraBlacklist(veryCold()).extraBlacklist(Biomes.STONY_SHORE));
-    addBiomeModifier(context, PVJPlacements.EXTRA_GRASS, new PVJBiomeModifier.Builder(context, "enableExtraRiverGrass").tag(river()));
-    addBiomeModifier(context, PVJPlacements.TIDE_POOL, new PVJBiomeModifier.Builder(context, "enableTidePools").extraBiomes(Biomes.STONY_SHORE));
-    addBiomeModifier(context, PVJPlacements.CAVE_ROOTS, new PVJBiomeModifier.Builder(context, "enableCaveRoots").tag(overworld()));
-    addBiomeModifier(context, PVJPlacements.REEDS, new PVJBiomeModifier.Builder(context, "enableReeds").tag(plainsType()).extraBlacklist(Biomes.SNOWY_PLAINS));
-    addBiomeModifier(context, PVJPlacements.PRICKLY_BUSH, new PVJBiomeModifier.Builder(context, "enablePricklyBush").extraBiomes(Biomes.WOODED_BADLANDS));
-    addBiomeModifier(context, PVJPlacements.ICICLE, new PVJBiomeModifier.Builder(context, "enableIcicles").tag(snowy()));
-    addBiomeModifier(context, PVJPlacements.SANDY_SPROUTS, new PVJBiomeModifier.Builder(context, "enableSandySprouts").tag(beach()).extraBlacklist(veryCold()));
-    addBiomeModifier(context, PVJPlacements.WATERGRASS, new PVJBiomeModifier.Builder(context, "enableWatergrass").tag(overworld()).blacklist(oceanOrBeach(), badlands()).extraBlacklist(veryCold()).extraBlacklist(Biomes.STONY_SHORE));
-    addBiomeModifier(context, PVJPlacements.GRAVEL_PIT, new PVJBiomeModifier.Builder(context, "enableGravelPits").decoration(GenerationStep.Decoration.LAKES).extraBiomes(Biomes.OLD_GROWTH_BIRCH_FOREST, Biomes.BIRCH_FOREST));
-    addBiomeModifier(context, PVJPlacements.GOLD_PIT, new PVJBiomeModifier.Builder(context, "enableGoldPits").decoration(GenerationStep.Decoration.LAKES).tag(List.of(BiomeTags.IS_BADLANDS)));
-    addBiomeModifier(context, PVJPlacements.BEACHED_KELP, new PVJBiomeModifier.Builder(context, "enableBeachedKelp").extraBiomes(Biomes.BEACH));
-    addBiomeModifier(context, PVJPlacements.DRIED_BEACHED_KELP, new PVJBiomeModifier.Builder(context, "enableDriedBeachedKelp").extraBiomes(Biomes.BEACH));
-    addBiomeModifier(context, PVJPlacements.GLOWING_BLUE_FUNGUS, new PVJBiomeModifier.Builder(context, "enableGlowingBlueFungus").extraBiomes(Biomes.DEEP_DARK));
-    addBiomeModifier(context, PVJPlacements.MUDDY_BONES, new PVJBiomeModifier.Builder(context, "enableMuddyBones").extraBiomes(Biomes.MANGROVE_SWAMP));
-    addBiomeModifier(context, PVJPlacements.LOTUS_POND, new PVJBiomeModifier.Builder(context, "enableLotusPonds").decoration(GenerationStep.Decoration.LAKES).extraBiomes(Biomes.CHERRY_GROVE));
-    addBiomeModifier(context, PVJPlacements.FLOATING_PINK_LOTUS, new PVJBiomeModifier.Builder(context, "enableFloatingPinkLotus").extraBiomes(Biomes.FLOWER_FOREST));
-    addBiomeModifier(context, PVJPlacements.HOT_SPRINGS, new PVJBiomeModifier.Builder(context, "enableHotSprings").tag(List.of(BiomeTags.IS_TAIGA)));
-    addBiomeModifier(context, PVJPlacements.OAK_BUSH, new PVJBiomeModifier.Builder(context, "enableBushes").tag(plainsType()));
-    addBiomeModifier(context, PVJPlacements.YELLOW_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.MEADOW));
-    addBiomeModifier(context, PVJPlacements.ORANGE_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.MEADOW));
-    addBiomeModifier(context, PVJPlacements.BLUE_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.MEADOW));
-    addBiomeModifier(context, PVJPlacements.PURPLE_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.MEADOW));
-    addBiomeModifier(context, PVJPlacements.WHITE_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.MEADOW));
-    addBiomeModifier(context, PVJPlacements.MIXED_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.MEADOW));
-    addBiomeModifier(context, PVJPlacements.MANY_YELLOW_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.FLOWER_FOREST));
-    addBiomeModifier(context, PVJPlacements.MANY_ORANGE_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.FLOWER_FOREST));
-    addBiomeModifier(context, PVJPlacements.MANY_BLUE_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.FLOWER_FOREST));
-    addBiomeModifier(context, PVJPlacements.MANY_PURPLE_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.FLOWER_FOREST));
-    addBiomeModifier(context, PVJPlacements.MANY_WHITE_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.FLOWER_FOREST));
-    addBiomeModifier(context, PVJPlacements.MANY_MIXED_WILDFLOWERS, new PVJBiomeModifier.Builder(context, "enableWildflowers").extraBiomes(Biomes.FLOWER_FOREST));
-    addBiomeModifier(context, PVJPlacements.SLIME_NODULE, new PVJBiomeModifier.Builder(context, "enableSlimeNodules").tag(List.of(Tags.Biomes.IS_SWAMP)));
-    addBiomeModifier(context, PVJPlacements.PINK_VINES, new PVJBiomeModifier.Builder(context, "enablePinkVines").extraBiomes(Biomes.CHERRY_GROVE));
+        initBiomeModifiers();
+        initSpawnModifiers();
+    }
 
-    addBiomeModifier(context, PVJPlacements.OAK_FALLEN_TREE, new PVJBiomeModifier.Builder(context, "enableFallenTrees").tag(List.of(PVJTags.HAS_OAK_LOGS)));
-    addBiomeModifier(context, PVJPlacements.BIRCH_FALLEN_TREE, new PVJBiomeModifier.Builder(context, "enableFallenTrees").tag(List.of(PVJTags.HAS_BIRCH_LOGS)));
-    addBiomeModifier(context, PVJPlacements.SPRUCE_FALLEN_TREE, new PVJBiomeModifier.Builder(context, "enableFallenTrees").tag(List.of(PVJTags.HAS_SPRUCE_LOGS)));
-    addBiomeModifier(context, PVJPlacements.JUNGLE_FALLEN_TREE, new PVJBiomeModifier.Builder(context, "enableFallenTrees").tag(List.of(PVJTags.HAS_JUNGLE_LOGS)));
-    addBiomeModifier(context, PVJPlacements.ACACIA_FALLEN_TREE, new PVJBiomeModifier.Builder(context, "enableFallenTrees").tag(List.of(PVJTags.HAS_ACACIA_LOGS)));
-    addBiomeModifier(context, PVJPlacements.DARK_OAK_FALLEN_TREE, new PVJBiomeModifier.Builder(context, "enableFallenTrees").tag(List.of(PVJTags.HAS_DARK_OAK_LOGS)));
-    addBiomeModifier(context, PVJPlacements.CHERRY_FALLEN_TREE, new PVJBiomeModifier.Builder(context, "enableFallenTrees").tag(List.of(PVJTags.HAS_CHERRY_LOGS)));
-    addBiomeModifier(context, PVJPlacements.MANGROVE_FALLEN_TREE, new PVJBiomeModifier.Builder(context, "enableFallenTrees").tag(List.of(PVJTags.HAS_MANGROVE_LOGS)));
+    private static void initBiomeModifiers() {
+        addBiomeModifier(
+                PVJPlacements.TWIGS,
+                overworld()
+                        .and(blacklist(BiomeType.DESERT, BiomeType.OCEAN, BiomeType.BEACH, BiomeType.BADLANDS, BiomeType.VERY_COLD))
+                        .and(blacklist(BiomeKeys.STONY_SHORE)),
+                () -> true); // TODO use proper config conditions
+        addBiomeModifier(
+                PVJPlacements.FALLEN_LEAVES,
+                overworld()
+                        .and(blacklist(BiomeType.DESERT, BiomeType.OCEAN, BiomeType.BEACH, BiomeType.MUSHROOM, BiomeType.BADLANDS, BiomeType.VERY_COLD))
+                        .and(blacklist(BiomeKeys.STONY_SHORE)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.DEAD_FALLEN_LEAVES,
+                biomes(BiomeKeys.WOODED_BADLANDS),
+                () -> true);
 
-    addBiomeModifier(context, PVJPlacements.CHARRED_BONES, new PVJBiomeModifier.Builder(context, "enableCharredBones").dimension(Dimension.NETHER).tag(List.of(BiomeTags.IS_NETHER)));
-    addBiomeModifier(context, PVJPlacements.GLOWCAP, new PVJBiomeModifier.Builder(context, "enableGlowcap").dimension(Dimension.NETHER).tag(List.of(BiomeTags.IS_NETHER)));
-    addBiomeModifier(context, PVJPlacements.CINDERCANE, new PVJBiomeModifier.Builder(context, "enableCindercane").dimension(Dimension.NETHER).tag(List.of(BiomeTags.IS_NETHER)));
-    addBiomeModifier(context, PVJPlacements.WARPED_NETTLE, new PVJBiomeModifier.Builder(context, "enableNetherNettles").dimension(Dimension.NETHER).extraBiomes(Biomes.WARPED_FOREST));
-    addBiomeModifier(context, PVJPlacements.CRIMSON_NETTLE, new PVJBiomeModifier.Builder(context, "enableNetherNettles").dimension(Dimension.NETHER).extraBiomes(Biomes.CRIMSON_FOREST));
-  }
+        addBiomeModifier(
+                PVJPlacements.DENSE_DEAD_FALLEN_LEAVES,
+                biomes(BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.PINECONES,
+                biomes(BiomeType.CONIFEROUS),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.SEASHELLS,
+                biomes(BiomeType.OCEAN, BiomeType.BEACH),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.OCEAN_FLOOR_SEASHELLS,
+                biomes(BiomeType.OCEAN, BiomeType.BEACH),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.ROCKS,
+                overworld().and(blacklist(BiomeType.MUSHROOM, BiomeType.VERY_COLD)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.BONES,
+                overworld().and(blacklist(BiomeType.MUSHROOM, BiomeType.VERY_COLD)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.CAVE_ROCKS,
+                overworld().and(blacklist(BiomeType.MUSHROOM, BiomeType.VERY_COLD)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.CAVE_BONES,
+                overworld().and(blacklist(BiomeType.MUSHROOM, BiomeType.VERY_COLD)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.ICE_CHUNKS,
+                biomes(BiomeType.SNOWY).and(blacklist(BiomeKeys.SNOWY_BEACH)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.MOSS_CARPET,
+                biomes(BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA),
+                () -> true);
+        addBiomeModifier(PVJPlacements.BARK_MUSHROOM, overworld(), () -> true);
+        addBiomeModifier(PVJPlacements.SEA_OATS, biomes(BiomeType.BEACH).and(blacklist(BiomeType.VERY_COLD)), () -> true);
+        addBiomeModifier(PVJPlacements.BEACH_GRASS, biomes(BiomeType.BEACH).and(blacklist(BiomeType.VERY_COLD)), () -> true);
+        addBiomeModifier(
+                PVJPlacements.CATTAILS,
+                overworld()
+                        .and(blacklist(BiomeType.OCEAN, BiomeType.BEACH, BiomeType.VERY_COLD))
+                        .and(blacklist(BiomeKeys.STONY_SHORE)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.SHORT_GRASS,
+                overworld()
+                        .and(blacklist(BiomeType.MUSHROOM))
+                        .and(blacklist(BiomeKeys.SNOWY_PLAINS)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.NATURAL_COBWEB,
+                overworld()
+                        .and(blacklist(BiomeType.MUSHROOM))
+                        .and(blacklist(BiomeKeys.SNOWY_PLAINS)),
+                () -> true);
+        addBiomeModifier(PVJPlacements.SMALL_CACTUS, biomes(BiomeType.DESERT), () -> true);
+        addBiomeModifier(
+                PVJPlacements.EXTRA_SEAGRASS,
+                overworld()
+                        .and(blacklist(BiomeType.OCEAN, BiomeType.BEACH, BiomeType.DESERT, BiomeType.BADLANDS))
+                        .and(blacklist(BiomeKeys.STONY_SHORE)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.EXTRA_LILYPADS,
+                overworld()
+                        .and(blacklist(BiomeType.OCEAN, BiomeType.BEACH, BiomeType.DESERT, BiomeType.BADLANDS, BiomeType.VERY_COLD))
+                        .and(blacklist(BiomeKeys.STONY_SHORE)),
+                () -> true);
+        addBiomeModifier(PVJPlacements.EXTRA_GRASS, biomes(BiomeType.RIVER), () -> true);
+        addBiomeModifier(PVJPlacements.TIDE_POOL, biomes(BiomeKeys.STONY_SHORE), () -> true);
+        addBiomeModifier(PVJPlacements.CAVE_ROOTS, overworld(), () -> true);
+        addBiomeModifier(PVJPlacements.REEDS, biomes(BiomeType.PLAINS).and(blacklist(BiomeKeys.SNOWY_PLAINS)), () -> true);
+        addBiomeModifier(PVJPlacements.PRICKLY_BUSH, biomes(BiomeKeys.WOODED_BADLANDS), () -> true);
+        addBiomeModifier(PVJPlacements.ICICLE, biomes(BiomeType.SNOWY), () -> true);
+        addBiomeModifier(PVJPlacements.SANDY_SPROUTS, biomes(BiomeType.BEACH).and(blacklist(BiomeType.VERY_COLD)), () -> true);
+        addBiomeModifier(
+                PVJPlacements.WATERGRASS,
+                overworld()
+                        .and(blacklist(BiomeType.OCEAN, BiomeType.BEACH, BiomeType.BADLANDS, BiomeType.VERY_COLD))
+                        .and(blacklist(BiomeKeys.STONY_SHORE)),
+                () -> true);
+        addBiomeModifier(
+                PVJPlacements.GRAVEL_PIT,
+                biomes(BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.BIRCH_FOREST),
+                GenerationStep.Feature.LAKES,
+                () -> true);
+        addBiomeModifier(PVJPlacements.GOLD_PIT, biomes(BiomeType.BADLANDS), GenerationStep.Feature.LAKES, () -> true);
+        addBiomeModifier(PVJPlacements.BEACHED_KELP, biomes(BiomeKeys.BEACH), () -> true);
+        addBiomeModifier(PVJPlacements.DRIED_BEACHED_KELP, biomes(BiomeKeys.BEACH), () -> true);
+        addBiomeModifier(PVJPlacements.GLOWING_BLUE_FUNGUS, biomes(BiomeKeys.DEEP_DARK), () -> true);
+        addBiomeModifier(PVJPlacements.MUDDY_BONES, biomes(BiomeKeys.MANGROVE_SWAMP), () -> true);
+        addBiomeModifier(PVJPlacements.LOTUS_POND, biomes(BiomeKeys.CHERRY_GROVE), GenerationStep.Feature.LAKES, () -> true);
+        addBiomeModifier(PVJPlacements.FLOATING_PINK_LOTUS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
+        addBiomeModifier(PVJPlacements.HOT_SPRINGS, c -> c.hasTag(BiomeTags.IS_TAIGA), () -> true);
+        addBiomeModifier(PVJPlacements.OAK_BUSH, biomes(BiomeType.PLAINS), () -> true);
+        addBiomeModifier(PVJPlacements.YELLOW_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
+        addBiomeModifier(PVJPlacements.ORANGE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
+        addBiomeModifier(PVJPlacements.BLUE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
+        addBiomeModifier(PVJPlacements.PURPLE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
+        addBiomeModifier(PVJPlacements.WHITE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
+        addBiomeModifier(PVJPlacements.MIXED_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
+        addBiomeModifier(PVJPlacements.MANY_YELLOW_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
+        addBiomeModifier(PVJPlacements.MANY_ORANGE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
+        addBiomeModifier(PVJPlacements.MANY_BLUE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
+        addBiomeModifier(PVJPlacements.MANY_PURPLE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
+        addBiomeModifier(PVJPlacements.MANY_WHITE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
+        addBiomeModifier(PVJPlacements.MANY_MIXED_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
+        addBiomeModifier(PVJPlacements.SLIME_NODULE, biomes(BiomeType.SWAMP), () -> true);
+        addBiomeModifier(PVJPlacements.PINK_VINES, biomes(BiomeKeys.CHERRY_GROVE), () -> true);
 
-  public static void bootstrapSpawnModifiers(BootstapContext<BiomeModifier> context) {
-    addSpawnModifier(context, "tropical_fish_in_jungles", BiomeTags.IS_OVERWORLD, BiomeTags.IS_JUNGLE, MobCategory.WATER_AMBIENT, new MobSpawnSettings.SpawnerData(EntityType.TROPICAL_FISH, 25, 5, 5), "enableJungleTropicalFish");
-  }
+        addBiomeModifier(PVJPlacements.OAK_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_OAK_LOGS), () -> true);
+        addBiomeModifier(PVJPlacements.BIRCH_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_BIRCH_LOGS), () -> true);
+        addBiomeModifier(PVJPlacements.SPRUCE_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_SPRUCE_LOGS), () -> true);
+        addBiomeModifier(PVJPlacements.JUNGLE_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_JUNGLE_LOGS), () -> true);
+        addBiomeModifier(PVJPlacements.ACACIA_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_ACACIA_LOGS), () -> true);
+        addBiomeModifier(PVJPlacements.DARK_OAK_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_DARK_OAK_LOGS), () -> true);
+        addBiomeModifier(PVJPlacements.CHERRY_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_CHERRY_LOGS), () -> true);
+        addBiomeModifier(PVJPlacements.MANGROVE_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_MANGROVE_LOGS), () -> true);
 
-  private static void addBiomeModifier(BootstapContext<BiomeModifier> context, RegistryKey<PlacedFeature> placedFeatureKey, PVJBiomeModifier.Builder builder) {
-    BiomeModifier modifier = builder.placedFeature(placedFeatureKey).build();
-    RegistryKey<BiomeModifier> key = RegistryKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, placedFeatureKey.location());
-    context.register(key, modifier);
-  }
+        addBiomeModifier(PVJPlacements.CHARRED_BONES, nether(), () -> true);
+        addBiomeModifier(PVJPlacements.GLOWCAP, nether(), () -> true);
+        addBiomeModifier(PVJPlacements.CINDERCANE, nether(), () -> true);
+        addBiomeModifier(PVJPlacements.WARPED_NETTLE, biomes(BiomeKeys.WARPED_FOREST), () -> true);
+        addBiomeModifier(PVJPlacements.CRIMSON_NETTLE, biomes(BiomeKeys.CRIMSON_FOREST), () -> true);
+    }
 
-  private static void addSpawnModifier(
-    BootstapContext<BiomeModifier> context,
-    String spawnName,
-    TagKey<Biome> dimension,
-    TagKey<Biome> biomes,
-    MobCategory mobCategory,
-    MobSpawnSettings.SpawnerData spawnerData,
-    String configOption
-  ) {
-    HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
-    RegistryKey<BiomeModifier> key = RegistryKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new Identifier(ProjectVibrantJourneys.MOD_ID, spawnName));
-    BiomeModifier modifier = new PVJSpawnModifier(dimension, biomeGetter.getOrThrow(biomes), mobCategory, spawnerData, configOption);
-    context.register(key, modifier);
-  }
+    private static void initSpawnModifiers() {
+        addSpawnModifier(
+                "tropical_fish_in_jungles",
+                overworld().and(biomes(BiomeType.JUNGLE)),
+                SpawnGroup.WATER_AMBIENT,
+                EntityType.TROPICAL_FISH,
+                25,
+                5,
+                5,
+                () -> true);
+    }
 
-  private static List<TagKey<Biome>> forestOrPlains() {
-    return List.of(Tags.Biomes.IS_PLAINS, BiomeTags.IS_FOREST);
-  }
+    private static void addBiomeModifier(
+            RegistryKey<PlacedFeature> feature,
+            Predicate<BiomeSelectionContext> condition,
+            Supplier<Boolean> configCondition) {
+        addBiomeModifier(feature, condition, GenerationStep.Feature.VEGETAL_DECORATION, configCondition);
+    }
 
-  private static List<TagKey<Biome>> plainsType() {
-    return List.of(Tags.Biomes.IS_PLAINS, BiomeTags.IS_SAVANNA);
-  }
+    private static void addBiomeModifier(
+            RegistryKey<PlacedFeature> feature,
+            Predicate<BiomeSelectionContext> condition,
+            GenerationStep.Feature featureType,
+            Supplier<Boolean> configCondition) {
+        if (configCondition.get()) {
+            BiomeModifications.addFeature(condition, featureType, feature);
+        }
+    }
 
-  private static List<TagKey<Biome>> oceanOrBeach() {
-    return List.of(BiomeTags.IS_BEACH, BiomeTags.IS_OCEAN);
-  }
+    @SuppressWarnings("SameParameterValue")
+    private static void addSpawnModifier(
+            String spawnName,
+            Predicate<BiomeSelectionContext> condition,
+            SpawnGroup group,
+            EntityType<?> entityType,
+            int weight,
+            int minGroupSize,
+            int maxGroupSize,
+            Supplier<Boolean> configCondition
+    ) {
+        if (configCondition.get()) {
+            BiomeModifications.addSpawn(condition, group, entityType, weight, minGroupSize, maxGroupSize);
+        }
+    }
 
-  private static List<TagKey<Biome>> badlands() {
-    return List.of(BiomeTags.IS_BADLANDS);
-  }
+    private static List<RegistryKey<Biome>> veryCold() {
+        return List.of(
+                BiomeKeys.FROZEN_RIVER,
+                BiomeKeys.SNOWY_PLAINS,
+                BiomeKeys.SNOWY_BEACH,
+                BiomeKeys.SNOWY_SLOPES,
+                BiomeKeys.ICE_SPIKES,
+                BiomeKeys.FROZEN_OCEAN,
+                BiomeKeys.DEEP_FROZEN_OCEAN,
+                BiomeKeys.JAGGED_PEAKS);
+    }
 
-  private static List<TagKey<Biome>> beach() {
-    return List.of(BiomeTags.IS_BEACH);
-  }
+    private static Predicate<BiomeSelectionContext> overworld() {
+        return c -> c.hasTag(BiomeTags.IS_OVERWORLD);
+    }
 
-  private static List<TagKey<Biome>> river() {
-    return List.of(BiomeTags.IS_RIVER);
-  }
+    private static Predicate<BiomeSelectionContext> nether() {
+        return c -> c.hasTag(BiomeTags.IS_NETHER);
+    }
 
-  private static List<TagKey<Biome>> coniferous() {
-    return List.of(Tags.Biomes.IS_CONIFEROUS);
-  }
+    @SafeVarargs
+    private static Predicate<BiomeSelectionContext> biomes(RegistryKey<Biome>... biomes) {
+        Predicate<BiomeSelectionContext> pred = (c -> true);
+        for (RegistryKey<Biome> biome : biomes) {
+            pred = pred.and(c -> c.getBiomeKey().equals(biome));
+        }
 
-  private static List<TagKey<Biome>> snowy() {
-    return List.of(Tags.Biomes.IS_SNOWY);
-  }
+        return pred;
+    }
 
-  private static List<TagKey<Biome>> mushroom() {
-    return List.of(Tags.Biomes.IS_MUSHROOM);
-  }
+    private static Predicate<BiomeSelectionContext> biomes(BiomeType... biomes) {
+        Predicate<BiomeSelectionContext> pred = (c -> true);
+        for (BiomeType t : biomes) {
+            pred = pred.or(fromBiomeType(t));
+        }
 
-  private static List<RegistryKey<Biome>> veryCold() {
-    return List.of(Biomes.FROZEN_RIVER, Biomes.SNOWY_PLAINS,
-      Biomes.SNOWY_BEACH,
-      Biomes.SNOWY_SLOPES,
-      Biomes.ICE_SPIKES,
-      Biomes.FROZEN_OCEAN,
-      Biomes.DEEP_FROZEN_OCEAN,
-      Biomes.JAGGED_PEAKS);
-  }
+        return pred;
+    }
 
-  private static List<TagKey<Biome>> desert() {
-    return List.of(Tags.Biomes.IS_DESERT);
-  }
+    @SafeVarargs
+    private static Predicate<BiomeSelectionContext> blacklist(RegistryKey<Biome>... biomes) {
+        Predicate<BiomeSelectionContext> pred = (c -> true);
+        for (RegistryKey<Biome> biome : biomes) {
+            pred = pred.and(c -> !c.getBiomeKey().equals(biome));
+        }
 
-  private static List<TagKey<Biome>> overworld() {
-    return List.of(BiomeTags.IS_OVERWORLD);
-  }
+        return pred;
+    }
 
-  private static List<TagKey<Biome>> nether() {
-    return List.of(BiomeTags.IS_NETHER);
-  }
+    private static Predicate<BiomeSelectionContext> blacklist(BiomeType... biomes) {
+        Predicate<BiomeSelectionContext> pred = (c -> true);
 
-  @Override
-  protected void configure(RegistryWrapper.WrapperLookup wrapperLookup, Entries entries) {
+        for (BiomeType t : biomes) {
+            pred = pred.and(fromBiomeType(t).negate());
+        }
 
-  }
+        return pred;
+    }
 
-  @Override
-  public String getName() {
-    return "";
-  }
+    private static Predicate<BiomeSelectionContext> fromBiomeType(BiomeType t) {
+        return switch (t) {
+            case FOREST -> c -> c.hasTag(BiomeTags.IS_FOREST);
+            case PLAINS -> c -> c.hasTag(FabricTags.IS_PLAINS) || c.hasTag(FabricTags.PLAINS);
+            case OCEAN -> c -> c.hasTag(BiomeTags.IS_OCEAN);
+            case BEACH -> c -> c.hasTag(BiomeTags.IS_BEACH);
+            case BADLANDS -> c -> c.hasTag(BiomeTags.IS_BADLANDS);
+            case RIVER -> c -> c.hasTag(BiomeTags.IS_RIVER);
+            case CONIFEROUS -> c -> c.hasTag(ForgeCompatTags.IS_CONIFEROUS) || c.hasTag(CompatTags.IS_CONIFEROUS);
+            case SNOWY ->
+                    c -> c.hasTag(ForgeCompatTags.IS_SNOWY) || c.hasTag(FabricTags.IS_SNOWY) || c.hasTag(FabricTags.SNOWY);
+            case MUSHROOM -> c -> c.hasTag(FabricTags.IS_MUSHROOM) || c.hasTag(FabricTags.MUSHROOM);
+            case DESERT -> c -> c.hasTag(FabricTags.IS_DESERT) || c.hasTag(FabricTags.DESERT);
+            case SWAMP -> c -> c.hasTag(FabricTags.IS_SWAMP) || c.hasTag(FabricTags.SWAMP);
+            case TAIGA -> c -> c.hasTag(BiomeTags.IS_TAIGA);
+            case JUNGLE -> c -> c.hasTag(BiomeTags.IS_JUNGLE);
+            case VERY_COLD -> c -> veryCold().contains(c.getBiomeKey());
+        };
+    }
+
+    private enum BiomeType {
+        FOREST, PLAINS, OCEAN, DESERT, BEACH, BADLANDS, RIVER, CONIFEROUS, SNOWY, MUSHROOM, SWAMP, TAIGA, JUNGLE, VERY_COLD
+    }
+
 }

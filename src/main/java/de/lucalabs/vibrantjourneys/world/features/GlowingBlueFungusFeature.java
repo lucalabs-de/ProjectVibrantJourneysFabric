@@ -13,7 +13,7 @@ public class GlowingBlueFungusFeature extends Feature<DefaultFeatureConfig> {
     Random randomSource = context.getRandom();
     BlockPos origin = context.getOrigin();
     StructureWorldAccess level = context.getWorld();
-    BlockPos.Mutable mutable = origin.mutable();
+    BlockPos.Mutable mutable = origin.mutableCopy();
     GlowingFungusBlock blockToPlace = (GlowingFungusBlock) PVJBlocks.GLOWING_BLUE_FUNGUS;
     int count = 0;
 

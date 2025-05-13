@@ -2,7 +2,7 @@ package de.lucalabs.vibrantjourneys.world.modifiers;
 
 import com.mojang.serialization.Codec;
 
-public record PVJSpawnModifier(TagKey<Biome> dimension, HolderSet<Biome> biomes, MobCategory category,
+public record PVJSpawnModifier(TagKey<Biome> dimension, RegistryEntryList<Biome> biomes, MobCategory category,
                                MobSpawnSettings.SpawnerData data, String configOption) implements BiomeModifier {
 
   @Override

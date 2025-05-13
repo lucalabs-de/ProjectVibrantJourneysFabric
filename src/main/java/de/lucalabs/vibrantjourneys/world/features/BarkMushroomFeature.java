@@ -13,7 +13,7 @@ public class BarkMushroomFeature extends Feature<DefaultFeatureConfig> {
     Random randomSource = context.getRandom();
     BlockPos origin = context.getOrigin();
     StructureWorldAccess level = context.getWorld();
-    BlockPos.Mutable mutable = origin.mutable();
+    BlockPos.Mutable mutable = origin.mutableCopy();
     BarkMushroomBlock blockToPlace = BarkMushroomBlock.getRandom(randomSource);
     int count = 0;
 

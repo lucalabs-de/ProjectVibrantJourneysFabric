@@ -46,13 +46,13 @@ public class WarpedForestRuinedPortalDecorator extends RuinedPortalDecoratorBase
     if (WorldUtils.isEmptyOrReplaceable(level, pos)) {
       float chance = random.nextFloat();
       if (chance < 0.02F) {
-        Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> bigMushroom = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(TreeFeatures.WARPED_FUNGUS);
+        Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> bigMushroom = level.getRegistryManager().get(Registries.CONFIGURED_FEATURE).getEntry(TreeConfiguredFeatures.WARPED_FUNGUS);
         bigMushroom.ifPresent((feature) -> feature.value().place(level, generator, random, pos));
       } else if (chance < 0.15F) {
-        Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> warpedForestVegetation = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(NetherFeatures.WARPED_FOREST_VEGETION);
+        Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> warpedForestVegetation = level.getRegistryManager().get(Registries.CONFIGURED_FEATURE).getEntry(NetherConfiguredFeatures.WARPED_FOREST_VEGETION);
         warpedForestVegetation.ifPresent((feature) -> feature.value().place(level, generator, random, pos));
       } else if (chance < 0.16F) {
-        Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> twistingVines = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(NetherFeatures.TWISTING_VINES_BONEMEAL);
+        Optional<? extends RegistryEntry<ConfiguredFeature<?, ?>>> twistingVines = level.getRegistryManager().get(Registries.CONFIGURED_FEATURE).getEntry(NetherConfiguredFeatures.TWISTING_VINES_BONEMEAL);
         twistingVines.ifPresent((feature) -> feature.value().place(level, generator, random, pos));
       }
     }

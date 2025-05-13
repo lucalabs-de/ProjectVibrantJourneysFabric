@@ -13,7 +13,7 @@ public class SlimeNoduleFeature extends Feature<DefaultFeatureConfig> {
     Random randomSource = context.getRandom();
     BlockPos origin = context.getOrigin();
     StructureWorldAccess level = context.getWorld();
-    BlockPos.Mutable mutable = origin.mutable();
+    BlockPos.Mutable mutable = origin.mutableCopy();
     SlimeNoduleBlock blockToPlace = (SlimeNoduleBlock) PVJBlocks.SLIME_NODULE;
     int count = 0;
 
