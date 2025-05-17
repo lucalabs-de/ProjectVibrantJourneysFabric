@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:natural_cobweb",
+  "config": {
+    "probability": 0.1
+  }
+}

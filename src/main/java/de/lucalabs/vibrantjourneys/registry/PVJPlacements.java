@@ -5,8 +5,11 @@ import de.lucalabs.vibrantjourneys.ProjectVibrantJourneys;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.block.Blocks;
-import net.minecraft.registry.*;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryOwner;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
@@ -108,9 +111,6 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         super(output, registriesFuture);
     }
 
-    public static void bootstrap(Registerable<PlacedFeature> context) {
-    }
-
     private static RegistryKey<PlacedFeature> createKey(String name) {
         return RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(ProjectVibrantJourneys.MOD_ID, name));
     }
@@ -145,20 +145,27 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         return List.of(SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, CountPlacementModifier.of(count), BiomePlacementModifier.of());
     }
 
+    private static RegistryEntry<ConfiguredFeature<?, ?>> entry(RegistryEntryOwner<ConfiguredFeature<?, ?>> reg, RegistryKey<ConfiguredFeature<?, ?>> key) {
+        return RegistryEntry.Reference.standAlone(reg, key);
+    }
+
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup, Entries entries) {
-        RegistryEntryLookup<ConfiguredFeature<?, ?>> holderGetter = wrapperLookup.createRegistryLookup().getOrThrow(RegistryKeys.CONFIGURED_FEATURE);
+        RegistryWrapper.Impl<ConfiguredFeature<?, ?>> configuredFeatures = wrapperLookup.getWrapperOrThrow(RegistryKeys.CONFIGURED_FEATURE);
 
-        register(entries, MOSS_CARPET, holderGetter.getOrThrow(PVJConfiguredFeatures.MOSS_CARPETS), modifiers(3));
-        register(entries, SEA_OATS, holderGetter.getOrThrow(PVJConfiguredFeatures.SEA_OATS), onceEvery(5));
-        register(entries, CATTAILS, holderGetter.getOrThrow(PVJConfiguredFeatures.CATTAILS), onceEvery(1));
-        register(entries, BEACH_GRASS, holderGetter.getOrThrow(PVJConfiguredFeatures.BEACH_GRASS), onceEvery(5));
-        register(entries, BARK_MUSHROOM, holderGetter.getOrThrow(PVJConfiguredFeatures.BARK_MUSHROOM), modifiers(30));
-        register(entries, SHORT_GRASS, holderGetter.getOrThrow(PVJConfiguredFeatures.SHORT_GRASS), modifiers(3));
+//        register(entries, MOSS_CARPET, entry(configuredFeatures,PVJConfiguredFeatures.MOSS_CARPETS), modifiers(3));
+
+        register(entries, MOSS_CARPET, entry(configuredFeatures, PVJConfiguredFeatures.MOSS_CARPETS), modifiers(3));
+
+        register(entries, SEA_OATS, entry(configuredFeatures, PVJConfiguredFeatures.SEA_OATS), onceEvery(5));
+        register(entries, CATTAILS, entry(configuredFeatures, PVJConfiguredFeatures.CATTAILS), onceEvery(1));
+        register(entries, BEACH_GRASS, entry(configuredFeatures, PVJConfiguredFeatures.BEACH_GRASS), onceEvery(5));
+        register(entries, BARK_MUSHROOM, entry(configuredFeatures, PVJConfiguredFeatures.BARK_MUSHROOM), modifiers(30));
+        register(entries, SHORT_GRASS, entry(configuredFeatures, PVJConfiguredFeatures.SHORT_GRASS), modifiers(3));
         register(
                 entries,
                 SMALL_CACTUS,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.SMALL_CACTUS),
+                entry(configuredFeatures, PVJConfiguredFeatures.SMALL_CACTUS),
                 RarityFilterPlacementModifier.of(8),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
@@ -166,7 +173,7 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         register(
                 entries,
                 ICICLE,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.ICICLE),
+                entry(configuredFeatures, PVJConfiguredFeatures.ICICLE),
                 CountPlacementModifier.of(150),
                 SquarePlacementModifier.of(),
                 HeightRangePlacementModifier.uniform(YOffset.fixed(50), YOffset.fixed(256)),
@@ -180,7 +187,7 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         register(
                 entries,
                 CAVE_ROOTS,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.CAVE_ROOTS),
+                entry(configuredFeatures, PVJConfiguredFeatures.CAVE_ROOTS),
                 CountPlacementModifier.of(188),
                 SquarePlacementModifier.of(),
                 HeightRangePlacementModifier.uniform(YOffset.fixed(0), YOffset.fixed(256)),
@@ -190,23 +197,23 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
                         BlockPredicate.IS_AIR, 12),
                 RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(-1)),
                 BiomePlacementModifier.of());
-        register(entries, REEDS, holderGetter.getOrThrow(PVJConfiguredFeatures.REEDS), onceEvery(1));
-        register(entries, PRICKLY_BUSH, holderGetter.getOrThrow(PVJConfiguredFeatures.PRICKLY_BUSH), onceEvery(2));
-        register(entries, TWIGS, holderGetter.getOrThrow(PVJConfiguredFeatures.TWIGS), modifiers(3));
-        register(entries, FALLEN_LEAVES, holderGetter.getOrThrow(PVJConfiguredFeatures.FALLEN_LEAVES), modifiers(3));
-        register(entries, DEAD_FALLEN_LEAVES, holderGetter.getOrThrow(PVJConfiguredFeatures.DEAD_FALLEN_LEAVES), modifiers(3));
-        register(entries, DENSE_DEAD_FALLEN_LEAVES, holderGetter.getOrThrow(PVJConfiguredFeatures.DEAD_FALLEN_LEAVES), modifiers(6));
-        register(entries, PINECONES, holderGetter.getOrThrow(PVJConfiguredFeatures.PINECONES), modifiers(2));
-        register(entries, SEASHELLS, holderGetter.getOrThrow(PVJConfiguredFeatures.SEASHELLS), modifiers(2));
-        register(entries, OCEAN_FLOOR_SEASHELLS, holderGetter.getOrThrow(PVJConfiguredFeatures.SEASHELLS), seagrassPlacement(2));
-        register(entries, EXTRA_OCEAN_FLOOR_SEASHELLS, holderGetter.getOrThrow(PVJConfiguredFeatures.SEASHELLS), seagrassPlacement(4));
-        register(entries, ROCKS, holderGetter.getOrThrow(PVJConfiguredFeatures.ROCKS), modifiers(2));
-        register(entries, ICE_CHUNKS, holderGetter.getOrThrow(PVJConfiguredFeatures.ICE_CHUNKS), modifiers(1));
-        register(entries, BONES, holderGetter.getOrThrow(PVJConfiguredFeatures.BONES), modifiers(1));
+        register(entries, REEDS, entry(configuredFeatures, PVJConfiguredFeatures.REEDS), onceEvery(1));
+        register(entries, PRICKLY_BUSH, entry(configuredFeatures, PVJConfiguredFeatures.PRICKLY_BUSH), onceEvery(2));
+        register(entries, TWIGS, entry(configuredFeatures, PVJConfiguredFeatures.TWIGS), modifiers(3));
+        register(entries, FALLEN_LEAVES, entry(configuredFeatures, PVJConfiguredFeatures.FALLEN_LEAVES), modifiers(3));
+        register(entries, DEAD_FALLEN_LEAVES, entry(configuredFeatures, PVJConfiguredFeatures.DEAD_FALLEN_LEAVES), modifiers(3));
+        register(entries, DENSE_DEAD_FALLEN_LEAVES, entry(configuredFeatures, PVJConfiguredFeatures.DEAD_FALLEN_LEAVES), modifiers(6));
+        register(entries, PINECONES, entry(configuredFeatures, PVJConfiguredFeatures.PINECONES), modifiers(2));
+        register(entries, SEASHELLS, entry(configuredFeatures, PVJConfiguredFeatures.SEASHELLS), modifiers(2));
+        register(entries, OCEAN_FLOOR_SEASHELLS, entry(configuredFeatures, PVJConfiguredFeatures.SEASHELLS), seagrassPlacement(2));
+        register(entries, EXTRA_OCEAN_FLOOR_SEASHELLS, entry(configuredFeatures, PVJConfiguredFeatures.SEASHELLS), seagrassPlacement(4));
+        register(entries, ROCKS, entry(configuredFeatures, PVJConfiguredFeatures.ROCKS), modifiers(2));
+        register(entries, ICE_CHUNKS, entry(configuredFeatures, PVJConfiguredFeatures.ICE_CHUNKS), modifiers(1));
+        register(entries, BONES, entry(configuredFeatures, PVJConfiguredFeatures.BONES), modifiers(1));
         register(
                 entries,
                 CHARRED_BONES,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.CHARRED_BONES),
+                entry(configuredFeatures, PVJConfiguredFeatures.CHARRED_BONES),
                 RarityFilterPlacementModifier.of(5),
                 CountMultilayerPlacementModifier.of(1),
                 SquarePlacementModifier.of(),
@@ -215,7 +222,7 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         register(
                 entries,
                 CAVE_BONES,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.BONES),
+                entry(configuredFeatures, PVJConfiguredFeatures.BONES),
                 CountPlacementModifier.of(100),
                 SquarePlacementModifier.of(),
                 HeightRangePlacementModifier.uniform(YOffset.aboveBottom(4), YOffset.fixed(60)),
@@ -228,7 +235,7 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         register(
                 entries,
                 CAVE_ROCKS,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.ROCKS),
+                entry(configuredFeatures, PVJConfiguredFeatures.ROCKS),
                 CountPlacementModifier.of(250),
                 SquarePlacementModifier.of(),
                 HeightRangePlacementModifier.uniform(YOffset.aboveBottom(4), YOffset.fixed(60)),
@@ -242,21 +249,21 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         register(
                 entries,
                 WARPED_NETTLE,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.WARPED_NETTLE),
+                entry(configuredFeatures, PVJConfiguredFeatures.WARPED_NETTLE),
                 RarityFilterPlacementModifier.of(4),
                 CountMultilayerPlacementModifier.of(2),
                 BiomePlacementModifier.of());
         register(
                 entries,
                 CRIMSON_NETTLE,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.CRIMSON_NETTLE),
+                entry(configuredFeatures, PVJConfiguredFeatures.CRIMSON_NETTLE),
                 RarityFilterPlacementModifier.of(4),
                 CountMultilayerPlacementModifier.of(2),
                 BiomePlacementModifier.of());
         register(
                 entries,
                 GLOWCAP,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.GLOWCAP),
+                entry(configuredFeatures, PVJConfiguredFeatures.GLOWCAP),
                 RarityFilterPlacementModifier.of(2),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.BOTTOM_TO_TOP_RANGE,
@@ -264,32 +271,32 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         register(
                 entries,
                 CINDERCANE,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.CINDERCANE),
+                entry(configuredFeatures, PVJConfiguredFeatures.CINDERCANE),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.BOTTOM_TO_TOP_RANGE,
                 BiomePlacementModifier.of());
-        register(entries, OAK_FALLEN_TREE, holderGetter.getOrThrow(PVJConfiguredFeatures.OAK_FALLEN_TREE), modifiers(1));
-        register(entries, BIRCH_FALLEN_TREE, holderGetter.getOrThrow(PVJConfiguredFeatures.BIRCH_FALLEN_TREE), modifiers(1));
-        register(entries, SPRUCE_FALLEN_TREE, holderGetter.getOrThrow(PVJConfiguredFeatures.SPRUCE_FALLEN_TREE), modifiers(1));
-        register(entries, JUNGLE_FALLEN_TREE, holderGetter.getOrThrow(PVJConfiguredFeatures.JUNGLE_FALLEN_TREE), modifiers(1));
-        register(entries, ACACIA_FALLEN_TREE, holderGetter.getOrThrow(PVJConfiguredFeatures.ACACIA_FALLEN_TREE), modifiers(1));
-        register(entries, DARK_OAK_FALLEN_TREE, holderGetter.getOrThrow(PVJConfiguredFeatures.DARK_OAK_FALLEN_TREE), modifiers(1));
-        register(entries, CHERRY_FALLEN_TREE, holderGetter.getOrThrow(PVJConfiguredFeatures.CHERRY_FALLEN_TREE), modifiers(1));
-        register(entries, MANGROVE_FALLEN_TREE, holderGetter.getOrThrow(PVJConfiguredFeatures.MANGROVE_FALLEN_TREE), modifiers(1));
-        register(entries, NATURAL_COBWEB, holderGetter.getOrThrow(PVJConfiguredFeatures.NATURAL_COBWEB), modifiers(5));
-        register(entries, EXTRA_SEAGRASS, holderGetter.getOrThrow(OceanConfiguredFeatures.SEAGRASS_SLIGHTLY_LESS_SHORT), seagrassPlacement(48));
-        register(entries, EXTRA_LILYPADS, holderGetter.getOrThrow(PVJConfiguredFeatures.LILYPADS), modifiers(4));
+        register(entries, OAK_FALLEN_TREE, entry(configuredFeatures, PVJConfiguredFeatures.OAK_FALLEN_TREE), modifiers(1));
+        register(entries, BIRCH_FALLEN_TREE, entry(configuredFeatures, PVJConfiguredFeatures.BIRCH_FALLEN_TREE), modifiers(1));
+        register(entries, SPRUCE_FALLEN_TREE, entry(configuredFeatures, PVJConfiguredFeatures.SPRUCE_FALLEN_TREE), modifiers(1));
+        register(entries, JUNGLE_FALLEN_TREE, entry(configuredFeatures, PVJConfiguredFeatures.JUNGLE_FALLEN_TREE), modifiers(1));
+        register(entries, ACACIA_FALLEN_TREE, entry(configuredFeatures, PVJConfiguredFeatures.ACACIA_FALLEN_TREE), modifiers(1));
+        register(entries, DARK_OAK_FALLEN_TREE, entry(configuredFeatures, PVJConfiguredFeatures.DARK_OAK_FALLEN_TREE), modifiers(1));
+        register(entries, CHERRY_FALLEN_TREE, entry(configuredFeatures, PVJConfiguredFeatures.CHERRY_FALLEN_TREE), modifiers(1));
+        register(entries, MANGROVE_FALLEN_TREE, entry(configuredFeatures, PVJConfiguredFeatures.MANGROVE_FALLEN_TREE), modifiers(1));
+        register(entries, NATURAL_COBWEB, entry(configuredFeatures, PVJConfiguredFeatures.NATURAL_COBWEB), modifiers(5));
+        register(entries, EXTRA_SEAGRASS, entry(configuredFeatures, OceanConfiguredFeatures.SEAGRASS_SLIGHTLY_LESS_SHORT), seagrassPlacement(48));
+        register(entries, EXTRA_LILYPADS, entry(configuredFeatures, PVJConfiguredFeatures.LILYPADS), modifiers(4));
         register(
                 entries,
                 EXTRA_GRASS,
-                holderGetter.getOrThrow(VegetationConfiguredFeatures.PATCH_GRASS),
+                entry(configuredFeatures, VegetationConfiguredFeatures.PATCH_GRASS),
                 NoiseThresholdCountPlacementModifier.of(-0.8D, 5, 10),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP, BiomePlacementModifier.of());
         register(
                 entries,
                 TIDE_POOL,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.TIDE_POOL),
+                entry(configuredFeatures, PVJConfiguredFeatures.TIDE_POOL),
                 CountPlacementModifier.of(1),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.MOTION_BLOCKING_HEIGHTMAP,
@@ -300,12 +307,12 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
                         12),
                 RandomOffsetPlacementModifier.vertically(ConstantIntProvider.create(1)),
                 BiomePlacementModifier.of());
-        register(entries, SANDY_SPROUTS, holderGetter.getOrThrow(PVJConfiguredFeatures.SANDY_SPROUTS), onceEvery(5));
-        register(entries, WATERGRASS, holderGetter.getOrThrow(PVJConfiguredFeatures.WATERGRASS), onceEvery(1));
+        register(entries, SANDY_SPROUTS, entry(configuredFeatures, PVJConfiguredFeatures.SANDY_SPROUTS), onceEvery(5));
+        register(entries, WATERGRASS, entry(configuredFeatures, PVJConfiguredFeatures.WATERGRASS), onceEvery(1));
         register(
                 entries,
                 GRAVEL_PIT,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.GRAVEL_PIT),
+                entry(configuredFeatures, PVJConfiguredFeatures.GRAVEL_PIT),
                 RarityFilterPlacementModifier.of(20),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
@@ -313,23 +320,23 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         register(
                 entries,
                 GOLD_PIT,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.GOLD_PIT),
+                entry(configuredFeatures, PVJConfiguredFeatures.GOLD_PIT),
                 RarityFilterPlacementModifier.of(30),
                 HeightRangePlacementModifier.uniform(YOffset.aboveBottom(63), YOffset.fixed(73)),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
                 BiomePlacementModifier.of());
-        register(entries, BEACHED_KELP, holderGetter.getOrThrow(PVJConfiguredFeatures.BEACHED_KELP), modifiers(2));
+        register(entries, BEACHED_KELP, entry(configuredFeatures, PVJConfiguredFeatures.BEACHED_KELP), modifiers(2));
         register(
                 entries,
                 DRIED_BEACHED_KELP,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.DRIED_BEACHED_KELP),
+                entry(configuredFeatures, PVJConfiguredFeatures.DRIED_BEACHED_KELP),
                 modifiers(1),
                 RarityFilterPlacementModifier.of(2));
         register(
                 entries,
                 GLOWING_BLUE_FUNGUS,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.GLOWING_BLUE_FUNGUS),
+                entry(configuredFeatures, PVJConfiguredFeatures.GLOWING_BLUE_FUNGUS),
                 CountPlacementModifier.of(30),
                 SquarePlacementModifier.of(),
                 HeightRangePlacementModifier.uniform(YOffset.aboveBottom(-64), YOffset.fixed(63)),
@@ -337,44 +344,44 @@ public class PVJPlacements extends FabricDynamicRegistryProvider {
         register(
                 entries,
                 MUDDY_BONES,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.MUDDY_BONES),
+                entry(configuredFeatures, PVJConfiguredFeatures.MUDDY_BONES),
                 modifiers(5),
                 RandomOffsetPlacementModifier.vertically(UniformIntProvider.create(-5, 0)));
         register(
                 entries,
                 LOTUS_POND,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.LOTUS_POND),
+                entry(configuredFeatures, PVJConfiguredFeatures.LOTUS_POND),
                 RarityFilterPlacementModifier.of(2),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
                 BiomePlacementModifier.of());
-        register(entries, FLOATING_PINK_LOTUS, holderGetter.getOrThrow(PVJConfiguredFeatures.FLOATING_PINK_LOTUS), modifiers(4));
+        register(entries, FLOATING_PINK_LOTUS, entry(configuredFeatures, PVJConfiguredFeatures.FLOATING_PINK_LOTUS), modifiers(4));
         register(
                 entries,
                 HOT_SPRINGS,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.HOT_SPRINGS),
+                entry(configuredFeatures, PVJConfiguredFeatures.HOT_SPRINGS),
                 RarityFilterPlacementModifier.of(90),
                 SquarePlacementModifier.of(),
                 PlacedFeatures.WORLD_SURFACE_WG_HEIGHTMAP,
                 BiomePlacementModifier.of());
-        register(entries, OAK_BUSH, holderGetter.getOrThrow(PVJConfiguredFeatures.OAK_BUSH), modifiers(2), RarityFilterPlacementModifier.of(12));
-        register(entries, YELLOW_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.YELLOW_WILDFLOWERS), onceEvery(10));
-        register(entries, ORANGE_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.ORANGE_WILDFLOWERS), onceEvery(10));
-        register(entries, BLUE_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.BLUE_WILDFLOWERS), onceEvery(10));
-        register(entries, PURPLE_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.PURPLE_WILDFLOWERS), onceEvery(10));
-        register(entries, WHITE_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.WHITE_WILDFLOWERS), onceEvery(10));
-        register(entries, MIXED_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.MIXED_WILDFLOWERS), onceEvery(10));
-        register(entries, MANY_YELLOW_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.YELLOW_WILDFLOWERS), onceEvery(3));
-        register(entries, MANY_ORANGE_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.ORANGE_WILDFLOWERS), onceEvery(3));
-        register(entries, MANY_BLUE_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.BLUE_WILDFLOWERS), onceEvery(3));
-        register(entries, MANY_PURPLE_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.PURPLE_WILDFLOWERS), onceEvery(3));
-        register(entries, MANY_WHITE_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.WHITE_WILDFLOWERS), onceEvery(3));
-        register(entries, MANY_MIXED_WILDFLOWERS, holderGetter.getOrThrow(PVJConfiguredFeatures.MIXED_WILDFLOWERS), onceEvery(3));
-        register(entries, SLIME_NODULE, holderGetter.getOrThrow(PVJConfiguredFeatures.SLIME_NODULE), modifiers(5));
+        register(entries, OAK_BUSH, entry(configuredFeatures, PVJConfiguredFeatures.OAK_BUSH), modifiers(2), RarityFilterPlacementModifier.of(12));
+        register(entries, YELLOW_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.YELLOW_WILDFLOWERS), onceEvery(10));
+        register(entries, ORANGE_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.ORANGE_WILDFLOWERS), onceEvery(10));
+        register(entries, BLUE_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.BLUE_WILDFLOWERS), onceEvery(10));
+        register(entries, PURPLE_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.PURPLE_WILDFLOWERS), onceEvery(10));
+        register(entries, WHITE_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.WHITE_WILDFLOWERS), onceEvery(10));
+        register(entries, MIXED_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.MIXED_WILDFLOWERS), onceEvery(10));
+        register(entries, MANY_YELLOW_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.YELLOW_WILDFLOWERS), onceEvery(3));
+        register(entries, MANY_ORANGE_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.ORANGE_WILDFLOWERS), onceEvery(3));
+        register(entries, MANY_BLUE_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.BLUE_WILDFLOWERS), onceEvery(3));
+        register(entries, MANY_PURPLE_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.PURPLE_WILDFLOWERS), onceEvery(3));
+        register(entries, MANY_WHITE_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.WHITE_WILDFLOWERS), onceEvery(3));
+        register(entries, MANY_MIXED_WILDFLOWERS, entry(configuredFeatures, PVJConfiguredFeatures.MIXED_WILDFLOWERS), onceEvery(3));
+        register(entries, SLIME_NODULE, entry(configuredFeatures, PVJConfiguredFeatures.SLIME_NODULE), modifiers(5));
         register(
                 entries,
                 PINK_VINES,
-                holderGetter.getOrThrow(PVJConfiguredFeatures.PINK_VINES),
+                entry(configuredFeatures, PVJConfiguredFeatures.PINK_VINES),
                 CountPlacementModifier.of(150),
                 SquarePlacementModifier.of(),
                 HeightRangePlacementModifier.uniform(YOffset.fixed(60), YOffset.fixed(256)),

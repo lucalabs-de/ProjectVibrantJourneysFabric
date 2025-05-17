@@ -6,6 +6,7 @@ import de.lucalabs.vibrantjourneys.world.features.configurations.MultipleVegetat
 import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
@@ -16,8 +17,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.HashSet;
@@ -218,17 +219,19 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
     }
 
     protected void placeVegetation(
-            StructureWorldAccess level,
+            StructureWorldAccess world,
             MultipleVegetationPatchConfiguration config,
             ChunkGenerator chunkGenerator,
             Random rand,
             BlockPos pos) {
 
-        for (RegistryEntry<PlacedFeature> feature : config.vegetationFeature) {
-            if (feature.value().generate(level, chunkGenerator, rand, pos.down().offset(config.surface.getDirection().getOpposite()))) {
-                BlockState blockstate = level.getBlockState(pos);
+        var configuredFeatures = world.getRegistryManager().get(RegistryKeys.CONFIGURED_FEATURE);
+
+        for (RegistryKey<ConfiguredFeature<?, ?>> feature : config.vegetationFeature) {
+            if (configuredFeatures.get(feature).generate(world, chunkGenerator, rand, pos.down().offset(config.surface.getDirection().getOpposite()))) {
+                BlockState blockstate = world.getBlockState(pos);
                 if (blockstate.contains(Properties.WATERLOGGED) && !blockstate.get(Properties.WATERLOGGED)) {
-                    WorldUtils.setBlockState(level, pos, blockstate.with(Properties.WATERLOGGED, Boolean.TRUE), 2);
+                    WorldUtils.setBlockState(world, pos, blockstate.with(Properties.WATERLOGGED, Boolean.TRUE), 2);
                 }
             }
         }

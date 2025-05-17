@@ -311,8 +311,6 @@ public class PVJConfiguredFeatures extends FabricDynamicRegistryProvider {
                 new FallenTreeVegetation(SHORT_GRASS_STATE_PROVIDER, Optional.of("enableShortGrass"))
         );
 
-        RegistryEntryLookup<ConfiguredFeature<?, ?>> holderGetter = wrapperLookup.createRegistryLookup().getOrThrow(RegistryKeys.CONFIGURED_FEATURE);
-
         register(
                 entries,
                 MOSS_CARPETS,
@@ -424,11 +422,11 @@ public class PVJConfiguredFeatures extends FabricDynamicRegistryProvider {
                 BlockTags.LUSH_GROUND_REPLACEABLE,
                 BlockStateProvider.of(Blocks.STONE),
                 0.15F,
-                List.of(PlacedFeatures.createEntry(
-                                holderGetter.getOrThrow(SEA_PICKLE)),
-                        PlacedFeatures.createEntry(holderGetter.getOrThrow(OceanConfiguredFeatures.SEAGRASS_TALL)),
-                        PlacedFeatures.createEntry(holderGetter.getOrThrow(OceanConfiguredFeatures.KELP)),
-                        PlacedFeatures.createEntry(holderGetter.getOrThrow(OceanConfiguredFeatures.KELP))),
+                List.of(
+                        SEA_PICKLE,
+                        OceanConfiguredFeatures.SEAGRASS_TALL,
+                        OceanConfiguredFeatures.KELP,
+                        OceanConfiguredFeatures.KELP),
                 VerticalSurfaceType.FLOOR,
                 ConstantIntProvider.create(3),
                 1F,

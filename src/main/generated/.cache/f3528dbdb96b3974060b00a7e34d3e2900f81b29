@@ -1,0 +1,23 @@
+// 1.20.1	2025-05-18T00:24:27.1851762	Project: Vibrant Journeys/Tags for minecraft:block
+dbd6d4a516eb67f2a3682d581a68d74641533b54 data\minecraft\tags\blocks\sand.json
+07af04f40e2f8ce4748dd0cf5827349cde850ccc data\farmersdelight\tags\blocks\compost_activators.json
+ec07a627e6a92ff768c12ff246f8049aed38421e data\minecraft\tags\blocks\mineable\axe.json
+414d874b597f9adc5ab27091c1bdd8cc27517795 data\minecraft\tags\blocks\spruce_logs.json
+ec07a627e6a92ff768c12ff246f8049aed38421e data\minecraft\tags\blocks\mushroom_grow_block.json
+2e9380f76f042eaf20e06252ae54c16326ca8ff4 data\minecraft\tags\blocks\sword_efficient.json
+94cca7a2d2f33f729de94a01d29b7d8711218bc9 data\minecraft\tags\blocks\jungle_logs.json
+dbd6d4a516eb67f2a3682d581a68d74641533b54 data\c\tags\blocks\sands\red.json
+9dceac953319d7d46253976b4b5c6b154bf3ac24 data\c\tags\blocks\gravels.json
+8a11c281ffaa32212a25247390e622d16a041429 data\minecraft\tags\blocks\replaceable_by_trees.json
+050a733068ef2b4a3b8664d6dfd5b96c5c8734bd data\minecraft\tags\blocks\mineable\pickaxe.json
+f513d5fa20683a7e849de768fee57be651cdc82c data\minecraft\tags\blocks\birch_logs.json
+dbd6d4a516eb67f2a3682d581a68d74641533b54 data\c\tags\blocks\sands.json
+ca068f6132363f64c6fde6d2f482aefa606d24d8 data\minecraft\tags\blocks\mineable\shovel.json
+8f237366c94b2333ce794cfbac8868eb6ce377c7 data\minecraft\tags\blocks\dark_oak_logs.json
+ec07a627e6a92ff768c12ff246f8049aed38421e data\minecraft\tags\blocks\logs_that_burn.json
+3543ef5863c5e554498d8bcd2ce7a9c61c165ca5 data\minecraft\tags\blocks\oak_logs.json
+bee9a832651f8fd07d7cc4a8454ffe800bec4bf9 data\minecraft\tags\blocks\cherry_logs.json
+ec07a627e6a92ff768c12ff246f8049aed38421e data\minecraft\tags\blocks\logs.json
+9d453ac5f5d6ced1633fae8997062b6173bb87a8 data\projectvibrantjourneys\tags\blocks\grows_on_hollow_log.json
+739c52ff40813856057a30b202b5bb4e0f5dd22e data\minecraft\tags\blocks\mangrove_logs.json
+9aaa4ccbe2a42b756fcb83c5dfc66b59f04aa922 data\projectvibrantjourneys\tags\blocks\groundcover_cannot_generate_on.json

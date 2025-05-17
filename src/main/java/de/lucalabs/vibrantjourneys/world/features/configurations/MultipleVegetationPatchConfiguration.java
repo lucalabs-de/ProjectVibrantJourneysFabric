@@ -3,11 +3,13 @@ package de.lucalabs.vibrantjourneys.world.features.configurations;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.Block;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.math.VerticalSurfaceType;
 import net.minecraft.util.math.intprovider.IntProvider;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
@@ -21,7 +23,7 @@ public class MultipleVegetationPatchConfiguration implements FeatureConfig {
                             TagKey.codec(RegistryKeys.BLOCK).fieldOf("replaceable").forGetter((config) -> config.replaceable),
                             BlockStateProvider.TYPE_CODEC.fieldOf("ground_state").forGetter((config) -> config.groundState),
                             Codec.floatRange(0.0F, 1.0F).fieldOf("placement_chance").forGetter((config) -> config.placementChance),
-                            PlacedFeature.REGISTRY_CODEC.listOf().fieldOf("vegetation_feature").forGetter((config) -> config.vegetationFeature),
+                            RegistryKey.createCodec(RegistryKeys.CONFIGURED_FEATURE).listOf().fieldOf("vegetation_feature").forGetter((config) -> config.vegetationFeature),
                             VerticalSurfaceType.CODEC.fieldOf("surface").forGetter((config) -> config.surface),
                             IntProvider.createValidatingCodec(1, 128).fieldOf("depth").forGetter((config) -> config.depth),
                             Codec.floatRange(0.0F, 1.0F).fieldOf("extra_bottom_block_chance").forGetter((config) -> config.extraBottomBlockChance),
@@ -34,7 +36,7 @@ public class MultipleVegetationPatchConfiguration implements FeatureConfig {
     public final TagKey<Block> replaceable;
     public final BlockStateProvider groundState;
     public final float placementChance;
-    public final List<RegistryEntry<PlacedFeature>> vegetationFeature;
+    public final List<RegistryKey<ConfiguredFeature<?, ?>>> vegetationFeature;
     public final VerticalSurfaceType surface;
     public final IntProvider depth;
     public final float extraBottomBlockChance;
@@ -47,7 +49,7 @@ public class MultipleVegetationPatchConfiguration implements FeatureConfig {
             TagKey<Block> replace,
             BlockStateProvider provider,
             float placementChance,
-            List<RegistryEntry<PlacedFeature>> feature,
+            List<RegistryKey<ConfiguredFeature<?, ?>>> feature,
             VerticalSurfaceType surface,
             IntProvider depth,
             float extraBottomChance,

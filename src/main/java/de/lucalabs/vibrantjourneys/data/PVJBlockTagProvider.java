@@ -11,9 +11,9 @@ import net.minecraft.registry.tag.BlockTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class PVJBlockTags extends VanillaBlockTagProvider {
+public class PVJBlockTagProvider extends VanillaBlockTagProvider {
 
-    public PVJBlockTags(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> lookupProvider) {
+    public PVJBlockTagProvider(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> lookupProvider) {
         super(output, lookupProvider);
     }
 
@@ -215,31 +215,29 @@ public class PVJBlockTags extends VanillaBlockTagProvider {
                         Blocks.LOOM,
                         Blocks.DECORATED_POT
                 )
-                .addTag(
-                        BlockTags.WOOL)
-                .addTag(
-                        BlockTags.PLANKS)
-                .addTag(
-                        BlockTags.LEAVES)
-                .addTag(
-                        BlockTags.TERRACOTTA)
-                .addTag(
-                        BlockTags.SNOW)
-                .addTag(
-                        BlockTags.ICE)
-                .addTag(
-                        FabricTags.ORES)
-                .addTag(
-                        FabricTags.STORAGE_BLOCKS)
-                .addTag(
-                        BlockTags.FENCES)
-                .addTag(
-                        BlockTags.FENCE_GATES)
-                .addTag(
-                        BlockTags.STAIRS)
-                .addTag(
-                        BlockTags.STAIRS
-                );
+                .addOptionalTag(BlockTags.WOOL.id())
+                .addOptionalTag(BlockTags.PLANKS.id())
+                .addOptionalTag(BlockTags.LEAVES.id())
+                .addOptionalTag(BlockTags.TERRACOTTA.id())
+                .addOptionalTag(BlockTags.SNOW.id())
+                .addOptionalTag(BlockTags.ICE.id())
+                .addOptionalTag(FabricTags.ORES.id())
+                .addOptionalTag(FabricTags.STORAGE_BLOCKS.id())
+                .addOptionalTag(BlockTags.FENCES.id())
+                .addOptionalTag(BlockTags.FENCE_GATES.id())
+                .addOptionalTag(BlockTags.STAIRS.id());
+
+//                .addTag(BlockTags.WOOL)
+//                .addTag(BlockTags.PLANKS)
+//                .addTag(BlockTags.LEAVES)
+//                .addTag(BlockTags.TERRACOTTA)
+//                .addTag(BlockTags.SNOW)
+//                .addTag(BlockTags.ICE)
+//                .addTag(FabricTags.ORES)
+//                .addTag(FabricTags.STORAGE_BLOCKS)
+//                .addTag(BlockTags.FENCES)
+//                .addTag(BlockTags.FENCE_GATES)
+//                .addTag(BlockTags.STAIRS);
     }
 
     private void addModCompatTags(RegistryWrapper.WrapperLookup provider) {
