@@ -1,6 +1,7 @@
 package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
+import de.lucalabs.vibrantjourneys.config.PVJConfig;
 import de.lucalabs.vibrantjourneys.registry.PVJBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -101,7 +102,7 @@ public class LotusPondFeature extends Feature<DefaultFeatureConfig> {
                                     }
                                 } else {
                                     if (
-                                            PVJConfig.configOptions.get("enableWatergrass")
+                                            PVJConfig.enableWatergrass
                                                     && worldgenlevel.isAir(blockpos1.up())
                                                     && worldgenlevel.getBlockState(blockpos1.down()).isIn(BlockTags.DIRT)
                                                     && randomsource.nextFloat() <= 0.7F

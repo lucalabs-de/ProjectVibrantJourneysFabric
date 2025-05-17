@@ -1,7 +1,7 @@
 package de.lucalabs.vibrantjourneys.mixin;
 
+import de.lucalabs.vibrantjourneys.config.PVJConfig;
 import de.lucalabs.vibrantjourneys.world.features.ruinednetherportals.RuinedPortalDecoratorBase;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.NbtCompound;
@@ -20,7 +20,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.function.Function;
 
@@ -53,7 +52,7 @@ public abstract class RuinedPortalPieceMixin extends SimpleStructurePiece {
             ChunkPos chunkPos,
             BlockPos pivot,
             CallbackInfo ci) {
-        if (PVJConfig.configOptions.get("enableBetterRuinedNetherPortals")) {
+        if (PVJConfig.enableBetterRuinedNetherPortals) {
             boolean isInOverworld = world.toServerWorld().getRegistryKey() == World.OVERWORLD;
             boolean shouldGenerate = (1.0F - random.nextFloat() < MODIFY_PORTAL_CHANCE);
             if (isInOverworld && shouldGenerate) {

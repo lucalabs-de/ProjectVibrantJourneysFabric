@@ -1,5 +1,6 @@
 package de.lucalabs.vibrantjourneys.blocks;
 
+import de.lucalabs.vibrantjourneys.config.PVJConfig;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.block.*;
 import net.minecraft.enchantment.Enchantments;
@@ -49,7 +50,7 @@ public class GroundcoverBlock extends HorizontalFacingBlock implements Waterlogg
   @Override
   @SuppressWarnings("deprecation")
   public boolean canReplace(BlockState state, ItemPlacementContext context) {
-    if (PVJConfig.configOptions.get("replaceableGroundcover")) {
+    if (PVJConfig.replaceableGroundcover) {
       return context.getStack().isEmpty() || !context.getStack().isOf(this.asItem());
     }
     return super.canReplace(state, context);
@@ -58,7 +59,7 @@ public class GroundcoverBlock extends HorizontalFacingBlock implements Waterlogg
   @Override
   @SuppressWarnings("deprecation")
   public boolean canBucketPlace(BlockState state, Fluid fluid) {
-    if (PVJConfig.configOptions.get("replaceableGroundcover")) {
+    if (PVJConfig.replaceableGroundcover) {
       return true;
     }
     return super.canBucketPlace(state, fluid);

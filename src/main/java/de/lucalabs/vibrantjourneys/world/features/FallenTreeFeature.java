@@ -5,6 +5,7 @@ import de.lucalabs.vibrantjourneys.blocks.BarkMushroomBlock;
 import de.lucalabs.vibrantjourneys.blocks.FallenLeavesBlock;
 import de.lucalabs.vibrantjourneys.blocks.GroundcoverBlock;
 import de.lucalabs.vibrantjourneys.blocks.HollowLogBlock;
+import de.lucalabs.vibrantjourneys.config.PVJConfig;
 import de.lucalabs.vibrantjourneys.util.PVJFeatureVars;
 import de.lucalabs.vibrantjourneys.util.TreeFeatureUtils;
 import de.lucalabs.vibrantjourneys.util.WorldUtils;
@@ -20,7 +21,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.HashSet;
@@ -101,7 +101,7 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
                             if (state.canPlaceAt(level, pos)) {
                                 WorldUtils.setBlockState(level, pos, state, 2);
                             }
-                        } else if (rand.nextFloat() < 0.4F && PVJConfig.configOptions.get("enableBarkMushrooms")) {
+                        } else if (rand.nextFloat() < 0.4F && PVJConfig.enableBarkMushrooms) {
                             BarkMushroomBlock mushroom = BarkMushroomBlock.getRandom(rand);
                             WorldUtils.setBlockState(level, pos, mushroom.getDefaultState().with(BarkMushroomBlock.FACING, dirCounterClockwise), 2);
                         }
@@ -115,7 +115,7 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
                             if (state.canPlaceAt(level, pos)) {
                                 WorldUtils.setBlockState(level, pos, state, 2);
                             }
-                        } else if (rand.nextFloat() < 0.4F && PVJConfig.configOptions.get("enableBarkMushrooms")) {
+                        } else if (rand.nextFloat() < 0.4F && PVJConfig.enableBarkMushrooms) {
                             BarkMushroomBlock mushroom = BarkMushroomBlock.getRandom(rand);
                             WorldUtils.setBlockState(level, pos, mushroom.getDefaultState().with(BarkMushroomBlock.FACING, dirClockwise), 2);
                         }
@@ -173,7 +173,7 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
             FallenTreeConfiguration.FallenTreeVegetation temp = vegetationProviders.get(random);
             if (temp.configOption().isPresent()) {
                 Optional<String> configOption = temp.configOption();
-                if (configOption.isPresent() && !PVJConfig.configOptions.get(configOption.get())) {
+                if (!PVJConfig.configOptions.get(configOption.get())) {
                     continue;
                 }
             }
