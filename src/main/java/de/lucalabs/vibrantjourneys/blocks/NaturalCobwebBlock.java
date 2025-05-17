@@ -1,8 +1,12 @@
 package de.lucalabs.vibrantjourneys.blocks;
 
 import net.minecraft.block.*;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
@@ -32,5 +36,15 @@ public class NaturalCobwebBlock extends CobwebBlock {
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         if (!canPlaceAt(state, world, pos))
             world.removeBlock(pos, isMoving);
+    }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public float calcBlockBreakingDelta(BlockState state, PlayerEntity player, BlockView world, BlockPos pos) {
+        ItemStack heldItem = player.getMainHandStack();
+        if (heldItem.getItem() instanceof SwordItem) {
+            return 15.0F;
+        }
+        return super.calcBlockBreakingDelta(state, player, world, pos);
     }
 }

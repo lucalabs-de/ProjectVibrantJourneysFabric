@@ -23,11 +23,14 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.BlockPredicate;
 import net.minecraft.predicate.StatePredicate;
 import net.minecraft.predicate.entity.LocationPredicate;
+import net.minecraft.predicate.item.ItemPredicate;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.math.BlockPos;
 
 public class PVJBlockLootProvider extends FabricBlockLootTableProvider {
 
     private static final LootCondition.Builder HAS_SHEARS_OR_SILK_TOUCH = WITH_SHEARS.or(WITH_SILK_TOUCH);
+    private static final LootCondition.Builder WITH_SWORD = MatchToolLootCondition.builder(ItemPredicate.Builder.create().tag(ItemTags.SWORDS));
 
     protected PVJBlockLootProvider(FabricDataOutput dataOutput) {
         super(dataOutput);
@@ -105,7 +108,16 @@ public class PVJBlockLootProvider extends FabricBlockLootTableProvider {
         shearsOrSilkTouch(PVJBlocks.DEAD_FALLEN_LEAVES);
         shearsOrSilkTouch(PVJBlocks.SANDY_SPROUTS);
 
-        addDrop(PVJBlocks.NATURAL_COBWEB, (block) -> dropsWithSilkTouch(Blocks.COBWEB, this.addSurvivesExplosionCondition(Blocks.COBWEB, ItemEntry.builder(Items.STRING))));
+        addDrop(PVJBlocks.NATURAL_COBWEB, LootTable.builder()
+                .pool(LootPool.builder()
+                        .rolls(ConstantLootNumberProvider.create(1))
+                        .conditionally(WITH_SILK_TOUCH)
+                        .with(ItemEntry.builder(Items.COBWEB)))
+                .pool(LootPool.builder()
+                        .rolls(ConstantLootNumberProvider.create(1))
+                        .conditionally(WITH_SWORD.or(WITH_SHEARS))
+                        .with(ItemEntry.builder(Items.STRING))));
+
         addDrop(PVJBlocks.PRICKLY_BUSH, (block) -> dropsWithShears(
                 block,
                 this.applyExplosionDecay(block, ItemEntry.builder(Items.STICK)

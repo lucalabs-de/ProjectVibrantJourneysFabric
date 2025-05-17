@@ -2,7 +2,7 @@ package de.lucalabs.vibrantjourneys.data;
 
 import de.lucalabs.vibrantjourneys.tags.PVJTags;
 import de.lucalabs.vibrantjourneys.util.PVJFeatureVars;
-import de.lucalabs.vibrantjourneys.util.TreeConfiguredFeatures;
+import de.lucalabs.vibrantjourneys.util.TreeFeatureUtils;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.tag.vanilla.VanillaBiomeTagProvider;
 import net.minecraft.registry.RegistryKey;
@@ -21,33 +21,33 @@ public class PVJBiomeTagsProvider extends VanillaBiomeTagProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup provider) {
-        for (TreeConfiguredFeatures.ChanceBiomeEntry biome : PVJFeatureVars.OAK) {
+        for (TreeFeatureUtils.ChanceBiomeEntry biome : PVJFeatureVars.OAK) {
             addTag(PVJTags.HAS_OAK_LOGS, biome);
         }
-        for (TreeConfiguredFeatures.ChanceBiomeEntry biome : PVJFeatureVars.BIRCH) {
+        for (TreeFeatureUtils.ChanceBiomeEntry biome : PVJFeatureVars.BIRCH) {
             addTag(PVJTags.HAS_BIRCH_LOGS, biome);
         }
-        for (TreeConfiguredFeatures.ChanceBiomeEntry biome : PVJFeatureVars.SPRUCE) {
+        for (TreeFeatureUtils.ChanceBiomeEntry biome : PVJFeatureVars.SPRUCE) {
             addTag(PVJTags.HAS_SPRUCE_LOGS, biome);
         }
-        for (TreeConfiguredFeatures.ChanceBiomeEntry biome : PVJFeatureVars.JUNGLE) {
+        for (TreeFeatureUtils.ChanceBiomeEntry biome : PVJFeatureVars.JUNGLE) {
             addTag(PVJTags.HAS_JUNGLE_LOGS, biome);
         }
-        for (TreeConfiguredFeatures.ChanceBiomeEntry biome : PVJFeatureVars.ACACIA) {
+        for (TreeFeatureUtils.ChanceBiomeEntry biome : PVJFeatureVars.ACACIA) {
             addTag(PVJTags.HAS_ACACIA_LOGS, biome);
         }
-        for (TreeConfiguredFeatures.ChanceBiomeEntry biome : PVJFeatureVars.DARK_OAK) {
+        for (TreeFeatureUtils.ChanceBiomeEntry biome : PVJFeatureVars.DARK_OAK) {
             addTag(PVJTags.HAS_DARK_OAK_LOGS, biome);
         }
-        for (TreeConfiguredFeatures.ChanceBiomeEntry biome : PVJFeatureVars.CHERRY) {
+        for (TreeFeatureUtils.ChanceBiomeEntry biome : PVJFeatureVars.CHERRY) {
             addTag(PVJTags.HAS_CHERRY_LOGS, biome);
         }
-        for (TreeConfiguredFeatures.ChanceBiomeEntry biome : PVJFeatureVars.MANGROVE) {
+        for (TreeFeatureUtils.ChanceBiomeEntry biome : PVJFeatureVars.MANGROVE) {
             addTag(PVJTags.HAS_MANGROVE_LOGS, biome);
         }
     }
 
-    private void addTag(final TagKey<Biome> tagKey, final TreeConfiguredFeatures.ChanceBiomeEntry biomeEntry) {
+    private void addTag(final TagKey<Biome> tagKey, final TreeFeatureUtils.ChanceBiomeEntry biomeEntry) {
         Identifier location = new Identifier(biomeEntry.biomeName().trim());
 
         if (location.getNamespace().equals("minecraft")) {

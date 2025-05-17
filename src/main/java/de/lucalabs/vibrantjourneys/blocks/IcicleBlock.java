@@ -58,7 +58,7 @@ public class IcicleBlock extends Block implements LandingBlock {
         }
         Predicate<BlockState> predicate = (state) -> state.getBlock() == Blocks.CAULDRON || state.getBlock() == Blocks.WATER_CAULDRON;
         BiPredicate<BlockPos, BlockState> bipredicate = (blockpos, state) -> canDripThrough(level, blockpos, state);
-        return findBlockVertical(level, pos, Direction.DOWN.getDirection(), bipredicate, predicate).orElse((BlockPos) null);
+        return findBlockVertical(level, pos, Direction.DOWN.getDirection(), bipredicate, predicate).orElse(null);
     }
 
     private static void spawnFallingStalactite(BlockState state, ServerWorld level, BlockPos pos) {

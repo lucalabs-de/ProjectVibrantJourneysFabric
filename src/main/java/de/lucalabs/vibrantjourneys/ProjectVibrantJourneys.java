@@ -1,5 +1,6 @@
 package de.lucalabs.vibrantjourneys;
 
+import de.lucalabs.vibrantjourneys.config.ChanceTreeFeatureConfig;
 import de.lucalabs.vibrantjourneys.recipes.PVJCompostables;
 import de.lucalabs.vibrantjourneys.recipes.PVJPotionRecipes;
 import de.lucalabs.vibrantjourneys.registry.PVJBiomeModifiers;
@@ -23,5 +24,6 @@ public class ProjectVibrantJourneys implements ModInitializer {
 		PVJPotions.initialize();
 		PVJPotionRecipes.initialize();
 		PVJCompostables.inititalize();
+		ChanceTreeFeatureConfig.initialize();
 	}
 }

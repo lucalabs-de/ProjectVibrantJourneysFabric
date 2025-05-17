@@ -5,7 +5,8 @@
   "mixins": [
     "ChunkRegionAccessor",
     "PlantBlockMixin",
-    "RuinedPortalPieceMixin"
+    "RuinedPortalPieceMixin",
+    "VibrationListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

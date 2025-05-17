@@ -5,12 +5,12 @@ import java.util.HashSet;
 public class PVJFeatureVars {
 
   /* VANILLA */
-  public static final HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> OAK = new HashSet<>();
-  public static final HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> BIRCH = new HashSet<>();
-  public static final HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> SPRUCE = new HashSet<>();
-  public static final HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> JUNGLE = new HashSet<>();
-  public static final HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> ACACIA = new HashSet<>();
-  public static final HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> DARK_OAK = new HashSet<>();
-  public static final HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> CHERRY = new HashSet<>();
-  public static final HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> MANGROVE = new HashSet<>();
+  public static final HashSet<TreeFeatureUtils.ChanceBiomeEntry> OAK = new HashSet<>();
+  public static final HashSet<TreeFeatureUtils.ChanceBiomeEntry> BIRCH = new HashSet<>();
+  public static final HashSet<TreeFeatureUtils.ChanceBiomeEntry> SPRUCE = new HashSet<>();
+  public static final HashSet<TreeFeatureUtils.ChanceBiomeEntry> JUNGLE = new HashSet<>();
+  public static final HashSet<TreeFeatureUtils.ChanceBiomeEntry> ACACIA = new HashSet<>();
+  public static final HashSet<TreeFeatureUtils.ChanceBiomeEntry> DARK_OAK = new HashSet<>();
+  public static final HashSet<TreeFeatureUtils.ChanceBiomeEntry> CHERRY = new HashSet<>();
+  public static final HashSet<TreeFeatureUtils.ChanceBiomeEntry> MANGROVE = new HashSet<>();
 }

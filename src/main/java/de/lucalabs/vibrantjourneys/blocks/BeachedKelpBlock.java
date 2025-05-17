@@ -22,7 +22,7 @@ public class BeachedKelpBlock extends HorizontalFacingBlock implements Waterlogg
 
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-    public static final EnumProperty<BeachedKelpShape> KELP_SHAPE = EnumProperty.create("shape", BeachedKelpShape.class);
+    public static final EnumProperty<BeachedKelpShape> KELP_SHAPE = EnumProperty.of("shape", BeachedKelpShape.class);
 
     protected static final VoxelShape SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 1.0D, 15.0D);
 

@@ -1,15 +1,15 @@
 package de.lucalabs.vibrantjourneys.config.compatibility;
 
 import de.lucalabs.vibrantjourneys.util.PVJFeatureVars;
-import de.lucalabs.vibrantjourneys.util.TreeConfiguredFeatures;
+import de.lucalabs.vibrantjourneys.util.TreeFeatureUtils;
 
 import java.util.Set;
 
-import static de.lucalabs.vibrantjourneys.util.TreeConfiguredFeatures.entry;
+import static de.lucalabs.vibrantjourneys.util.TreeFeatureUtils.entry;
 
 public class BYG {
 
-    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> OAK_DEFAULT = Set.of(entry("byg:allium_fields", 5),
+    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> OAK_DEFAULT = Set.of(entry("byg:allium_fields", 5),
             entry("byg:araucaria_savanna", 5),
             entry("byg:autumnal_forest", 30),
             entry("byg:baobab_savanna", 5),
@@ -21,12 +21,12 @@ public class BYG {
             entry("byg:temperate_rainforest", 10),
             entry("byg:white_mangrove_marshes", 5));
 
-    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> BIRCH_DEFAULT = Set.of(entry("byg:autumnal_forest", 10),
+    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> BIRCH_DEFAULT = Set.of(entry("byg:autumnal_forest", 10),
             entry("byg:borealis_grove", 10),
             entry("byg:howling_peaks", 5),
             entry("byg:temperate_grove", 10));
 
-    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> SPRUCE_DEFAULT = Set.of(entry("byg:autumnal_taiga", 20),
+    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> SPRUCE_DEFAULT = Set.of(entry("byg:autumnal_taiga", 20),
             entry("byg:borealis_grove", 10),
             entry("byg:canadian_shield", 15),
             entry("byg:dacite_ridges", 10),
@@ -36,19 +36,19 @@ public class BYG {
             entry("byg:rose_fields", 5),
             entry("byg:weeping_witch_forest", 5));
 
-    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> JUNGLE_DEFAULT = Set.of(entry("byg:crag_gardens", 10));
+    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> JUNGLE_DEFAULT = Set.of(entry("byg:crag_gardens", 10));
 
-    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> ACACIA_DEFAULT = Set.of(entry("byg:araucaria_savanna", 10),
+    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> ACACIA_DEFAULT = Set.of(entry("byg:araucaria_savanna", 10),
             entry("byg:baobab_savanna", 10));
 
-    public static final Set<TreeConfiguredFeatures.ChanceBiomeEntry> DARK_OAK_DEFAULT = Set.of(entry("byg:temperate_rainforest", 10));
+    public static final Set<TreeFeatureUtils.ChanceBiomeEntry> DARK_OAK_DEFAULT = Set.of(entry("byg:temperate_rainforest", 10));
 
     public static void init() {
-        TreeConfiguredFeatures.serializeAndLoad("oak_trees", "byg", OAK_DEFAULT, PVJFeatureVars.OAK);
-        TreeConfiguredFeatures.serializeAndLoad("birch_trees", "byg", BIRCH_DEFAULT, PVJFeatureVars.BIRCH);
-        TreeConfiguredFeatures.serializeAndLoad("spruce_trees", "byg", SPRUCE_DEFAULT, PVJFeatureVars.SPRUCE);
-        TreeConfiguredFeatures.serializeAndLoad("jungle_trees", "byg", JUNGLE_DEFAULT, PVJFeatureVars.JUNGLE);
-        TreeConfiguredFeatures.serializeAndLoad("acacia_trees", "byg", ACACIA_DEFAULT, PVJFeatureVars.ACACIA);
-        TreeConfiguredFeatures.serializeAndLoad("dark_oak_trees", "byg", DARK_OAK_DEFAULT, PVJFeatureVars.DARK_OAK);
+        TreeFeatureUtils.serializeAndLoad("oak_trees", "byg", OAK_DEFAULT, PVJFeatureVars.OAK);
+        TreeFeatureUtils.serializeAndLoad("birch_trees", "byg", BIRCH_DEFAULT, PVJFeatureVars.BIRCH);
+        TreeFeatureUtils.serializeAndLoad("spruce_trees", "byg", SPRUCE_DEFAULT, PVJFeatureVars.SPRUCE);
+        TreeFeatureUtils.serializeAndLoad("jungle_trees", "byg", JUNGLE_DEFAULT, PVJFeatureVars.JUNGLE);
+        TreeFeatureUtils.serializeAndLoad("acacia_trees", "byg", ACACIA_DEFAULT, PVJFeatureVars.ACACIA);
+        TreeFeatureUtils.serializeAndLoad("dark_oak_trees", "byg", DARK_OAK_DEFAULT, PVJFeatureVars.DARK_OAK);
     }
 }

@@ -6,7 +6,7 @@ import de.lucalabs.vibrantjourneys.blocks.FallenLeavesBlock;
 import de.lucalabs.vibrantjourneys.blocks.GroundcoverBlock;
 import de.lucalabs.vibrantjourneys.blocks.HollowLogBlock;
 import de.lucalabs.vibrantjourneys.util.PVJFeatureVars;
-import de.lucalabs.vibrantjourneys.util.TreeConfiguredFeatures;
+import de.lucalabs.vibrantjourneys.util.TreeFeatureUtils;
 import de.lucalabs.vibrantjourneys.util.WorldUtils;
 import de.lucalabs.vibrantjourneys.world.features.configurations.FallenTreeConfiguration;
 import net.minecraft.block.Block;
@@ -20,6 +20,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.HashSet;
@@ -41,8 +42,8 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
         BlockState baseLog = context.getConfig().baseLog();
 
         String biome = level.getBiome(pos).getKey().get().getValue().toString();
-        HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> biomeEntries = getEntrySet(baseLog.getBlock());
-        int chance = TreeConfiguredFeatures.getChance(biome, biomeEntries);
+        HashSet<TreeFeatureUtils.ChanceBiomeEntry> biomeEntries = getEntrySet(baseLog.getBlock());
+        int chance = TreeFeatureUtils.getChance(biome, biomeEntries);
         if (chance == -1) {
             chance = 10; //set default
         }
@@ -142,7 +143,7 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
                 || world.getBlockState(pos).getBlock() instanceof GroundcoverBlock;
     }
 
-    public HashSet<TreeConfiguredFeatures.ChanceBiomeEntry> getEntrySet(Block log) {
+    public HashSet<TreeFeatureUtils.ChanceBiomeEntry> getEntrySet(Block log) {
         if (log == Blocks.OAK_LOG) {
             return PVJFeatureVars.OAK;
         } else if (log == Blocks.BIRCH_LOG) {
