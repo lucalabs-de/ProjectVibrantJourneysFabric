@@ -3,13 +3,21 @@ package de.lucalabs.vibrantjourneys.world.features;
 import com.mojang.serialization.Codec;
 import de.lucalabs.vibrantjourneys.util.WorldUtils;
 import de.lucalabs.vibrantjourneys.world.features.configurations.MultipleVegetationPatchConfiguration;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.HashSet;
@@ -32,8 +40,8 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
     }
 
     private static boolean isExposedDirection(StructureWorldAccess level, BlockPos pos, BlockPos.Mutable posMutable, Direction dir) {
-        posMutable.setWithOffset(pos, dir);
-        return !level.getBlockState(posMutable).isFaceSturdy(level, posMutable, dir.getOpposite());
+        posMutable.set(pos, dir);
+        return !level.getBlockState(posMutable).isSideSolidFullSquare(level, posMutable, dir.getOpposite());
     }
 
     @Override
@@ -47,15 +55,22 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
 
         BlockPos blockpos = context.getOrigin();
         Predicate<BlockState> predicate = (p_204782_) -> p_204782_.isIn(config.replaceable);
-        int i = config.xzRadius.sample(random) + 1;
-        int j = config.xzRadius.sample(random) + 1;
+        int i = config.xzRadius.get(random) + 1;
+        int j = config.xzRadius.get(random) + 1;
         Set<BlockPos> set = this.placeGroundPatch(worldgenlevel, config, random, blockpos, predicate, i, j);
         this.distributeVegetation(context, worldgenlevel, config, random, set, i, j);
 
         return !set.isEmpty();
     }
 
-    protected Set<BlockPos> placeGroundPatch(StructureWorldAccess level, MultipleVegetationPatchConfiguration config, Random rand, BlockPos pos, Predicate<BlockState> replace, int x, int z) {
+    protected Set<BlockPos> placeGroundPatch(
+            StructureWorldAccess level,
+            MultipleVegetationPatchConfiguration config,
+            Random rand,
+            BlockPos pos,
+            Predicate<BlockState> replace,
+            int x,
+            int z) {
         Set<BlockPos> set = createGround(level, config, rand, pos, replace, x, z);
         Set<BlockPos> set1 = new HashSet<>();
         BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable();
@@ -97,20 +112,20 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
                 boolean flag3 = flag && flag1;
                 boolean flag4 = flag2 && !flag3;
                 if (!flag3 && (!flag4 || config.extraEdgeColumnChance != 0.0F && !(rand.nextFloat() > config.extraEdgeColumnChance))) {
-                    blockpos$mutableblockpos.setWithOffset(pos, i, 0, j);
+                    blockpos$mutableblockpos.set(pos, i, 0, j);
 
-                    for (int k = 0; (surface ? level.isStateAtPosition(blockpos$mutableblockpos, AbstractBlock.BlockStateBase::isAir) : true) && k < config.verticalRange; ++k) {
+                    for (int k = 0; (!surface || level.testBlockState(blockpos$mutableblockpos, AbstractBlock.AbstractBlockState::isAir)) && k < config.verticalRange; ++k) {
                         blockpos$mutableblockpos.move(direction);
                     }
 
-                    for (int i1 = 0; level.isStateAtPosition(blockpos$mutableblockpos, (p_204784_) -> !p_204784_.isAir()) && i1 < config.verticalRange; ++i1) {
+                    for (int i1 = 0; level.testBlockState(blockpos$mutableblockpos, (p_204784_) -> !p_204784_.isAir()) && i1 < config.verticalRange; ++i1) {
                         blockpos$mutableblockpos.move(direction1);
                     }
 
-                    blockpos$mutableblockpos1.setWithOffset(blockpos$mutableblockpos, config.surface.getDirection());
+                    blockpos$mutableblockpos1.set(blockpos$mutableblockpos, config.surface.getDirection());
                     BlockState blockstate = level.getBlockState(blockpos$mutableblockpos1);
-                    if (blockstate.isFaceSturdy(level, blockpos$mutableblockpos1, config.surface.getDirection().getOpposite())) {
-                        int l = config.depth.sample(rand) + (config.extraBottomBlockChance > 0.0F && rand.nextFloat() < config.extraBottomBlockChance ? 1 : 0);
+                    if (blockstate.isSideSolidFullSquare(level, blockpos$mutableblockpos1, config.surface.getDirection().getOpposite())) {
+                        int l = config.depth.get(rand) + (config.extraBottomBlockChance > 0.0F && rand.nextFloat() < config.extraBottomBlockChance ? 1 : 0);
                         BlockPos blockpos = blockpos$mutableblockpos1.toImmutable();
                         boolean flag5 = this.placeGround(level, config, predicate, rand, blockpos$mutableblockpos1, l);
                         if (flag5) {
@@ -126,7 +141,7 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
     protected void distributeVegetation(FeatureContext<MultipleVegetationPatchConfiguration> context, StructureWorldAccess level, MultipleVegetationPatchConfiguration config, Random rand, Set<BlockPos> set, int p_160619_, int p_160620_) {
         for (BlockPos blockpos : set) {
             if (config.vegetationChance > 0.0F && rand.nextFloat() < config.vegetationChance) {
-                this.placeVegetation(level, config, context.chunkGenerator(), rand, blockpos);
+                this.placeVegetation(level, config, context.getGenerator(), rand, blockpos);
 
                 if (rand.nextInt(20) == 0) {
                     for (int i = 0; i < 32; ++i) {
@@ -134,20 +149,20 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
                         BlockState blockstate = Blocks.SEAGRASS.getDefaultState();
 
                         for (int j = 0; j < i / 16; ++j) {
-                            pos = pos.offset(rand.nextInt(3) - 1, (rand.nextInt(3) - 1) * rand.nextInt(3) / 2, rand.nextInt(3) - 1);
+                            pos = pos.add(rand.nextInt(3) - 1, (rand.nextInt(3) - 1) * rand.nextInt(3) / 2, rand.nextInt(3) - 1);
 
-                            if (level.getBlockState(pos.down()).isCollisionShapeFullBlock(level, pos.down())) {
+                            if (level.getBlockState(pos.down()).isFullCube(level, pos.down())) {
                                 if (blockstate.canPlaceAt(level, pos)) {
                                     BlockState blockstate1 = level.getBlockState(pos);
-                                    if (blockstate1.is(Blocks.WATER) && level.getFluidState(pos).getAmount() == 8) {
+                                    if (blockstate1.isOf(Blocks.WATER) && level.getFluidState(pos).getLevel() == 8) {
                                         WorldUtils.setBlockState(level, pos, blockstate, 3);
-                                    } else if (blockstate1.is(Blocks.KELP) && rand.nextBoolean()) {
+                                    } else if (blockstate1.isOf(Blocks.KELP) && rand.nextBoolean()) {
                                         int l = Math.min(blockstate1.get(AbstractPlantStemBlock.AGE) + 1, 25);
-                                        if (level.getBlockState(pos.up()).getFluidState().getType() == Fluids.WATER) {
-                                            WorldUtils.setBlockState(level, pos, blockstate1.with(AbstractPlantStemBlock.AGE, Integer.valueOf(l)), 3);
+                                        if (level.getBlockState(pos.up()).getFluidState().getFluid() == Fluids.WATER) {
+                                            WorldUtils.setBlockState(level, pos, blockstate1.with(AbstractPlantStemBlock.AGE, l), 3);
                                         }
-                                    } else if (blockstate1.is(Blocks.SEAGRASS) && rand.nextInt(3) == 0) {
-                                        if (level.getBlockState(pos.up()).getFluidState().getType() == Fluids.WATER) {
+                                    } else if (blockstate1.isOf(Blocks.SEAGRASS) && rand.nextInt(3) == 0) {
+                                        if (level.getBlockState(pos.up()).getFluidState().getFluid() == Fluids.WATER) {
                                             WorldUtils.setBlockState(level, pos, Blocks.TALL_SEAGRASS.getDefaultState(), 3);
                                         }
                                     }
@@ -159,7 +174,7 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
 
 
             } else {
-                if (level.getFluidState(blockpos).getType() == Fluids.WATER && level.getBlockState(blockpos).getBlock() == Blocks.WATER && rand.nextFloat() < 0.25F) {
+                if (level.getFluidState(blockpos).getFluid() == Fluids.WATER && level.getBlockState(blockpos).getBlock() == Blocks.WATER && rand.nextFloat() < 0.25F) {
                     tryPlaceCoral(level, blockpos, rand);
                 }
             }
@@ -167,23 +182,23 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
     }
 
     private void tryPlaceCoral(StructureWorldAccess level, BlockPos pos, Random rand) {
-        if (level.getBlockState(pos.down()).isCollisionShapeFullBlock(level, pos.down())) {
+        if (level.getBlockState(pos.down()).isFullCube(level, pos.down())) {
             if (rand.nextBoolean()) {
-                Optional<Block> coral = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.CORALS).getRandomElement(rand);
-                if (coral.isPresent()) {
-                    Block block = coral;
-                    WorldUtils.setBlockState(level, pos, block.getDefaultState(), 2);
-                }
+//                Optional<Block> coral = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.CORALS).getRandomElement(rand);
+                // TODO check that the below does the same as the above
+                Optional<Block> coral = getRandomCoral(rand);
+                coral.ifPresent(block -> WorldUtils.setBlockState(level, pos, block.getDefaultState(), 2));
             }
         } else {
             for (Direction direction : Direction.Type.HORIZONTAL) {
                 if (rand.nextBoolean()) {
-                    if (level.getBlockState(pos.offset(direction)).isCollisionShapeFullBlock(level, pos.offset(direction))) {
-                        Optional<Block> coral = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.WALL_CORALS).getRandomElement(rand);
+                    if (level.getBlockState(pos.offset(direction)).isFullCube(level, pos.offset(direction))) {
+//                        Optional<Block> coral = ForgeRegistries.BLOCKS.tags().getTag(BlockTags.WALL_CORALS).getRandomElement(rand);
+                        Optional<Block> coral = getRandomCoral(rand);
                         if (coral.isPresent()) {
-                            BlockState blockstate = coral.getDefaultState();
-                            if (blockstate.hasProperty(BaseCoralWallFanBlock.FACING)) {
-                                blockstate = blockstate.with(BaseCoralWallFanBlock.FACING, direction.getOpposite());
+                            BlockState blockstate = coral.get().getDefaultState();
+                            if (blockstate.contains(DeadCoralWallFanBlock.FACING)) {
+                                blockstate = blockstate.with(DeadCoralWallFanBlock.FACING, direction.getOpposite());
                             }
                             WorldUtils.setBlockState(level, pos, blockstate, 2);
                         }
@@ -193,27 +208,38 @@ public class MultipleWaterloggedVegetationPatchFeature extends Feature<MultipleV
         }
     }
 
-    protected boolean placeVegetation(StructureWorldAccess level, MultipleVegetationPatchConfiguration config, ChunkGenerator chunkGenerator, Random rand, BlockPos pos) {
-        boolean flag = false;
+    private Optional<Block> getRandomCoral(Random random) {
+        var tag = Registries.BLOCK.getEntryList(TagKey.of(RegistryKeys.BLOCK, BlockTags.WALL_CORALS.id())).orElse(null);
+        if (tag == null || tag.stream().toList().isEmpty()) {
+            return Optional.empty();
+        }
+
+        return tag.getRandom(random).map(RegistryEntry::value);
+    }
+
+    protected void placeVegetation(
+            StructureWorldAccess level,
+            MultipleVegetationPatchConfiguration config,
+            ChunkGenerator chunkGenerator,
+            Random rand,
+            BlockPos pos) {
 
         for (RegistryEntry<PlacedFeature> feature : config.vegetationFeature) {
-            if (feature.value().place(level, chunkGenerator, rand, pos.down().offset(config.surface.getDirection().getOpposite()))) {
+            if (feature.value().generate(level, chunkGenerator, rand, pos.down().offset(config.surface.getDirection().getOpposite()))) {
                 BlockState blockstate = level.getBlockState(pos);
-                if (blockstate.hasProperty(Properties.WATERLOGGED) && !blockstate.get(Properties.WATERLOGGED)) {
-                    WorldUtils.setBlockState(level, pos, blockstate.with(Properties.WATERLOGGED, Boolean.valueOf(true)), 2);
+                if (blockstate.contains(Properties.WATERLOGGED) && !blockstate.get(Properties.WATERLOGGED)) {
+                    WorldUtils.setBlockState(level, pos, blockstate.with(Properties.WATERLOGGED, Boolean.TRUE), 2);
                 }
-                flag = true;
             }
         }
 
-        return flag;
     }
 
     protected boolean placeGround(StructureWorldAccess level, MultipleVegetationPatchConfiguration config, Predicate<BlockState> pred, Random rand, BlockPos.Mutable pos, int iterations) {
         for (int i = 0; i < iterations; ++i) {
-            BlockState blockstate = config.groundState.getState(rand, pos);
+            BlockState blockstate = config.groundState.get(rand, pos);
             BlockState blockstate1 = level.getBlockState(pos);
-            if (!blockstate.is(blockstate1.getBlock())) {
+            if (!blockstate.isOf(blockstate1.getBlock())) {
                 if (!pred.test(blockstate1)) {
                     return i != 0;
                 }

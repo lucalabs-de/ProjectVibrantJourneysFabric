@@ -1,8 +1,11 @@
 package de.lucalabs.vibrantjourneys;
 
+import de.lucalabs.vibrantjourneys.recipes.PVJCompostables;
+import de.lucalabs.vibrantjourneys.recipes.PVJPotionRecipes;
 import de.lucalabs.vibrantjourneys.registry.PVJBiomeModifiers;
 import de.lucalabs.vibrantjourneys.registry.PVJBlocks;
 import de.lucalabs.vibrantjourneys.registry.PVJItems;
+import de.lucalabs.vibrantjourneys.registry.PVJPotions;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -17,5 +20,8 @@ public class ProjectVibrantJourneys implements ModInitializer {
 		PVJBlocks.initialize();
 		PVJItems.initialize();
 		PVJBiomeModifiers.initialize();
+		PVJPotions.initialize();
+		PVJPotionRecipes.initialize();
+		PVJCompostables.inititalize();
 	}
 }

@@ -28,7 +28,7 @@ public class PVJGeneralEvents {
   public void checkVibrationEvent(VanillaGameEvent event) {
     if (event.getVanillaEvent().is(GameEventTags.VIBRATIONS)) {
       if (event.getCause() instanceof LivingEntity entity) {
-        MobEffectInstance mobEffectInstance = entity.getEffect(PVJMobEffects.SPORADIC_SILENCE);
+        StatusEffectInstance mobEffectInstance = entity.getEffect(PVJMobEffects.SPORADIC_SILENCE);
         if (mobEffectInstance != null) {
           Random random = event.getWorld().getRandom();
           float threshold = ((mobEffectInstance.getAmplifier() + 1) * 0.25F) + ((mobEffectInstance.getAmplifier() + 1) * 0.05F * random.nextFloat());

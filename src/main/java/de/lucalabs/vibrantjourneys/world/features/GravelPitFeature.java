@@ -1,6 +1,16 @@
 package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
+import de.lucalabs.vibrantjourneys.registry.PVJBlocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.feature.DefaultFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 public class GravelPitFeature extends Feature<DefaultFeatureConfig> {
     private static final BlockState AIR = Blocks.CAVE_AIR.getDefaultState();
@@ -11,10 +21,11 @@ public class GravelPitFeature extends Feature<DefaultFeatureConfig> {
 
     @Override
     public boolean generate(FeatureContext<DefaultFeatureConfig> pContext) {
-        BlockPos blockpos = pContext.origin();
-        StructureWorldAccess worldgenlevel = pContext.level();
-        Random randomsource = pContext.random();
-        if (blockpos.getY() <= worldgenlevel.getMinBuildHeight() + 4) {
+        BlockPos blockpos = pContext.getOrigin();
+        StructureWorldAccess worldgenlevel = pContext.getWorld();
+        Random randomsource = pContext.getRandom();
+
+        if (blockpos.getY() <= worldgenlevel.getBottomY() + 4) {
             return false;
         } else {
             blockpos = blockpos.down(4);
@@ -59,12 +70,12 @@ public class GravelPitFeature extends Feature<DefaultFeatureConfig> {
                                         || l2 > 0 && aboolean[(k1 * 16 + k) * 8 + (l2 - 1)]
                         );
                         if (flag) {
-                            BlockState blockstate3 = worldgenlevel.getBlockState(blockpos.offset(k1, l2, k));
-                            if (l2 >= 4 && blockstate3.liquid()) {
+                            BlockState blockstate3 = worldgenlevel.getBlockState(blockpos.add(k1, l2, k));
+                            if (l2 >= 4 && blockstate3.isLiquid()) {
                                 return false;
                             }
 
-                            if (l2 < 4 && !blockstate3.isSolid() && worldgenlevel.getBlockState(blockpos.offset(k1, l2, k)) != blockstate1) {
+                            if (l2 < 4 && !blockstate3.isSolid() && worldgenlevel.getBlockState(blockpos.add(k1, l2, k)) != blockstate1) {
                                 return false;
                             }
                         }
@@ -76,13 +87,13 @@ public class GravelPitFeature extends Feature<DefaultFeatureConfig> {
                 for (int i2 = 0; i2 < 16; i2++) {
                     for (int i3 = 0; i3 < 8; i3++) {
                         if (aboolean[(l1 * 16 + i2) * 8 + i3]) {
-                            BlockPos blockpos1 = blockpos.offset(l1, i3, i2);
+                            BlockPos blockpos1 = blockpos.add(l1, i3, i2);
                             if (this.canReplaceBlock(worldgenlevel.getBlockState(blockpos1))) {
                                 boolean flag1 = i3 >= 4;
                                 worldgenlevel.setBlockState(blockpos1, flag1 ? AIR : blockstate1, 2);
                                 if (flag1) {
-                                    worldgenlevel.scheduleTick(blockpos1, AIR.getBlock(), 0);
-                                    this.markAboveForPostProcessing(worldgenlevel, blockpos1);
+                                    worldgenlevel.scheduleBlockTick(blockpos1, AIR.getBlock(), 0);
+                                    this.markBlocksAboveForPostProcessing(worldgenlevel, blockpos1);
                                 }
                             }
                         }
@@ -103,17 +114,17 @@ public class GravelPitFeature extends Feature<DefaultFeatureConfig> {
                                         || l3 > 0 && aboolean[(j2 * 16 + j3) * 8 + (l3 - 1)]
                         );
                         if (flag2 && (l3 < 4 || randomsource.nextInt(2) != 0)) {
-                            BlockState blockstate = worldgenlevel.getBlockState(blockpos.offset(j2, l3, j3));
-                            if (blockstate.isSolid() && !blockstate.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
-                                BlockPos blockpos3 = blockpos.offset(j2, l3, j3);
+                            BlockState blockstate = worldgenlevel.getBlockState(blockpos.add(j2, l3, j3));
+                            if (blockstate.isSolid() && !blockstate.isIn(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
+                                BlockPos blockpos3 = blockpos.add(j2, l3, j3);
                                 BlockState block;
-                                if (worldgenlevel.getBlockState(blockpos3.up()).canReplace() && randomsource.nextFloat() < 0.17F) {
+                                if (worldgenlevel.getBlockState(blockpos3.up()).isReplaceable() && randomsource.nextFloat() < 0.17F) {
                                     block = Blocks.GRASS_BLOCK.getDefaultState();
                                 } else {
                                     block = this.getGravelBlock(randomsource);
                                 }
                                 worldgenlevel.setBlockState(blockpos3, block, 2);
-                                this.markAboveForPostProcessing(worldgenlevel, blockpos3);
+                                this.markBlocksAboveForPostProcessing(worldgenlevel, blockpos3);
                             }
                         }
                     }
@@ -125,7 +136,7 @@ public class GravelPitFeature extends Feature<DefaultFeatureConfig> {
     }
 
     private boolean canReplaceBlock(BlockState pState) {
-        return !pState.is(BlockTags.FEATURES_CANNOT_REPLACE);
+        return !pState.isIn(BlockTags.FEATURES_CANNOT_REPLACE);
     }
 
     private BlockState getGravelBlock(Random random) {

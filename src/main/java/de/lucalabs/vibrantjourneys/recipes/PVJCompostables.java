@@ -1,10 +1,15 @@
 package de.lucalabs.vibrantjourneys.recipes;
 
+import de.lucalabs.vibrantjourneys.ProjectVibrantJourneys;
 import de.lucalabs.vibrantjourneys.registry.PVJBlocks;
+import net.minecraft.block.ComposterBlock;
+import net.minecraft.item.ItemConvertible;
 
 public class PVJCompostables {
 
-  public static void init() {
+  public static void inititalize() {
+    ProjectVibrantJourneys.LOGGER.info("initializing compostables");
+
     setCompostInfo(PVJBlocks.SHORT_GRASS, 0.1F);
     setCompostInfo(PVJBlocks.FALLEN_LEAVES, 0.1F);
     setCompostInfo(PVJBlocks.DEAD_FALLEN_LEAVES, 0.1F);
@@ -37,7 +42,7 @@ public class PVJCompostables {
     setCompostInfo(PVJBlocks.MIXED_WILDFLOWERS, 0.25F);
   }
 
-  public static void setCompostInfo(ItemLike item, float chance) {
-    ComposterBlock.COMPOSTABLES.put(item.asItem(), chance);
+  public static void setCompostInfo(ItemConvertible item, float chance) {
+    ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(item.asItem(), chance);
   }
 }

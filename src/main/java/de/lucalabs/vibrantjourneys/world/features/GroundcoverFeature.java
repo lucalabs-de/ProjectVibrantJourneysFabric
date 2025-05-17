@@ -1,34 +1,50 @@
 package de.lucalabs.vibrantjourneys.world.features;
 
 import com.mojang.serialization.Codec;
+import de.lucalabs.vibrantjourneys.tags.PVJTags;
+import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.StructureWorldAccess;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
+import net.minecraft.world.gen.feature.util.FeatureContext;
 
 public class GroundcoverFeature extends Feature<RandomPatchFeatureConfig> {
-  public GroundcoverFeature(Codec<RandomPatchFeatureConfig> codec) {
-    super(codec);
-  }
 
-  public boolean generate(FeatureContext<RandomPatchFeatureConfig> context) {
-    RandomPatchFeatureConfig randompatchconfiguration = context.getConfig();
-    Random randomsource = context.getRandom();
-    BlockPos blockpos = context.getOrigin();
-    StructureWorldAccess worldgenlevel = context.getWorld();
-    int i = 0;
-    BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable();
-    int j = randompatchconfiguration.xzSpread() + 1;
-    int k = randompatchconfiguration.ySpread() + 1;
-
-    for(int l = 0; l < randompatchconfiguration.tries(); ++l) {
-      blockpos$mutableblockpos.setWithOffset(blockpos, randomsource.nextInt(j) - randomsource.nextInt(j), randomsource.nextInt(k) - randomsource.nextInt(k), randomsource.nextInt(j) - randomsource.nextInt(j));
-      if (!worldgenlevel.getBlockState(blockpos$mutableblockpos.down()).is(dev.orderedchaos.projectvibrantjourneys.common.tags.PVJTags.GROUNDCOVER_CANNOT_GENERATE_ON)) {
-        if (randompatchconfiguration.feature().value().place(worldgenlevel, context.chunkGenerator(), randomsource, blockpos$mutableblockpos)) {
-          if (worldgenlevel.getBlockState(blockpos$mutableblockpos.up()).hasProperty(Properties.DOUBLE_BLOCK_HALF) && worldgenlevel.getBlockState(blockpos$mutableblockpos.up()).get(Properties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER) {
-            worldgenlevel.removeBlock(blockpos$mutableblockpos.up(), false);
-          }
-          ++i;
-        }
-      }
+    public GroundcoverFeature(Codec<RandomPatchFeatureConfig> codec) {
+        super(codec);
     }
 
-    return i > 0;
-  }
+    public boolean generate(FeatureContext<RandomPatchFeatureConfig> context) {
+        RandomPatchFeatureConfig config = context.getConfig();
+        Random random = context.getRandom();
+        BlockPos blockpos = context.getOrigin();
+        StructureWorldAccess world = context.getWorld();
+
+        int i = 0;
+        BlockPos.Mutable pos = new BlockPos.Mutable();
+        int j = config.xzSpread() + 1;
+        int k = config.ySpread() + 1;
+
+        for (int l = 0; l < config.tries(); ++l) {
+            pos.set(
+                    blockpos,
+                    random.nextInt(j) - random.nextInt(j),
+                    random.nextInt(k) - random.nextInt(k),
+                    random.nextInt(j) - random.nextInt(j));
+            if (!world.getBlockState(pos.down()).isIn(PVJTags.GROUNDCOVER_CANNOT_GENERATE_ON)) {
+                if (config.feature().value().generate(world, context.getGenerator(), random, pos)) {
+                    if (world.getBlockState(pos.up()).contains(Properties.DOUBLE_BLOCK_HALF)
+                            && world.getBlockState(pos.up()).get(Properties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER) {
+                        world.removeBlock(pos.up(), false);
+                    }
+                    ++i;
+                }
+            }
+        }
+
+        return i > 0;
+    }
 }
