@@ -15,6 +15,10 @@ public class PVJStatusEffects {
             "sporadic_silence",
             () -> new BaseMobEffect(StatusEffectCategory.BENEFICIAL, 0x052a32));
 
+    public static void initialize() {
+        ProjectVibrantJourneys.LOGGER.info("initializing status effects");
+    }
+
     private static StatusEffect register(String name, Supplier<StatusEffect> supplier) {
         return Registry.register(Registries.STATUS_EFFECT, new Identifier(ProjectVibrantJourneys.MOD_ID, name), supplier.get());
     }

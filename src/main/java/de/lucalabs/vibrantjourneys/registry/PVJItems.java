@@ -130,7 +130,7 @@ public class PVJItems {
 
     private static Item registerBurnable(String name, Supplier<FuelBlockItem> item) {
         Item i = registerItem(name, item);
-        FuelRegistry.INSTANCE.add(i, item.get().getBurnTime());
+        FuelRegistry.INSTANCE.add(i, ((FuelBlockItem) i).getBurnTime());
         return i;
     }
 

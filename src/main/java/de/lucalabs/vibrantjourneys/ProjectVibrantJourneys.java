@@ -25,6 +25,7 @@ public class ProjectVibrantJourneys implements ModInitializer {
 		PVJBiomeModifiers.initialize();
 		PVJPotions.initialize();
 		PVJPotionRecipes.initialize();
+		PVJStatusEffects.initialize();
 		PVJCompostables.inititalize();
 		ChanceTreeFeatureConfig.initialize();
 	}
