@@ -9,100 +9,100 @@ public class PVJConfig {
     public static HashMap<String, Boolean> configOptions = new HashMap<>();
 
     @Entry(name = "enableRocks")
-    public static boolean enableRocks;
+    public static boolean enableRocks = true;
     @Entry(name = "enableTwigs")
-    public static boolean enableTwigs;
+    public static boolean enableTwigs = true;
     @Entry(name = "enableFallenLeaves")
-    public static boolean enableFallenLeaves;
+    public static boolean enableFallenLeaves = true;
     @Entry(name = "enableBones")
-    public static boolean enableBones;
+    public static boolean enableBones = true;
     @Entry(name = "enableCharredBones")
-    public static boolean enableCharredBones;
+    public static boolean enableCharredBones = true;
     @Entry(name = "enableIceChunks")
-    public static boolean enableIceChunks;
+    public static boolean enableIceChunks = true;
     @Entry(name = "enablePinecones")
-    public static boolean enablePinecones;
+    public static boolean enablePinecones = true;
     @Entry(name = "enableSeashells")
-    public static boolean enableSeashells;
+    public static boolean enableSeashells = true;
 
     @Entry(name = "enableFallenTrees")
-    public static boolean enableFallenTrees;
+    public static boolean enableFallenTrees = true;
 
     @Entry(name = "enableSeaOats")
-    public static boolean enableSeaOats;
+    public static boolean enableSeaOats = true;
     @Entry(name = "enableCattails")
-    public static boolean enableCattails;
+    public static boolean enableCattails = true;
     @Entry(name = "enableBeachGrass")
-    public static boolean enableBeachGrass;
+    public static boolean enableBeachGrass = true;
     @Entry(name = "enableBarkMushrooms")
-    public static boolean enableBarkMushrooms;
+    public static boolean enableBarkMushrooms = true;
     @Entry(name = "enableGlowcap")
-    public static boolean enableGlowcap;
+    public static boolean enableGlowcap = true;
     @Entry(name = "enableCindercane")
-    public static boolean enableCindercane;
+    public static boolean enableCindercane = true;
     @Entry(name = "enableNetherNettles")
-    public static boolean enableNetherNettles;
+    public static boolean enableNetherNettles = true;
     @Entry(name = "enableShortGrass")
-    public static boolean enableShortGrass;
+    public static boolean enableShortGrass = true;
     @Entry(name = "enableNaturalCobwebs")
-    public static boolean enableNaturalCobwebs;
+    public static boolean enableNaturalCobwebs = true;
     @Entry(name = "enableSmallCacti")
-    public static boolean enableSmallCacti;
+    public static boolean enableSmallCacti = true;
     @Entry(name = "enablePricklyBush")
-    public static boolean enablePricklyBush;
+    public static boolean enablePricklyBush = true;
     @Entry(name = "enableReeds")
-    public static boolean enableReeds;
+    public static boolean enableReeds = true;
     @Entry(name = "enableIcicles")
-    public static boolean enableIcicles;
+    public static boolean enableIcicles = true;
     @Entry(name = "enableSandySprouts")
-    public static boolean enableSandySprouts;
+    public static boolean enableSandySprouts = true;
 
     @Entry(name = "enableExtraLilypads")
-    public static boolean enableExtraLilypads;
+    public static boolean enableExtraLilypads = true;
     @Entry(name = "enableExtraSeagrass")
-    public static boolean enableExtraSeagrass;
+    public static boolean enableExtraSeagrass = true;
     @Entry(name = "enableExtraRiverGrass")
-    public static boolean enableExtraRiverGrass;
+    public static boolean enableExtraRiverGrass = true;
     @Entry(name = "enableMossCarpets")
-    public static boolean enableMossCarpets;
+    public static boolean enableMossCarpets = true;
     @Entry(name = "enableTidePools")
-    public static boolean enableTidePools;
+    public static boolean enableTidePools = true;
     @Entry(name = "enableCaveRoots")
-    public static boolean enableCaveRoots;
+    public static boolean enableCaveRoots = true;
     @Entry(name = "enableBetterRuinedNetherPortals")
-    public static boolean enableBetterRuinedNetherPortals;
+    public static boolean enableBetterRuinedNetherPortals = true;
 
     @Entry(name = "enableWatergrass")
-    public static boolean enableWatergrass;
+    public static boolean enableWatergrass = true;
     @Entry(name = "enableGravelPits")
-    public static boolean enableGravelPits;
+    public static boolean enableGravelPits = true;
     @Entry(name = "enableGoldPits")
-    public static boolean enableGoldPits;
+    public static boolean enableGoldPits = true;
     @Entry(name = "enableBeachedKelp")
-    public static boolean enableBeachedKelp;
+    public static boolean enableBeachedKelp = true;
     @Entry(name = "enableDriedBeachedKelp")
-    public static boolean enableDriedBeachedKelp;
+    public static boolean enableDriedBeachedKelp = true;
     @Entry(name = "enableGlowingBlueFungus")
-    public static boolean enableGlowingBlueFungus;
+    public static boolean enableGlowingBlueFungus = true;
     @Entry(name = "enableMuddyBones")
-    public static boolean enableMuddyBones;
+    public static boolean enableMuddyBones = true;
     @Entry(name = "enableLotusPonds")
-    public static boolean enableLotusPonds;
+    public static boolean enableLotusPonds = true;
     @Entry(name = "enableFloatingPinkLotus")
-    public static boolean enableFloatingPinkLotus;
+    public static boolean enableFloatingPinkLotus = true;
     @Entry(name = "enableHotSprings")
-    public static boolean enableHotSprings;
+    public static boolean enableHotSprings = true;
     @Entry(name = "enableBushes")
-    public static boolean enableBushes;
+    public static boolean enableBushes = true;
     @Entry(name = "enableWildflowers")
-    public static boolean enableWildflowers;
+    public static boolean enableWildflowers = true;
     @Entry(name = "enableSlimeNodules")
-    public static boolean enableSlimeNodules;
+    public static boolean enableSlimeNodules = true;
     @Entry(name = "enablePinkVines")
-    public static boolean enablePinkVines;
+    public static boolean enablePinkVines = true;
 
     @Entry(name = "enableJungleTropicalFish")
-    public static boolean enableJungleTropicalFish;
+    public static boolean enableJungleTropicalFish = true;
 
     @Entry(name = "replaceableGroundcover")
     public static boolean replaceableGroundcover;

@@ -419,6 +419,7 @@ public class PVJConfiguredFeatures extends FabricDynamicRegistryProvider {
         ), BlockPredicate.matchingBlocks(Direction.UP.getVector(), Blocks.CHERRY_LEAVES))));
 
         register(entries, SEA_PICKLE, Feature.SEA_PICKLE, new CountConfig(1));
+
         register(entries, TIDE_POOL, PVJFeatures.POOL, new MultipleVegetationPatchConfiguration(
                 BlockTags.LUSH_GROUND_REPLACEABLE,
                 BlockStateProvider.of(Blocks.STONE),

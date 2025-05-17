@@ -22,6 +22,7 @@ public class PVJPotionRecipes {
 
         recipe(Potions.AWKWARD, PVJItems.GLOWING_BLUE_FUNGUS, PVJPotions.SPORADIC_SILENCE);
         recipe(PVJPotions.SPORADIC_SILENCE, Items.REDSTONE, PVJPotions.LONG_SPORADIC_SILENCE);
+        recipe(PVJPotions.SPORADIC_SILENCE, Items.GLOWSTONE, PVJPotions.STRONG_SPORADIC_SILENCE);
 //        recipe(SPORADIC_SILENCE_SPLASH_POTION, Items.REDSTONE, customSplashPotion(PVJPotions.LONG_SPORADIC_SILENCE));
 //        recipe(SPORADIC_SILENCE_LINGERING_POTION, Items.REDSTONE, customLingeringPotion(PVJPotions.LONG_SPORADIC_SILENCE));
     }

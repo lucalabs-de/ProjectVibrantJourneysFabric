@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "minecraft:seashells"
+    }
+  ],
+  "result": {
+    "item": "minecraft:prismarine_shard"
+  }
+}

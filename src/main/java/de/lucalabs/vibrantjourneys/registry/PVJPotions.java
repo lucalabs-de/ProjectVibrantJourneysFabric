@@ -18,9 +18,6 @@ public final class PVJPotions {
     public static Potion LONG_GLOWING = register(
             "long_glowing",
             () -> new Potion(new StatusEffectInstance(StatusEffects.GLOWING, 9600)));
-    public static Potion SPLASH_GLOWING = register(
-            "long_glowing",
-            () -> new Potion(new StatusEffectInstance(StatusEffects.GLOWING, 9600)));
 
     public static Potion SPORADIC_SILENCE = register(
             "sporadic_silence",
