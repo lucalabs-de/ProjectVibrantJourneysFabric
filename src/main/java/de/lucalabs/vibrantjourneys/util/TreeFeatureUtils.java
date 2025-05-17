@@ -4,16 +4,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.lucalabs.vibrantjourneys.ProjectVibrantJourneys;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.biome.Biome;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Set;
 
 public class TreeFeatureUtils {
@@ -32,7 +30,6 @@ public class TreeFeatureUtils {
     }
 
     public static int getChance(String biomeName, Set<ChanceBiomeEntry> data) {
-
         for (ChanceBiomeEntry entry : data) {
             if (entry.biomeName().equals(biomeName))
                 return entry.chance();
@@ -40,19 +37,13 @@ public class TreeFeatureUtils {
         return -1;
     }
 
-    public static int getChance(Biome biome, Set<ChanceBiomeEntry> data) {
-        List<Pair<Biome, Integer>> biomes = data.stream().map((entry) -> Pair.of(ForgeRegistries.BIOMES.get(new Identifier(entry.biomeName())), entry.chance())).toList();
-
-        for (Pair<Biome, Integer> pair : biomes) {
-            if (pair.getFirst().equals(biome))
-                return pair.getSecond();
-        }
-
-        return -1;
-    }
-
     public static void serializeAndLoad(String name, String loc, Set<ChanceBiomeEntry> defaults, Set<ChanceBiomeEntry> data) {
-        Path path = FMLPaths.CONFIGDIR.resolve(ProjectVibrantJourneys.MOD_ID + "/" + loc + "/" + name + ".json");
+        Path path = FabricLoader.getInstance()
+                .getConfigDir()
+                .resolve(ProjectVibrantJourneys.MOD_ID)
+                .resolve(loc)
+                .resolve(name + ".json");
+
         if (!path.toFile().exists()) {
             try {
                 Files.createDirectories(path.getParent());
