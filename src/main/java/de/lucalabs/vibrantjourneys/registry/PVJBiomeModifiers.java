@@ -1,6 +1,7 @@
 package de.lucalabs.vibrantjourneys.registry;
 
 import de.lucalabs.vibrantjourneys.ProjectVibrantJourneys;
+import de.lucalabs.vibrantjourneys.config.PVJConfig;
 import de.lucalabs.vibrantjourneys.tags.CompatTags;
 import de.lucalabs.vibrantjourneys.tags.FabricTags;
 import de.lucalabs.vibrantjourneys.tags.ForgeCompatTags;
@@ -57,148 +58,168 @@ public final class PVJBiomeModifiers {
                 overworld()
                         .and(blacklist(BiomeType.DESERT, BiomeType.OCEAN, BiomeType.BEACH, BiomeType.BADLANDS, BiomeType.VERY_COLD))
                         .and(blacklist(BiomeKeys.STONY_SHORE)),
-                () -> true); // TODO use proper config conditions
+                () -> PVJConfig.enableTwigs); // TODO use proper config conditions
         addBiomeModifier(
                 PVJPlacements.FALLEN_LEAVES,
                 overworld()
                         .and(blacklist(BiomeType.DESERT, BiomeType.OCEAN, BiomeType.BEACH, BiomeType.MUSHROOM, BiomeType.BADLANDS, BiomeType.VERY_COLD))
                         .and(blacklist(BiomeKeys.STONY_SHORE)),
-                () -> true);
+                () -> PVJConfig.enableFallenLeaves);
         addBiomeModifier(
                 PVJPlacements.DEAD_FALLEN_LEAVES,
                 biomes(BiomeKeys.WOODED_BADLANDS),
-                () -> true);
+                () -> PVJConfig.enableFallenLeaves);
 
         addBiomeModifier(
                 PVJPlacements.DENSE_DEAD_FALLEN_LEAVES,
                 biomes(BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA),
-                () -> true);
+                () -> PVJConfig.enableFallenLeaves);
         addBiomeModifier(
                 PVJPlacements.PINECONES,
                 biomes(BiomeType.CONIFEROUS),
-                () -> true);
+                () -> PVJConfig.enablePinecones);
         addBiomeModifier(
                 PVJPlacements.SEASHELLS,
                 biomes(BiomeType.OCEAN, BiomeType.BEACH),
-                () -> true);
+                () -> PVJConfig.enableSeashells);
         addBiomeModifier(
                 PVJPlacements.OCEAN_FLOOR_SEASHELLS,
                 biomes(BiomeType.OCEAN, BiomeType.BEACH),
-                () -> true);
+                () -> PVJConfig.enableSeashells);
         addBiomeModifier(
                 PVJPlacements.ROCKS,
                 overworld().and(blacklist(BiomeType.MUSHROOM, BiomeType.VERY_COLD)),
-                () -> true);
+                () -> PVJConfig.enableRocks);
         addBiomeModifier(
                 PVJPlacements.BONES,
                 overworld().and(blacklist(BiomeType.MUSHROOM, BiomeType.VERY_COLD)),
-                () -> true);
+                () -> PVJConfig.enableBones);
         addBiomeModifier(
                 PVJPlacements.CAVE_ROCKS,
                 overworld().and(blacklist(BiomeType.MUSHROOM, BiomeType.VERY_COLD)),
-                () -> true);
+                () -> PVJConfig.enableRocks);
         addBiomeModifier(
                 PVJPlacements.CAVE_BONES,
                 overworld().and(blacklist(BiomeType.MUSHROOM, BiomeType.VERY_COLD)),
-                () -> true);
+                () -> PVJConfig.enableBones);
         addBiomeModifier(
                 PVJPlacements.ICE_CHUNKS,
                 biomes(BiomeType.SNOWY).and(blacklist(BiomeKeys.SNOWY_BEACH)),
-                () -> true);
+                () -> PVJConfig.enableIceChunks);
         addBiomeModifier(
                 PVJPlacements.MOSS_CARPET,
                 biomes(BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA),
-                () -> true);
-        addBiomeModifier(PVJPlacements.BARK_MUSHROOM, overworld(), () -> true);
-        addBiomeModifier(PVJPlacements.SEA_OATS, biomes(BiomeType.BEACH).and(blacklist(BiomeType.VERY_COLD)), () -> true);
-        addBiomeModifier(PVJPlacements.BEACH_GRASS, biomes(BiomeType.BEACH).and(blacklist(BiomeType.VERY_COLD)), () -> true);
+                () -> PVJConfig.enableMossCarpets);
+        addBiomeModifier(PVJPlacements.BARK_MUSHROOM, overworld(), () -> PVJConfig.enableBarkMushrooms);
+        addBiomeModifier(
+                PVJPlacements.SEA_OATS,
+                biomes(BiomeType.BEACH).and(blacklist(BiomeType.VERY_COLD)),
+                () -> PVJConfig.enableSeaOats);
+        addBiomeModifier(
+                PVJPlacements.BEACH_GRASS,
+                biomes(BiomeType.BEACH).and(blacklist(BiomeType.VERY_COLD)),
+                () -> PVJConfig.enableBeachGrass);
         addBiomeModifier(
                 PVJPlacements.CATTAILS,
                 overworld()
                         .and(blacklist(BiomeType.OCEAN, BiomeType.BEACH, BiomeType.VERY_COLD))
                         .and(blacklist(BiomeKeys.STONY_SHORE)),
-                () -> true);
+                () -> PVJConfig.enableCattails);
         addBiomeModifier(
                 PVJPlacements.SHORT_GRASS,
                 overworld()
                         .and(blacklist(BiomeType.MUSHROOM))
                         .and(blacklist(BiomeKeys.SNOWY_PLAINS)),
-                () -> true);
+                () -> PVJConfig.enableShortGrass);
         addBiomeModifier(
                 PVJPlacements.NATURAL_COBWEB,
                 overworld()
                         .and(blacklist(BiomeType.MUSHROOM))
                         .and(blacklist(BiomeKeys.SNOWY_PLAINS)),
-                () -> true);
+                () -> PVJConfig.enableNaturalCobwebs);
         addBiomeModifier(PVJPlacements.SMALL_CACTUS, biomes(BiomeType.DESERT), () -> true);
         addBiomeModifier(
                 PVJPlacements.EXTRA_SEAGRASS,
                 overworld()
                         .and(blacklist(BiomeType.OCEAN, BiomeType.BEACH, BiomeType.DESERT, BiomeType.BADLANDS))
                         .and(blacklist(BiomeKeys.STONY_SHORE)),
-                () -> true);
+                () -> PVJConfig.enableExtraSeagrass);
         addBiomeModifier(
                 PVJPlacements.EXTRA_LILYPADS,
                 overworld()
                         .and(blacklist(BiomeType.OCEAN, BiomeType.BEACH, BiomeType.DESERT, BiomeType.BADLANDS, BiomeType.VERY_COLD))
                         .and(blacklist(BiomeKeys.STONY_SHORE)),
-                () -> true);
-        addBiomeModifier(PVJPlacements.EXTRA_GRASS, biomes(BiomeType.RIVER), () -> true);
-        addBiomeModifier(PVJPlacements.TIDE_POOL, biomes(BiomeKeys.STONY_SHORE), () -> true);
-        addBiomeModifier(PVJPlacements.CAVE_ROOTS, overworld(), () -> true);
-        addBiomeModifier(PVJPlacements.REEDS, biomes(BiomeType.PLAINS).and(blacklist(BiomeKeys.SNOWY_PLAINS)), () -> true);
-        addBiomeModifier(PVJPlacements.PRICKLY_BUSH, biomes(BiomeKeys.WOODED_BADLANDS), () -> true);
-        addBiomeModifier(PVJPlacements.ICICLE, biomes(BiomeType.SNOWY), () -> true);
-        addBiomeModifier(PVJPlacements.SANDY_SPROUTS, biomes(BiomeType.BEACH).and(blacklist(BiomeType.VERY_COLD)), () -> true);
+                () -> PVJConfig.enableExtraLilypads);
+        addBiomeModifier(PVJPlacements.EXTRA_GRASS, biomes(BiomeType.RIVER), () -> PVJConfig.enableExtraRiverGrass);
+        addBiomeModifier(PVJPlacements.TIDE_POOL, biomes(BiomeKeys.STONY_SHORE), () -> PVJConfig.enableTidePools);
+        addBiomeModifier(PVJPlacements.CAVE_ROOTS, overworld(), () -> PVJConfig.enableCaveRoots);
+        addBiomeModifier(
+                PVJPlacements.REEDS,
+                biomes(BiomeType.PLAINS).and(blacklist(BiomeKeys.SNOWY_PLAINS)),
+                () -> PVJConfig.enableReeds);
+        addBiomeModifier(PVJPlacements.PRICKLY_BUSH, biomes(BiomeKeys.WOODED_BADLANDS), () -> PVJConfig.enablePricklyBush);
+        addBiomeModifier(PVJPlacements.ICICLE, biomes(BiomeType.SNOWY), () -> PVJConfig.enableIcicles);
+        addBiomeModifier(
+                PVJPlacements.SANDY_SPROUTS,
+                biomes(BiomeType.BEACH).and(blacklist(BiomeType.VERY_COLD)),
+                () -> PVJConfig.enableSandySprouts);
         addBiomeModifier(
                 PVJPlacements.WATERGRASS,
                 overworld()
                         .and(blacklist(BiomeType.OCEAN, BiomeType.BEACH, BiomeType.BADLANDS, BiomeType.VERY_COLD))
                         .and(blacklist(BiomeKeys.STONY_SHORE)),
-                () -> true);
+                () -> PVJConfig.enableWatergrass);
         addBiomeModifier(
                 PVJPlacements.GRAVEL_PIT,
                 biomes(BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.BIRCH_FOREST),
                 GenerationStep.Feature.LAKES,
-                () -> true);
-        addBiomeModifier(PVJPlacements.GOLD_PIT, biomes(BiomeType.BADLANDS), GenerationStep.Feature.LAKES, () -> true);
-        addBiomeModifier(PVJPlacements.BEACHED_KELP, biomes(BiomeKeys.BEACH), () -> true);
-        addBiomeModifier(PVJPlacements.DRIED_BEACHED_KELP, biomes(BiomeKeys.BEACH), () -> true);
-        addBiomeModifier(PVJPlacements.GLOWING_BLUE_FUNGUS, biomes(BiomeKeys.DEEP_DARK), () -> true);
-        addBiomeModifier(PVJPlacements.MUDDY_BONES, biomes(BiomeKeys.MANGROVE_SWAMP), () -> true);
-        addBiomeModifier(PVJPlacements.LOTUS_POND, biomes(BiomeKeys.CHERRY_GROVE), GenerationStep.Feature.LAKES, () -> true);
-        addBiomeModifier(PVJPlacements.FLOATING_PINK_LOTUS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
-        addBiomeModifier(PVJPlacements.HOT_SPRINGS, c -> c.hasTag(BiomeTags.IS_TAIGA), () -> true);
+                () -> PVJConfig.enableGravelPits);
+        addBiomeModifier(
+                PVJPlacements.GOLD_PIT,
+                biomes(BiomeType.BADLANDS),
+                GenerationStep.Feature.LAKES,
+                () -> PVJConfig.enableGoldPits);
+        addBiomeModifier(PVJPlacements.BEACHED_KELP, biomes(BiomeKeys.BEACH), () -> PVJConfig.enableBeachedKelp);
+        addBiomeModifier(PVJPlacements.DRIED_BEACHED_KELP, biomes(BiomeKeys.BEACH), () -> PVJConfig.enableDriedBeachedKelp);
+        addBiomeModifier(PVJPlacements.GLOWING_BLUE_FUNGUS, biomes(BiomeKeys.DEEP_DARK), () -> PVJConfig.enableGlowingBlueFungus);
+        addBiomeModifier(PVJPlacements.MUDDY_BONES, biomes(BiomeKeys.MANGROVE_SWAMP), () -> PVJConfig.enableMuddyBones);
+        addBiomeModifier(
+                PVJPlacements.LOTUS_POND,
+                biomes(BiomeKeys.CHERRY_GROVE),
+                GenerationStep.Feature.LAKES,
+                () -> PVJConfig.enableLotusPonds);
+        addBiomeModifier(PVJPlacements.FLOATING_PINK_LOTUS, biomes(BiomeKeys.FLOWER_FOREST), () -> PVJConfig.enableFloatingPinkLotus);
+        addBiomeModifier(PVJPlacements.HOT_SPRINGS, c -> c.hasTag(BiomeTags.IS_TAIGA), () -> PVJConfig.enableHotSprings);
         addBiomeModifier(PVJPlacements.OAK_BUSH, biomes(BiomeType.PLAINS), () -> true);
-        addBiomeModifier(PVJPlacements.YELLOW_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
-        addBiomeModifier(PVJPlacements.ORANGE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
-        addBiomeModifier(PVJPlacements.BLUE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
-        addBiomeModifier(PVJPlacements.PURPLE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
-        addBiomeModifier(PVJPlacements.WHITE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
-        addBiomeModifier(PVJPlacements.MIXED_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> true);
-        addBiomeModifier(PVJPlacements.MANY_YELLOW_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
-        addBiomeModifier(PVJPlacements.MANY_ORANGE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
-        addBiomeModifier(PVJPlacements.MANY_BLUE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
-        addBiomeModifier(PVJPlacements.MANY_PURPLE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
-        addBiomeModifier(PVJPlacements.MANY_WHITE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
-        addBiomeModifier(PVJPlacements.MANY_MIXED_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> true);
-        addBiomeModifier(PVJPlacements.SLIME_NODULE, biomes(BiomeType.SWAMP), () -> true);
-        addBiomeModifier(PVJPlacements.PINK_VINES, biomes(BiomeKeys.CHERRY_GROVE), () -> true);
+        addBiomeModifier(PVJPlacements.YELLOW_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.ORANGE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.BLUE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.PURPLE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.WHITE_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.MIXED_WILDFLOWERS, biomes(BiomeKeys.MEADOW), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.MANY_YELLOW_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.MANY_ORANGE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.MANY_BLUE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.MANY_PURPLE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.MANY_WHITE_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.MANY_MIXED_WILDFLOWERS, biomes(BiomeKeys.FLOWER_FOREST), () -> PVJConfig.enableWildflowers);
+        addBiomeModifier(PVJPlacements.SLIME_NODULE, biomes(BiomeType.SWAMP), () -> PVJConfig.enableSlimeNodules);
+        addBiomeModifier(PVJPlacements.PINK_VINES, biomes(BiomeKeys.CHERRY_GROVE), () -> PVJConfig.enablePinkVines);
 
-        addBiomeModifier(PVJPlacements.OAK_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_OAK_LOGS), () -> true);
-        addBiomeModifier(PVJPlacements.BIRCH_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_BIRCH_LOGS), () -> true);
-        addBiomeModifier(PVJPlacements.SPRUCE_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_SPRUCE_LOGS), () -> true);
-        addBiomeModifier(PVJPlacements.JUNGLE_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_JUNGLE_LOGS), () -> true);
-        addBiomeModifier(PVJPlacements.ACACIA_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_ACACIA_LOGS), () -> true);
-        addBiomeModifier(PVJPlacements.DARK_OAK_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_DARK_OAK_LOGS), () -> true);
-        addBiomeModifier(PVJPlacements.CHERRY_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_CHERRY_LOGS), () -> true);
-        addBiomeModifier(PVJPlacements.MANGROVE_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_MANGROVE_LOGS), () -> true);
+        addBiomeModifier(PVJPlacements.OAK_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_OAK_LOGS), () -> PVJConfig.enableFallenTrees);
+        addBiomeModifier(PVJPlacements.BIRCH_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_BIRCH_LOGS), () -> PVJConfig.enableFallenTrees);
+        addBiomeModifier(PVJPlacements.SPRUCE_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_SPRUCE_LOGS), () -> PVJConfig.enableFallenTrees);
+        addBiomeModifier(PVJPlacements.JUNGLE_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_JUNGLE_LOGS), () -> PVJConfig.enableFallenTrees);
+        addBiomeModifier(PVJPlacements.ACACIA_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_ACACIA_LOGS), () -> PVJConfig.enableFallenTrees);
+        addBiomeModifier(PVJPlacements.DARK_OAK_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_DARK_OAK_LOGS), () -> PVJConfig.enableFallenTrees);
+        addBiomeModifier(PVJPlacements.CHERRY_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_CHERRY_LOGS), () -> PVJConfig.enableFallenTrees);
+        addBiomeModifier(PVJPlacements.MANGROVE_FALLEN_TREE, c -> c.hasTag(PVJTags.HAS_MANGROVE_LOGS), () -> PVJConfig.enableFallenTrees);
 
-        addBiomeModifier(PVJPlacements.CHARRED_BONES, nether(), () -> true);
-        addBiomeModifier(PVJPlacements.GLOWCAP, nether(), () -> true);
-        addBiomeModifier(PVJPlacements.CINDERCANE, nether(), () -> true);
-        addBiomeModifier(PVJPlacements.WARPED_NETTLE, biomes(BiomeKeys.WARPED_FOREST), () -> true);
-        addBiomeModifier(PVJPlacements.CRIMSON_NETTLE, biomes(BiomeKeys.CRIMSON_FOREST), () -> true);
+        addBiomeModifier(PVJPlacements.CHARRED_BONES, nether(), () -> PVJConfig.enableCharredBones);
+        addBiomeModifier(PVJPlacements.GLOWCAP, nether(), () -> PVJConfig.enableGlowcap);
+        addBiomeModifier(PVJPlacements.CINDERCANE, nether(), () -> PVJConfig.enableCindercane);
+        addBiomeModifier(PVJPlacements.WARPED_NETTLE, biomes(BiomeKeys.WARPED_FOREST), () -> PVJConfig.enableNetherNettles);
+        addBiomeModifier(PVJPlacements.CRIMSON_NETTLE, biomes(BiomeKeys.CRIMSON_FOREST), () -> PVJConfig.enableNetherNettles);
     }
 
     private static void initSpawnModifiers() {
@@ -210,7 +231,7 @@ public final class PVJBiomeModifiers {
                 25,
                 5,
                 5,
-                () -> true);
+                () -> PVJConfig.enableJungleTropicalFish);
     }
 
     private static void addBiomeModifier(
