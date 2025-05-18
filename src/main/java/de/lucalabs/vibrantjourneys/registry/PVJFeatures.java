@@ -1,5 +1,6 @@
 package de.lucalabs.vibrantjourneys.registry;
 
+import de.lucalabs.vibrantjourneys.ProjectVibrantJourneys;
 import de.lucalabs.vibrantjourneys.world.features.*;
 import de.lucalabs.vibrantjourneys.world.features.configurations.BushConfiguration;
 import de.lucalabs.vibrantjourneys.world.features.configurations.FallenTreeConfiguration;
@@ -7,6 +8,8 @@ import de.lucalabs.vibrantjourneys.world.features.configurations.MultipleVegetat
 import de.lucalabs.vibrantjourneys.world.features.stateproviders.DirectionalStateProvider;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.stat.Stat;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.ProbabilityConfig;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.stateprovider.BlockStateProviderType;
@@ -34,7 +37,12 @@ public class PVJFeatures {
     public static final Feature<DefaultFeatureConfig> SLIME_NODULE = registerFeature("slime_nodule", new SlimeNoduleFeature(DefaultFeatureConfig.CODEC));
 
     private static <FC extends FeatureConfig> Feature<FC> registerFeature(String name, Feature<FC> feature) {
-        return Registry.register(Registries.FEATURE, name, feature);
+        return Registry.register(Registries.FEATURE, new Identifier(ProjectVibrantJourneys.MOD_ID, name), feature);
+    }
+
+    public static void initialize() {
+        ProjectVibrantJourneys.LOGGER.info("initializing features");
+        StateProviders.initialize();
     }
 
     public static class StateProviders {
@@ -43,5 +51,9 @@ public class PVJFeatures {
                         Registries.BLOCK_STATE_PROVIDER_TYPE,
                         "directional_state_provider",
                         new BlockStateProviderType<>(DirectionalStateProvider.CODEC));
+
+        public static void initialize() {
+            ProjectVibrantJourneys.LOGGER.info("initializing state providers");
+        }
     }
 }

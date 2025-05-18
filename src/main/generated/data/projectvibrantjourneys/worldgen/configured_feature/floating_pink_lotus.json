@@ -3,7 +3,7 @@
   "config": {
     "feature": {
       "feature": {
-        "type": "minecraft:floating_pink_lotus",
+        "type": "projectvibrantjourneys:floating_pink_lotus",
         "config": {
           "probability": 0.5
         }

@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:fallen_tree",
+  "type": "projectvibrantjourneys:fallen_tree",
   "config": {
     "baseLog": {
       "Name": "minecraft:oak_log",

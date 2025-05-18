@@ -12,7 +12,7 @@
 		"sources": "https://github.com/lucalabs-de/ProjectVibrantJourneysFabric"
 	},
 	"license": "CC-NC-SA-4.0",
-	"icon": "assets/project-vibrant-journeys/icon.png",
+	"icon": "assets/projectvibrantjourneys/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -26,11 +26,7 @@
 		]
 	},
 	"mixins": [
-		"project-vibrant-journeys.mixins.json",
-		{
-			"config": "project-vibrant-journeys.client.mixins.json",
-			"environment": "client"
-		}
+		"project-vibrant-journeys.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.16.14",

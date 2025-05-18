@@ -3,7 +3,7 @@
   "config": {
     "feature": {
       "feature": {
-        "type": "minecraft:simple_block_match_water",
+        "type": "projectvibrantjourneys:simple_block_match_water",
         "config": {
           "to_place": {
             "type": "minecraft:simple_state_provider",

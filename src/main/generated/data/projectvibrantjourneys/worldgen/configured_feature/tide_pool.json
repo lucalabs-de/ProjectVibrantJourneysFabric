@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:pool",
+  "type": "projectvibrantjourneys:pool",
   "config": {
     "depth": 3,
     "extra_bottom_block_chance": 1.0,

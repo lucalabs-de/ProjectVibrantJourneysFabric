@@ -3,7 +3,7 @@
   "config": {
     "feature": {
       "feature": {
-        "type": "minecraft:lily_pad",
+        "type": "projectvibrantjourneys:lily_pad",
         "config": {
           "probability": 0.75
         }

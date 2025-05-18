@@ -5,6 +5,7 @@ import de.lucalabs.vibrantjourneys.config.PVJConfig;
 import de.lucalabs.vibrantjourneys.recipes.PVJCompostables;
 import de.lucalabs.vibrantjourneys.recipes.PVJPotionRecipes;
 import de.lucalabs.vibrantjourneys.registry.*;
+import de.lucalabs.vibrantjourneys.world.features.ruinednetherportals.RuinedPortalDecoratorBase;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 
@@ -19,6 +20,7 @@ public class ProjectVibrantJourneys implements ModInitializer {
 	public void onInitialize() {
 		MidnightConfig.init(ProjectVibrantJourneys.MOD_ID, PVJConfig.class);
 
+		PVJFeatures.initialize();
 		PVJBlocks.initialize();
 		PVJItemGroup.initialize();
 		PVJItems.initialize();
@@ -28,5 +30,7 @@ public class ProjectVibrantJourneys implements ModInitializer {
 		PVJStatusEffects.initialize();
 		PVJCompostables.inititalize();
 		ChanceTreeFeatureConfig.initialize();
+
+		RuinedPortalDecoratorBase.registerPortalDecorators();
 	}
 }
