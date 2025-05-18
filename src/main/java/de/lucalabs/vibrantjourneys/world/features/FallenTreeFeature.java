@@ -62,7 +62,7 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
         boolean branched = false;
 
         for (int i = 0; i < length; i++) {
-            if (!canReplace(level, pos)) {
+            if (!canReplace(level, pos) || canReplace(level, pos.down())) { // TODO check that the second condition is alright
                 return false;
             }
             pos = pos.offset(dir);
@@ -84,7 +84,7 @@ public class FallenTreeFeature extends Feature<FallenTreeConfiguration> {
 
                     if (!branched && i <= (length / 2) + 1 && rand.nextFloat() < 0.5F) {
                         BlockPos branchPos = rand.nextBoolean() ? pos.offset(dirCounterClockwise) : pos.offset(dirClockwise);
-                        ;
+
                         WorldUtils.setBlockState(level, branchPos, baseLog.with(PillarBlock.AXIS, dirCounterClockwise.getAxis()), 2);
                         if (level.isAir(branchPos.up()) && rand.nextFloat() < 0.4F) {
                             WorldUtils.setBlockState(level, branchPos.up(), this.getVegetationToPlace(vegetationProviders, randomSource, branchPos.up()), 2);

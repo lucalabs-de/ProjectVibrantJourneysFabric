@@ -58,7 +58,7 @@ public final class PVJBiomeModifiers {
                 overworld()
                         .and(blacklist(BiomeType.DESERT, BiomeType.OCEAN, BiomeType.BEACH, BiomeType.BADLANDS, BiomeType.VERY_COLD))
                         .and(blacklist(BiomeKeys.STONY_SHORE)),
-                () -> PVJConfig.enableTwigs); // TODO use proper config conditions
+                () -> PVJConfig.enableTwigs);
         addBiomeModifier(
                 PVJPlacements.FALLEN_LEAVES,
                 overworld()
