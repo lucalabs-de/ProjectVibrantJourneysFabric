@@ -27,7 +27,7 @@ public final class PVJRendering {
         BlockRenderLayerMap.INSTANCE.putBlock(PVJBlocks.FALLEN_LEAVES, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PVJBlocks.GLOWCAP, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PVJBlocks.GLOWING_BLUE_FUNGUS, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(PVJBlocks.ICICLE, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(PVJBlocks.ICICLE, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PVJBlocks.NATURAL_COBWEB, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PVJBlocks.PINK_LOTUS, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(PVJBlocks.PINK_VINES, RenderLayer.getCutout());

@@ -248,6 +248,7 @@ public final class PVJBiomeModifiers {
             Supplier<Boolean> configCondition) {
         if (configCondition.get()) {
             BiomeModifications.addFeature(condition, featureType, feature);
+//            BiomeModifications.addFeature(c -> false, featureType, feature);
         }
     }
 
@@ -289,16 +290,16 @@ public final class PVJBiomeModifiers {
 
     @SafeVarargs
     private static Predicate<BiomeSelectionContext> biomes(RegistryKey<Biome>... biomes) {
-        Predicate<BiomeSelectionContext> pred = (c -> true);
+        Predicate<BiomeSelectionContext> pred = (c -> false);
         for (RegistryKey<Biome> biome : biomes) {
-            pred = pred.and(c -> c.getBiomeKey().equals(biome));
+            pred = pred.or(c -> c.getBiomeKey().equals(biome));
         }
 
         return pred;
     }
 
     private static Predicate<BiomeSelectionContext> biomes(BiomeType... biomes) {
-        Predicate<BiomeSelectionContext> pred = (c -> true);
+        Predicate<BiomeSelectionContext> pred = (c -> false);
         for (BiomeType t : biomes) {
             pred = pred.or(fromBiomeType(t));
         }
@@ -327,6 +328,7 @@ public final class PVJBiomeModifiers {
     }
 
     private static Predicate<BiomeSelectionContext> fromBiomeType(BiomeType t) {
+//        return c -> false;
         return switch (t) {
             case FOREST -> c -> c.hasTag(BiomeTags.IS_FOREST);
             case PLAINS -> c -> c.hasTag(FabricTags.IS_PLAINS) || c.hasTag(FabricTags.PLAINS);

@@ -31,7 +31,7 @@ public class MuddyBonesFeature extends Feature<DefaultFeatureConfig> {
         if (world.getBlockState(origin).isOf(Blocks.MUD)) {
             BlockState state = PVJBlocks.MUDDY_BONES.getDefaultState().with(MuddyBonesBlock.FACING, dir).with(MuddyBonesBlock.MODEL, model);
             if (world.setBlockState(origin, state, 2)) {
-                ProjectVibrantJourneys.LOGGER.info(origin.toString());
+//                ProjectVibrantJourneys.LOGGER.info(origin.toString());
             }
         }
 
