@@ -226,18 +226,6 @@ public class PVJBlockTagProvider extends VanillaBlockTagProvider {
                 .addOptionalTag(BlockTags.FENCES.id())
                 .addOptionalTag(BlockTags.FENCE_GATES.id())
                 .addOptionalTag(BlockTags.STAIRS.id());
-
-//                .addTag(BlockTags.WOOL)
-//                .addTag(BlockTags.PLANKS)
-//                .addTag(BlockTags.LEAVES)
-//                .addTag(BlockTags.TERRACOTTA)
-//                .addTag(BlockTags.SNOW)
-//                .addTag(BlockTags.ICE)
-//                .addTag(FabricTags.ORES)
-//                .addTag(FabricTags.STORAGE_BLOCKS)
-//                .addTag(BlockTags.FENCES)
-//                .addTag(BlockTags.FENCE_GATES)
-//                .addTag(BlockTags.STAIRS);
     }
 
     private void addModCompatTags(RegistryWrapper.WrapperLookup provider) {

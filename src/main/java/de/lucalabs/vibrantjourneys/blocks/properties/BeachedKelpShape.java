@@ -11,7 +11,7 @@ public enum BeachedKelpShape implements StringIdentifiable {
 
   private final String name;
 
-  private BeachedKelpShape(String name) {
+  BeachedKelpShape(String name) {
     this.name = name;
   }
 
