@@ -21,7 +21,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:pinecones"
+          "name": "projectvibrantjourneys:pinecones"
         }
       ],
       "rolls": 1.0

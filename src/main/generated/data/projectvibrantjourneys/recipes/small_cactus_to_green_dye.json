@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.1,
   "ingredient": {
-    "item": "minecraft:small_cactus"
+    "item": "projectvibrantjourneys:small_cactus"
   },
   "result": "minecraft:green_dye"
 }

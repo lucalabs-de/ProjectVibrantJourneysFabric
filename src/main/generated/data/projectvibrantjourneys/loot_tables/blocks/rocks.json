@@ -21,7 +21,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:rocks"
+          "name": "projectvibrantjourneys:rocks"
         }
       ],
       "rolls": 1.0

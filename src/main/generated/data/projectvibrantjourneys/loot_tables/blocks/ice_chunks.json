@@ -21,7 +21,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:ice_chunks"
+          "name": "projectvibrantjourneys:ice_chunks"
         }
       ],
       "rolls": 1.0

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:crimson_nettle"
+          "name": "projectvibrantjourneys:crimson_nettle"
         }
       ],
       "rolls": 1.0

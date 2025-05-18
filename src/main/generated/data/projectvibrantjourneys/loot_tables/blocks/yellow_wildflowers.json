@@ -67,7 +67,7 @@
               "function": "minecraft:explosion_decay"
             }
           ],
-          "name": "minecraft:yellow_wildflowers"
+          "name": "projectvibrantjourneys:yellow_wildflowers"
         }
       ],
       "rolls": 1.0

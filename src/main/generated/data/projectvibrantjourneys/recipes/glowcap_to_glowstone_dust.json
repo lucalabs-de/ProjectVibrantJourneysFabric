@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.1,
   "ingredient": {
-    "item": "minecraft:glowcap"
+    "item": "projectvibrantjourneys:glowcap"
   },
   "result": "minecraft:glowstone_dust"
 }

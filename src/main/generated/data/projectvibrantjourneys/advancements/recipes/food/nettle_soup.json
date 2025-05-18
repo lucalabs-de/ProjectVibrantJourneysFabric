@@ -18,7 +18,7 @@
         "items": [
           {
             "items": [
-              "minecraft:crimson_nettle"
+              "projectvibrantjourneys:crimson_nettle"
             ]
           }
         ]
@@ -30,7 +30,7 @@
         "items": [
           {
             "items": [
-              "minecraft:nettle_soup"
+              "projectvibrantjourneys:nettle_soup"
             ]
           }
         ]
@@ -48,7 +48,7 @@
         "items": [
           {
             "items": [
-              "minecraft:warped_nettle"
+              "projectvibrantjourneys:warped_nettle"
             ]
           }
         ]

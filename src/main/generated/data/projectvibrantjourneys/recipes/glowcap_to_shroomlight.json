@@ -6,7 +6,7 @@
       "item": "minecraft:glowstone"
     },
     "N": {
-      "item": "minecraft:glowcap"
+      "item": "projectvibrantjourneys:glowcap"
     }
   },
   "pattern": [

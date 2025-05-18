@@ -21,7 +21,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:icicle"
+          "name": "projectvibrantjourneys:icicle"
         }
       ],
       "rolls": 1.0

@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:glowing_blue_fungus"
+          "name": "projectvibrantjourneys:glowing_blue_fungus"
         }
       ],
       "rolls": 1.0

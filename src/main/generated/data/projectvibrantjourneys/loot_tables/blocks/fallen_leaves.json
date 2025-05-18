@@ -34,7 +34,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:fallen_leaves"
+          "name": "projectvibrantjourneys:fallen_leaves"
         }
       ],
       "rolls": 1.0

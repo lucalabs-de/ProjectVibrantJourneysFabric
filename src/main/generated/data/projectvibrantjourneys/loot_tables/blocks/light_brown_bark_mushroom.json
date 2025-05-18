@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:light_brown_bark_mushroom"
+          "name": "projectvibrantjourneys:light_brown_bark_mushroom"
         }
       ],
       "rolls": 1.0

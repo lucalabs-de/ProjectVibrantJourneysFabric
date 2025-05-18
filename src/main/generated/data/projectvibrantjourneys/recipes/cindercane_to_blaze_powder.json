@@ -4,7 +4,7 @@
   "cookingtime": 800,
   "experience": 0.3,
   "ingredient": {
-    "item": "minecraft:cindercane"
+    "item": "projectvibrantjourneys:cindercane"
   },
   "result": "minecraft:blaze_powder"
 }

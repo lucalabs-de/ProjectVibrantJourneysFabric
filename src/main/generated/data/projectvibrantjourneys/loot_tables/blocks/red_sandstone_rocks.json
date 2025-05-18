@@ -21,7 +21,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:red_sandstone_rocks"
+          "name": "projectvibrantjourneys:red_sandstone_rocks"
         }
       ],
       "rolls": 1.0

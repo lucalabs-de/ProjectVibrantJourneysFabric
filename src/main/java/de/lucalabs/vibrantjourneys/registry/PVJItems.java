@@ -8,6 +8,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 
 import java.util.function.Supplier;
 
@@ -135,7 +136,7 @@ public class PVJItems {
     }
 
     private static Item registerItem(String name, Supplier<? extends Item> item) {
-        Item i = Registry.register(Registries.ITEM, name, item.get());
+        Item i = Registry.register(Registries.ITEM, new Identifier(ProjectVibrantJourneys.MOD_ID, name), item.get());
         PVJItemGroup.TAB_ITEMS.add(i);
         return i;
     }

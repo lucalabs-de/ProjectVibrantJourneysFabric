@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:oak_hollow_log"
+          "name": "projectvibrantjourneys:oak_hollow_log"
         }
       ],
       "rolls": 1.0

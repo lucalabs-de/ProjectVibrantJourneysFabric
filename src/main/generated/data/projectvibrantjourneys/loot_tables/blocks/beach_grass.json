@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:beach_grass"
+          "name": "projectvibrantjourneys:beach_grass"
         }
       ],
       "rolls": 1.0

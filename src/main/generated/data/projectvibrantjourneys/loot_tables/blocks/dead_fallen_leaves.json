@@ -34,7 +34,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:dead_fallen_leaves"
+          "name": "projectvibrantjourneys:dead_fallen_leaves"
         }
       ],
       "rolls": 1.0

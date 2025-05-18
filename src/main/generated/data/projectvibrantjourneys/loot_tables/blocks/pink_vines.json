@@ -16,7 +16,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:pink_vines"
+          "name": "projectvibrantjourneys:pink_vines"
         }
       ],
       "rolls": 1.0

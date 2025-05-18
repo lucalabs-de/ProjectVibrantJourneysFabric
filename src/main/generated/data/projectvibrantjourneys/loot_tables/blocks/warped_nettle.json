@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:warped_nettle"
+          "name": "projectvibrantjourneys:warped_nettle"
         }
       ],
       "rolls": 1.0
